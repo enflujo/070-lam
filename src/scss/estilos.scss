@@ -1,0 +1,41 @@
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --azulOscuro: #323846;
+  --blancoNube: #e0e1db;
+  --rojoCorazon: #d53f26;
+  --azulMedio: #393c5b;
+  --cafeTunica: #ab6656;
+  --doradoEspada: #c2a154;
+  --sangreCristo: #b73944;
+  --tinieblas: #0d030c;
+}
+
+body {
+  background-color: var(--azulOscuro);
+  color: var(--blancoNube);
+}
+
+::selection {
+  background-color: var(--doradoEspada);
+  color: var(--blancoNube);
+}
+
+main {
+  padding: 1em;
+}
