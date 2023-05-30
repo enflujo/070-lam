@@ -1,73 +1,152 @@
-import Nodo from './componentes/Nodo';
 import './scss/estilos.scss';
-import datosAgentes from './Visualización LAM - agentes.csv';
-import datosEstructurados from './Visualización LAM - prueba-datos-estructurados.csv';
-import metadatos from './Visualización LAM - prueba-metadatos.csv';
-// import personas from './Visualización LAM - personas.csv';
-// import organizaciones from './Visualización LAM - organizaciones';
-
-let datos;
+import agentes from './datos/agentes.json';
+import organizaciones from './datos/organizaciones.json';
+import { crearParrafos } from './utilidades/ayudas';
 
 const nodos = [];
 const svg = document.getElementById('vis');
-const listaCirculos = document.getElementById('listaCirculos');
+const contenedorCirculos = vis.getElementById('circulos');
+const circulos = contenedorCirculos.querySelectorAll('circle');
+const contenedorInfo = document.getElementById('info');
+const tituloInfo = document.getElementById('tituloInfo');
+const contenidoInfo = document.getElementById('contenidoInfo');
+const DOS_PI = Math.PI * 2;
+const dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 } };
+let orbitando = true;
+let leer = false;
 
-const losQueSeMuestran = datosEstructurados.filter((agente) => agente['se muestra']);
-const circulos = metadatos.filter((fila) => fila.circulos && fila.circulos.length);
-const agentes = datosAgentes.filter((agente) => agente.se_muestra === 'TRUE');
+class Nodo {
+  constructor(contenedor, datos, anillo, dims) {
+    this.grupo = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const texto = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    const icono = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    const nodoTexto = document.createTextNode(datos.nombre);
+    this.anillo = anillo;
+    this.datos = datos;
+    this.angulo = (Math.random() * 360) | 0;
 
-function procesarDatos() {
-  const campos = Object.keys(datosEstructurados[0]);
+    texto.setAttribute('class', 'nombre');
+    texto.appendChild(nodoTexto);
+    icono.setAttribute('fill', '#d53f26');
+    icono.setAttribute('r', 5);
+    icono.fill = 'red';
 
-  datos = datosEstructurados.map((instancia) => {
-    for (const campo of campos) {
-      const dato = instancia[campo];
+    this.grupo.setAttribute('class', 'nodo');
+    this.grupo.appendChild(icono);
+    this.grupo.appendChild(texto);
+    contenedor.appendChild(this.grupo);
 
-      if (dato) {
-        instancia[campo] = dato.trim();
+    this.escalar(dims);
+    this.actualizar();
 
-        if (dato === 'FALSE') {
-          instancia[campo] = false;
-        }
+    this.grupo.onmouseenter = () => {
+      orbitando = false;
+      this.llenarInfo();
+    };
 
-        if (dato === 'TRUE') {
-          instancia[campo] = true;
-        }
-      }
-    }
+    this.grupo.onmouseleave = () => {
+      orbitando = true;
+      if (leer) return;
+      contenedorInfo.classList.remove('conAgente');
+      inicio();
+    };
 
-    return instancia;
-  });
+    this.grupo.onclick = (evento) => {
+      evento.stopPropagation();
+      leer = true;
+    };
+  }
+
+  llenarInfo() {
+    contenedorInfo.classList.add('conAgente');
+    tituloInfo.innerText = this.datos.nombre;
+    crearParrafos(this.datos.descripcion, contenidoInfo);
+  }
+
+  escalar(dims) {
+    this.radio = this.anillo * dims.pasoR;
+    this.centro = dims.centro;
+  }
+
+  actualizar() {
+    this.angulo = (this.angulo + 0.1) % 360;
+    const _x = this.radio * Math.sin((DOS_PI * this.angulo) / 360);
+    const _y = this.radio * Math.cos((DOS_PI * this.angulo) / 360);
+    const x = this.centro.x + _x;
+    const y = this.centro.y + _y;
+    this.grupo.setAttribute('transform', `translate(${x},${y})`);
+  }
 }
 
-procesarDatos();
+inicio();
+escalar();
 crearNodos();
 animar();
 
+window.onresize = escalar;
+svg.onclick = () => {
+  contenedorInfo.classList.remove('conAgente');
+  leer = false;
+  inicio();
+};
+
+function inicio() {
+  const infoLazos = organizaciones.find((obj) => obj.nombre.toLowerCase() === 'lazos de amor mariano');
+  tituloInfo.innerText = infoLazos.nombre;
+  crearParrafos(infoLazos.descripcion, contenidoInfo);
+}
+
+function escalar() {
+  const _dims = svg.getBoundingClientRect();
+  const ladoMin = Math.min(_dims.width, _dims.height);
+  const centro = { x: _dims.width / 2, y: _dims.height / 2 };
+  const pasoRadio = ladoMin / 12;
+
+  vis.setAttribute('width', _dims.width);
+  vis.setAttribute('height', _dims.height);
+  circulos.forEach((circulo, i) => {
+    circulo.setAttribute('cx', centro.x);
+    circulo.setAttribute('cy', centro.y);
+    circulo.setAttribute('r', (i + 1) * pasoRadio);
+  });
+
+  dims.ancho = _dims.width;
+  dims.alto = _dims.height;
+  dims.min = ladoMin;
+  dims.pasoR = pasoRadio;
+  dims.centro = centro;
+
+  if (nodos.length) {
+    nodos.forEach((nodo) => {
+      nodo.escalar(dims);
+    });
+  }
+}
+
 function crearNodos() {
-  console.log(agentes);
+  const cantidades = agentes.reduce(
+    (acumulado, obj) => {
+      acumulado[obj.grado]++;
+      return acumulado;
+    },
+    [0, 0, 0, 0, 0]
+  );
+
   agentes.forEach((agente) => {
-    if (agente.agentes !== 'Lazos de amor mariano') {
-      const anillo = +agente.grado.slice(-1) + 1;
-      nodos.push(new Nodo(svg, agente.agentes, anillo));
+    if (agente.nombre !== 'Lazos de amor mariano') {
+      const anillo = agente.grado + 1;
+      nodos.push(new Nodo(svg, agente, anillo, dims, contenedorInfo, tituloInfo, contenidoInfo, inicio));
     }
   });
 }
 
-circulos.forEach((circulo) => {
-  const elemento = document.createElement('li');
-  elemento.innerText = circulo.circulos;
-  listaCirculos.appendChild(elemento);
-});
-
 function animar() {
+  requestAnimationFrame(animar);
+
+  if (!orbitando) return;
   nodos.forEach((nodo) => {
     nodo.actualizar();
   });
-
-  requestAnimationFrame(animar);
 }
-
-// console.log(agentes);
 
 console.log('..:: Desarrollado por el Laboratorio EnFlujo - http://enflujo.com ::..');

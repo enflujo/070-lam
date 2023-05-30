@@ -1,3 +1,27 @@
+$fuenteTitulos: 'Grenze Gotisch', 'Brush Script MT', cursive;
+$fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
+
+:root {
+  --azulOscuro: #323846;
+  --blancoNube: #e0e1db;
+  --rojoCorazon: #d53f26;
+  --azulMedio: #393c5b;
+  --cafeTunica: #ab6656;
+  --doradoEspada: #c2a154;
+  --sangreCristo: #b73944;
+  --tinieblas: #0d030c;
+  --amarilloEdadMedia: #fff8cc;
+  --verdeJade: #ccffcc;
+  --rosaHermanosGrimm: #fcc5dd;
+  --amarilloOro: #efd63f;
+  --rojoMistico: #f24125;
+  --rosaJardin: #ef9396;
+  --verdeRealeza: #197934;
+  --negroTinta: #3a2817;
+  --rojoCalor: #ff24004d;
+  --amarilloLuz: #ffff4c4d;
+}
+
 html {
   box-sizing: border-box;
   height: 100%;
@@ -9,31 +33,40 @@ html {
   box-sizing: inherit;
 }
 
+::selection {
+  background-color: var(--rojoMistico);
+  color: var(--blancoNube);
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
 }
 
-:root {
-  --azulOscuro: #323846;
-  --blancoNube: #e0e1db;
-  --rojoCorazon: #d53f26;
-  --azulMedio: #393c5b;
-  --cafeTunica: #ab6656;
-  --doradoEspada: #c2a154;
-  --sangreCristo: #b73944;
-  --tinieblas: #0d030c;
-}
-
 body {
-  background-color: var(--azulOscuro);
-  color: var(--blancoNube);
+  background-color: var(--amarilloEdadMedia);
+  color: var(--negroTinta);
+  font-family: $fuenteTexto;
+  font-size: 0.8em;
 }
 
-::selection {
-  background-color: var(--doradoEspada);
-  color: var(--blancoNube);
+main {
+  height: 100vh;
+  overflow: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: $fuenteTitulos;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2em;
+  border-bottom: 2px solid var(--negroTinta);
+  padding-bottom: 0.5em;
 }
 
 #contenedor {
@@ -42,27 +75,42 @@ body {
 
 .columnaLado {
   width: 20vw;
-  background-color: yellow;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 2em 3em 2em 3em;
+  background-color: var(--rosaHermanosGrimm);
+  overflow-y: auto;
 }
 
-// #vis {
-//   width: 60vw;
-//   height: 100vh;
-//   background-color: blue;
-// }
+#vis {
+  height: 100vh;
+  width: 60vw;
+  background: radial-gradient(circle at center, #ff24004d 0, #ffff4c4d 100%);
+}
 
-#convenciones {
-  ul {
-    padding: 1em;
-    margin: 2em;
-    background-color: green;
-    list-style: none;
+#filtros {
+  background-color: var(--rosaHermanosGrimm);
+}
+
+#info {
+  &.conAgente {
+    background-color: var(--verdeJade);
   }
 }
 
 .nombre {
-  font-size: 0.08em;
-  fill: white;
+  font-size: 0.8em;
+  fill: var(--negroTinta);
   text-anchor: middle;
+}
+
+#circulos {
+  circle {
+    fill: none;
+    stroke-width: 0.5px;
+    stroke: var(--negroTinta);
+  }
+}
+
+.nodo {
+  cursor: pointer;
 }

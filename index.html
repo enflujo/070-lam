@@ -33,18 +33,29 @@
     <!-- <meta name="twitter:description" content="Descripción ..." /> -->
     <!-- <meta name="twitter:image" content="https://xxxxxx.jpg" /> -->
     <!-- <meta name="twitter:image:alt" content="Texto que describe la imagen" /> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@700&family=Roboto+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <main id="contenedor">
-      <div id="filtros" class="columnaLado"></div>
-      <svg id="vis" viewBox="0 0 100 100" height="100%" width="60%">
-        <circle fill="none" stroke="cyan" stroke-width=".1px" cx="50" cy="50" r="10" />
-        <circle fill="none" stroke="cyan" stroke-width=".1px" cx="50" cy="50" r="20" />
-        <circle fill="none" stroke="cyan" stroke-width=".1px" cx="50" cy="50" r="30" />
-        <circle fill="none" stroke="cyan" stroke-width=".1px" stroke-dasharray=".5,.3" cx="50" cy="50" r="40" />
+      <div id="filtros" class="columnaLado">
+        <h2>Filtros</h2>
+      </div>
+      <svg id="vis" height="100%" width="60%">
+        <g id="circulos">
+          <circle cx="50" cy="50" r="10" />
+          <circle cx="50" cy="50" r="20" />
+          <circle cx="50" cy="50" r="30" />
+          <circle cx="50" cy="50" r="40" />
+        </g>
       </svg>
-      <div id="convenciones" class="columnaLado">
-        <ul id="listaCirculos"></ul>
+      <div id="info" class="columnaLado">
+        <h2 id="tituloInfo"></h2>
+        <div id="contenidoInfo"></div>
       </div>
     </main>
 
