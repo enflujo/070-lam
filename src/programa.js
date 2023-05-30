@@ -1,6 +1,7 @@
 import './scss/estilos.scss';
 import agentes from './datos/agentes.json';
 import organizaciones from './datos/organizaciones.json';
+import personas from './datos/personas.json';
 import { crearParrafos } from './utilidades/ayudas';
 
 const nodos = [];
@@ -16,7 +17,7 @@ let orbitando = true;
 let leer = false;
 
 class Nodo {
-  constructor(contenedor, datos, anillo, dims) {
+  constructor(contenedor, datos, anillo, dims, esOrganizacion) {
     this.grupo = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     const texto = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     const icono = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -24,6 +25,7 @@ class Nodo {
     this.anillo = anillo;
     this.datos = datos;
     this.angulo = (Math.random() * 360) | 0;
+    this.esOrganizacion = esOrganizacion;
 
     texto.setAttribute('class', 'nombre');
     texto.appendChild(nodoTexto);
@@ -135,7 +137,15 @@ function crearNodos() {
   agentes.forEach((agente) => {
     if (agente.nombre !== 'Lazos de amor mariano') {
       const anillo = agente.grado + 1;
-      nodos.push(new Nodo(svg, agente, anillo, dims, contenedorInfo, tituloInfo, contenidoInfo, inicio));
+      const organizacion = organizaciones.find((obj) => obj.nombre === agente.nombre);
+
+      let persona;
+
+      if (!organizacion) {
+        persona = personas.find((obj) => obj.nombre === agente.nombre);
+      }
+
+      nodos.push(new Nodo(svg, organizacion || persona, anillo, dims, !!organizacion));
     }
   });
 }
