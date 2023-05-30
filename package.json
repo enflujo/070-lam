@@ -2,22 +2,33 @@
   "name": "enflujo-plantilla-vite",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite build && vite preview",
     "lint": "prettier --check .",
-    "lint:fix": "prettier --write --list-different ."
+    "lint:fix": "prettier --write --list-different .",
+    "datos": "nodemon -r dotenv/config tally.ts"
   },
   "devDependencies": {
+    "@googleapis/sheets": "^4.0.2",
     "@rollup/plugin-dsv": "^3.0.2",
+    "@types/node": "^20.2.5",
     "autoprefixer": "^10.4.14",
     "cssnano": "^6.0.1",
-    "postcss": "^8.4.23",
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.22",
+    "postcss": "^8.4.24",
     "prettier": "^2.8.8",
     "sass": "^1.62.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4",
     "vite": "^4.3.9"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "nodemonConfig": {
+    "ignore": [
+      "src/*"
+    ]
+  }
 }
