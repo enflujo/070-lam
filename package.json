@@ -17,6 +17,7 @@
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",
     "sass": "^1.62.1",
-    "vite": "^4.3.4"
-  }
+    "vite": "^4.3.9"
+  },
+  "dependencies": {}
 }

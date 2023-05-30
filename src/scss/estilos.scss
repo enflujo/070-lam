@@ -36,6 +36,33 @@ body {
   color: var(--blancoNube);
 }
 
-main {
-  padding: 1em;
+#contenedor {
+  display: flex;
+}
+
+.columnaLado {
+  width: 20vw;
+  background-color: yellow;
+  height: 100vh;
+}
+
+// #vis {
+//   width: 60vw;
+//   height: 100vh;
+//   background-color: blue;
+// }
+
+#convenciones {
+  ul {
+    padding: 1em;
+    margin: 2em;
+    background-color: green;
+    list-style: none;
+  }
+}
+
+.nombre {
+  font-size: 0.08em;
+  fill: white;
+  text-anchor: middle;
 }
