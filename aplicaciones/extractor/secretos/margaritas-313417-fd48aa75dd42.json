@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "margaritas-313417",
+  "private_key_id": "fd48aa75dd420f67ee703e1b9666c53b1738c85c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC6keeEgU6z/B8G\nwfFhCL6eMwk+UyNDKVDP4Y0yLOB1FGSKZmwAwWXUV9YUppRBnUZVmxpSqHDL+xk7\nJvs9bu3hvbelo/tRhGzTKqrfEZgTE1X/RHvqLk8Q7t5QyDpLpIX499XvDsatPds4\ndiE82wqSQPG0PwVr+/l5S7LlX9p3YPrtj0xU5aPvamTUCTHdWADsitRyeM+le2eL\nj55w8uIR2Rht2GaP4fNNuiUIN7/hulXovR+bP8OkcPHAD238UfhGxwBuMLbACvwu\nv6alm8D/YqeCRV7BVs/2I0TW/NKuzLqSP5o1TWOtjeVlmaH6twBuLuGeOrrhR8l5\ntnmUTRfxAgMBAAECggEAAXJLhFI0vhtHnI0HrNNaonsl8IKy9USntq0348u30Qfk\n9xLP64IprWJMXlWTtKNGSgLpWtAUC/ck478eb375sfW0sSXMLKkZR0/CBRfDuSyj\nLrGny18mP+eWh8jt9PDiv2/roRZeeBYAtMorgWy3kxO/sqXShNWpF6Lsi/VAz5V9\n4fgXgu+lgDGfMhTGWs0Bp3Q/CD0f6lcCaZ9yMSOV3tulLph5SJ+UoCfj3+iDmDVA\n17DSDUyjlkpMr2Ce+9psuOBKXUTDfBNbuH4hj32taKENYk6O4NgP/7EPda3amvb1\nr4YRBquHfuYv2quNhl+uX7g2F4GDxkjzUWvpC5jJwQKBgQD2tZkzUGhKyj++XBSx\nGu/FsnTJQ97isC9C3byioZ1cLJuwRuMSckyObmcO0iToDF/QplfBZ6mYg15p94+c\ng0G4liosR9qmCXED36ooIZxlc0ihh6p0WVw4RJLQHn4V9TgNmHPpmaR3bOjm8QEG\nP0wU2HGe4WSCgsJ0oVrfY625MQKBgQDBmIgio6cqrxpPdHmBYfDC8iwNJFcx6CQj\nxcvFd+0Wk6RxEX+WNz4VmVCy/p0PX8j7SiTsRlI3+Hn3GADWjkKVa8Ub1RIOfCxC\nAbcX0aree+zW87IyuWC6xVzHWs1sQWI3caTenwMJPO5iUWqmlJz1Ws+RNIxvaLRd\n8nk9gH2awQKBgQCXImCbwuJhDs1F/HrglDPW1KAeu+lKzcvmFph8uK0BzoIB1ys8\nHbEwgAm6VpotXYdE9uJDpRGMUM4B9JqRswcL4VIslkgn9xi42sgOlaiNrbYM3mNZ\nq3SHM9sMi+GJ6hNQoNhBftH2J032TCXogdZF3uKcBk/gc+JUOJTGzPWbwQKBgQCP\npxVtTq5ed+w4BR+cKAa1QWn6nnqtJ6qZeM4Jy0F8PTYKSIe5+WfyMv+0skXtAJBs\nFsprIIslyRUHiyIkEw/JPFzYmDR71xwoJomr/QKjcKV/ovkZtoDWVljP/Mrth17P\n8V37a1afZj0la3COBzyouyfGgY2rpbAg/imEv3F0gQKBgB8xbJC7JKlNGh/tjx7c\nDNJ4ywwhrGS+9mhh6R8NyU8igwJAD1Bmd3w++VTkU3Ctpg2SD+IVGRNIkjmvMxqz\nFPLlA6069jsBjo1A6TkiB1VUBjPQB1+prmFtOMWWRDPxDSyx7kc6+VF0QvxpWhiC\nfeNhlBFAQsUYG2vbveSr0A7B\n-----END PRIVATE KEY-----\n",
+  "client_email": "margarita-enflujo@margaritas-313417.iam.gserviceaccount.com",
+  "client_id": "101814870258182431267",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/margarita-enflujo%40margaritas-313417.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

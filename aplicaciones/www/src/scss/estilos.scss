@@ -81,10 +81,20 @@ h2 {
   overflow-y: auto;
 }
 
+#contenedorVis {
+  background: radial-gradient(circle at center, #ff22008e 0, #ffff4c4d 60%);
+  position: relative;
+}
+
 #vis {
   height: 100vh;
   width: 60vw;
-  background: radial-gradient(circle at center, #ff24004d 0, #ffff4c4d 100%);
+}
+
+#contenedorAgentes {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 #filtros {
@@ -98,9 +108,14 @@ h2 {
 }
 
 .nombre {
-  font-size: 0.8em;
-  fill: var(--negroTinta);
-  text-anchor: middle;
+  font-size: 0.75em;
+  color: var(--negroTinta);
+  // text-anchor: middle;
+  width: 100px;
+  display: block;
+  transform: translate(-50%, -3px);
+  text-align: center;
+  line-height: 1;
 }
 
 #circulos {
@@ -113,4 +128,14 @@ h2 {
 
 .nodo {
   cursor: pointer;
+  position: absolute;
+}
+
+.icono {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  background-color: var(--rojoCorazon);
+  transform: translate(-50%, -50%);
 }

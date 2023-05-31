@@ -4,7 +4,7 @@ import { writeFileSync } from 'fs';
 type Dato = string | boolean | number;
 
 const guardarJSON = (json: any, nombre: string) => {
-  writeFileSync(`./src/datos/${nombre}.json`, JSON.stringify(json));
+  writeFileSync(`../www/src/datos/${nombre}.json`, JSON.stringify(json));
 };
 
 const tablas = ['prueba-datos-estructurados', 'agentes', 'organizaciones', 'personas'];

@@ -1,4 +1,4 @@
-export function crearParrafos(texto, contenedor) {
+export function crearParrafos(texto: string, contenedor: HTMLDivElement) {
   contenedor.innerHTML = '';
   if (!texto) return;
   const partesDesc = texto.split('\n').filter((parte) => parte.length);
@@ -9,3 +9,5 @@ export function crearParrafos(texto, contenedor) {
     contenedor.appendChild(parrafo);
   });
 }
+
+export const aleatorioFraccion = (min: number, max: number) => Math.random() * (max - min) + min;

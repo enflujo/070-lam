@@ -1,0 +1,15 @@
+{
+  "name": "extractor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon -r dotenv/config tally.ts dotenv_config_path=../../.env"
+  },
+  "devDependencies": {
+    "@googleapis/sheets": "^4.0.2",
+    "@types/node": "^20.2.5",
+    "dotenv": "^16.1.0",
+    "nodemon": "^2.0.22"
+  }
+}
