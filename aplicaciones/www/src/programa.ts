@@ -1,9 +1,7 @@
 import './scss/estilos.scss';
 import agentes from './datos/agentes.json';
-import organizaciones from './datos/organizaciones.json';
-import personas from './datos/personas.json';
 import { aleatorioFraccion, crearParrafos } from './utilidades/ayudas';
-import type { DatosAgente, Dims } from './tipos';
+import type { Dims } from './tipos';
 import Nodo from './componentes/Nodo';
 
 const nodos: Nodo[] = [];
@@ -58,7 +56,7 @@ function definirEventos() {
 }
 
 function inicio() {
-  const infoLazos = organizaciones.find((obj) => obj.nombre.toLowerCase() === 'lazos de amor mariano');
+  const infoLazos = agentes.find((obj) => obj.nombre.toLowerCase() === 'lazos de amor mariano');
 
   if (infoLazos && contenidoInfo) {
     tituloInfo.innerText = infoLazos.nombre;
@@ -111,25 +109,12 @@ function crearNodos() {
 
   agentesFlotantes.forEach((agente) => {
     const anillo = agente.grado + 1;
-    const organizacion = organizaciones.find((obj) => obj.nombre === agente.nombre);
-
-    let datosAgente: DatosAgente = { nombre: '', descripcion: '' };
-
-    if (organizacion) {
-      datosAgente = organizacion;
-    } else {
-      const persona = personas.find((obj) => obj.nombre === agente.nombre);
-
-      if (persona) {
-        datosAgente = persona;
-      }
-    }
 
     if (svg) {
       const anguloMax = posiciones[agente.grado].i * posiciones[agente.grado].paso;
       const anguloMin = anguloMax - posiciones[agente.grado].paso * 0.5;
       const angulo = aleatorioFraccion(anguloMin, anguloMax);
-      nodos.push(new Nodo(contenedorAgentes, datosAgente, anillo, angulo, dims, !!organizacion));
+      nodos.push(new Nodo(contenedorAgentes, agente, anillo, angulo, dims));
       posiciones[agente.grado].i++;
     }
   });

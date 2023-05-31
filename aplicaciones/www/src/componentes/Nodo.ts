@@ -7,18 +7,10 @@ export default class Nodo {
   anillo: number;
   datos: DatosAgente;
   angulo: number;
-  esOrganizacion: boolean;
   radio: number;
   centro: Punto;
 
-  constructor(
-    contenedor: HTMLDivElement,
-    datos: DatosAgente,
-    anillo: number,
-    angulo: number,
-    dims: Dims,
-    esOrganizacion: boolean
-  ) {
+  constructor(contenedor: HTMLDivElement, datos: DatosAgente, anillo: number, angulo: number, dims: Dims) {
     this.grupo = document.createElement('div');
     const texto = document.createElement('span');
     const icono = document.createElement('span');
@@ -27,7 +19,6 @@ export default class Nodo {
     this.radio = 0;
     this.centro = { x: 0, y: 0 };
     this.angulo = angulo;
-    this.esOrganizacion = esOrganizacion;
 
     texto.className = 'nombre';
     texto.innerText = datos.nombre;
