@@ -1,3 +1,4 @@
+import { agenteActivo, estanOrbitando, mostrarAgente } from '../cerebros/general';
 import type { DatosAgente, Dims, Punto } from '../tipos';
 
 const DOS_PI = Math.PI * 2;
@@ -9,6 +10,7 @@ export default class Nodo {
   angulo: number;
   radio: number;
   centro: Punto;
+  activo: boolean;
 
   constructor(contenedor: HTMLDivElement, datos: DatosAgente, anillo: number, angulo: number, dims: Dims) {
     this.grupo = document.createElement('div');
@@ -19,13 +21,14 @@ export default class Nodo {
     this.radio = 0;
     this.centro = { x: 0, y: 0 };
     this.angulo = angulo;
+    this.activo = true;
 
     texto.className = 'nombre';
     texto.innerText = datos.nombre;
 
     icono.className = 'icono';
 
-    this.grupo.className = 'nodo';
+    this.grupo.className = 'nodo activo';
     this.grupo.appendChild(icono);
     this.grupo.appendChild(texto);
     contenedor.appendChild(this.grupo);
@@ -34,22 +37,26 @@ export default class Nodo {
     this.actualizar();
 
     this.grupo.onmouseenter = () => {
-      document.dispatchEvent(new CustomEvent('orbitando', { detail: { orbitando: false } }));
-      document.dispatchEvent(new CustomEvent('agente', { detail: { conAgente: true, datos: this.datos } }));
+      if (!this.activo) return;
+      estanOrbitando.set(false);
+      mostrarAgente.set(this.datos);
     };
 
     this.grupo.onmouseleave = () => {
-      document.dispatchEvent(new CustomEvent('orbitando', { detail: { orbitando: true } }));
+      if (!this.activo) return;
+      estanOrbitando.set(true);
     };
 
     this.grupo.onclick = (evento) => {
       evento.stopPropagation();
+      agenteActivo.set(this.datos.nombre);
     };
   }
 
   escalar(dims: Dims) {
     this.radio = this.anillo * dims.pasoR;
     this.centro = dims.centro;
+    this.actualizar();
   }
 
   actualizar() {
@@ -60,5 +67,15 @@ export default class Nodo {
     const y = this.centro.y + _y;
 
     this.grupo.style.transform = `translate(${x}px,${y}px)`;
+  }
+
+  activar() {
+    this.grupo.classList.add('activo');
+    this.activo = true;
+  }
+
+  desactivar() {
+    this.grupo.classList.remove('activo');
+    this.activo = false;
   }
 }

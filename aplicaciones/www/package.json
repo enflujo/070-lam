@@ -17,5 +17,8 @@
     "postcss": "^8.4.24",
     "sass": "^1.62.1",
     "vite": "^4.3.9"
+  },
+  "dependencies": {
+    "nanostores": "^0.9.1"
   }
 }

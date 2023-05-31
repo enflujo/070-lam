@@ -12,6 +12,7 @@ $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
   --tinieblas: #0d030c;
   --amarilloEdadMedia: #fff8cc;
   --verdeJade: #ccffcc;
+  --azulNube: #ccf7ff;
   --rosaHermanosGrimm: #fcc5dd;
   --amarilloOro: #efd63f;
   --rojoMistico: #f24125;
@@ -67,6 +68,7 @@ h2 {
   font-size: 2em;
   border-bottom: 2px solid var(--negroTinta);
   padding-bottom: 0.5em;
+  line-height: 1.1;
 }
 
 #contenedor {
@@ -103,15 +105,18 @@ h2 {
 }
 
 #info {
-  &.conAgente {
+  &.persona {
     background-color: var(--verdeJade);
+  }
+
+  &.org {
+    background-color: var(--azulNube);
   }
 }
 
 .nombre {
   font-size: 0.75em;
   color: var(--negroTinta);
-  // text-anchor: middle;
   width: 100px;
   display: block;
   transform: translate(-50%, -3px);
@@ -130,6 +135,11 @@ h2 {
 .nodo {
   cursor: pointer;
   position: absolute;
+  opacity: 0.4;
+
+  &.activo {
+    opacity: 1;
+  }
 }
 
 .icono {
@@ -139,4 +149,43 @@ h2 {
   display: block;
   background-color: var(--rojoCorazon);
   transform: translate(-50%, -50%);
+}
+
+#corazon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2em;
+  z-index: 8;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  animation: palpito 2.5s infinite ease-in-out;
+}
+
+#infoImg {
+  width: 100%;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@keyframes palpito {
+  0% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.7;
+  }
 }

@@ -1,22 +1,20 @@
 import './scss/estilos.scss';
 import agentes from './datos/agentes.json';
-import { aleatorioFraccion, crearParrafos } from './utilidades/ayudas';
-import type { Dims } from './tipos';
+import { aleatorioFraccion, llenarInfo } from './utilidades/ayudas';
+import type { DatosAgente, Dims } from './tipos';
 import Nodo from './componentes/Nodo';
+import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from './cerebros/general';
 
 const nodos: Nodo[] = [];
 const svg = document.querySelector<SVGElement>('#vis');
 const contenedorCirculos = svg?.querySelector<SVGGElement>('#circulos');
 const circulos = contenedorCirculos?.querySelectorAll<SVGCircleElement>('circle');
 const contenedorAgentes = document.getElementById('contenedorAgentes') as HTMLDivElement;
-const contenedorInfo = document.getElementById('info');
-const tituloInfo = document.getElementById('tituloInfo') as HTMLDivElement;
-const contenidoInfo = document.querySelector<HTMLDivElement>('#contenidoInfo');
-const agentesFlotantes = agentes.filter((agente) => agente.nombre !== 'Lazos de amor mariano');
-
+const corazon = document.getElementById('corazon') as HTMLSpanElement;
+const contenedorInfo = document.getElementById('info') as HTMLDivElement;
+const agentesFlotantes = agentes.filter((agente) => agente.nombre !== 'Lazos de amor mariano') as DatosAgente[];
 const dims: Dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 } };
 let orbitando = true;
-let leer = false;
 
 definirEventos();
 inicio();
@@ -26,41 +24,83 @@ animar();
 window.onresize = escalar;
 
 function definirEventos() {
-  document.addEventListener('agente', (evento: CustomEventInit) => {
-    if (evento.detail.conAgente) {
-      contenedorInfo?.classList.add('conAgente');
-      const { nombre, descripcion } = evento.detail.datos;
-      if (tituloInfo) tituloInfo.innerText = nombre;
-      if (contenidoInfo && descripcion) crearParrafos(descripcion, contenidoInfo);
-    } else {
-      contenedorInfo?.classList.remove('conAgente');
-      inicio();
-    }
-  });
-
-  document.addEventListener('orbitando', (evento: CustomEventInit) => {
-    orbitando = evento.detail.orbitando;
-  });
-
-  document.addEventListener('leer', (evento: CustomEventInit) => {
-    leer = evento.detail.leer;
+  document.addEventListener('activarAgente', (evento: CustomEventInit) => {
+    nodos.forEach((nodo) => {
+      if (nodo.datos.nombre === evento.detail.datos.nombre) {
+        console.log('j', evento.detail.datos.nombre);
+        nodo.activar();
+      } else {
+        nodo.desactivar();
+      }
+    });
   });
 
   if (svg) {
     svg.onclick = () => {
-      contenedorInfo?.classList.remove('conAgente');
-      leer = false;
-      inicio();
+      mostrarAgente.set(null);
+      agenteActivo.set(null);
     };
   }
+
+  corazon.onmouseenter = () => {
+    mostrarAgente.set(null);
+  };
+
+  leyendo.subscribe((estaLeyendo) => {
+    console.log('leyendo', estaLeyendo);
+  });
+
+  estanOrbitando.subscribe((valor) => {
+    orbitando = valor;
+  });
+
+  mostrarAgente.subscribe((agente) => {
+    if (agente) {
+      const { tipo } = agente;
+      contenedorInfo.classList.add(tipo);
+
+      if (tipo === 'org') {
+        contenedorInfo.classList.remove('lam');
+        contenedorInfo.classList.remove('persona');
+      } else {
+        contenedorInfo.classList.remove('lam');
+        contenedorInfo.classList.remove('org');
+      }
+      llenarInfo(agente);
+    } else {
+      contenedorInfo.classList.add('lam');
+      contenedorInfo.classList.remove('persona');
+      contenedorInfo.classList.remove('org');
+      inicio();
+    }
+  });
+
+  agenteActivo.subscribe((nombre) => {
+    if (nombre) {
+      nodos.forEach((nodo) => {
+        if (nodo.datos.nombre === nombre) {
+          nodo.activar();
+        } else {
+          nodo.desactivar();
+        }
+      });
+
+      leyendo.set(true);
+    } else {
+      nodos.forEach((nodo) => {
+        nodo.activar();
+      });
+
+      leyendo.set(false);
+    }
+  });
 }
 
 function inicio() {
-  const infoLazos = agentes.find((obj) => obj.nombre.toLowerCase() === 'lazos de amor mariano');
+  const infoLazos = agentes.find((obj) => obj.nombre.toLowerCase() === 'lazos de amor mariano') as DatosAgente;
 
-  if (infoLazos && contenidoInfo) {
-    tituloInfo.innerText = infoLazos.nombre;
-    crearParrafos(infoLazos.descripcion || '', contenidoInfo);
+  if (infoLazos) {
+    llenarInfo(infoLazos);
   }
 }
 
@@ -107,7 +147,7 @@ function crearNodos() {
     return { paso: 1 / total, i: 0, total };
   });
 
-  agentesFlotantes.forEach((agente) => {
+  agentesFlotantes.forEach((agente: DatosAgente) => {
     const anillo = agente.grado + 1;
 
     if (svg) {
