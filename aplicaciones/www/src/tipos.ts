@@ -18,9 +18,10 @@ export type DatosAgente = {
   nombre: string;
   descripcion?: string;
   grado: number;
-  img: string;
+  img?: string;
   tipo: 'persona' | 'org' | 'lam';
   relaciones: Relacion[];
+  relacionesInvertidas: Relacion[];
 };
 
 export type Relacion = {
@@ -30,3 +31,5 @@ export type Relacion = {
   con: string;
   activo: boolean;
 };
+
+export type NodoRelacion = { linea: SVGLineElement; hacia?: number };

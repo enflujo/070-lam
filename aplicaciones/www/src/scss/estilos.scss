@@ -96,6 +96,12 @@ h3 {
     overflow: hidden;
   }
 
+  &.sinTitulo {
+    h3 {
+      display: none;
+    }
+  }
+
   &.mostrar {
     display: block;
   }
@@ -302,7 +308,7 @@ h3 {
     height: auto;
   }
 
-  animation: palpito 2.5s infinite ease-in-out;
+  animation: palpito 0.9s infinite ease-in-out;
 }
 
 #infoImg {
@@ -315,14 +321,27 @@ h3 {
 
 @keyframes palpito {
   0% {
-    opacity: 0.7;
+    opacity: 0.5;
   }
 
-  50% {
+  20% {
     opacity: 1;
   }
 
-  100% {
+  40% {
     opacity: 0.7;
   }
+
+  60% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 0.9;
+  }
+}
+
+.conexion {
+  stroke-width: 1;
+  stroke: var(--negroTinta);
 }

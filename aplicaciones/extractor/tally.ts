@@ -3,6 +3,7 @@ import type { sheets_v4 } from '@googleapis/sheets';
 import { writeFileSync } from 'fs';
 
 type Dato = string | boolean | number;
+type Relacion = { activo: boolean; descriptor: string; con?: string; tipo?: string; tipoRelacion?: string };
 
 const guardarJSON = (json: any, nombre: string) => {
   writeFileSync(`../www/src/datos/${nombre}.json`, JSON.stringify(json));
@@ -51,6 +52,19 @@ function limpiarTabla(datosTabla: sheets_v4.Schema$Sheet) {
   }
 
   return datos;
+}
+
+function tipoRelacion(relacion: { [llave: string]: Dato }) {
+  let tipoRelacion = '';
+
+  if (relacion.tipo_de_relacion === 'organización - organización') {
+    tipoRelacion = 'orgOrg';
+  } else if (relacion.tipo_de_relacion === 'persona - persona') {
+    tipoRelacion = 'perPer';
+  } else if (relacion.tipo_de_relacion === 'persona - organización') {
+    tipoRelacion = 'perOrg';
+  }
+  return tipoRelacion;
 }
 
 async function iniciarSheets() {
@@ -113,22 +127,12 @@ async function iniciarSheets() {
       const relaciones = datos
         .filter((fila) => fila.rrb === agente.nombre)
         .map((relacion) => {
-          const respuesta: { activo: boolean; descriptor: string; con?: string; tipo?: string; tipoRelacion?: string } =
-            {
-              activo: !!relacion.activo,
-              descriptor: `${relacion.descriptor_de_relacion}`,
-            };
-          let tipoRelacion = '';
+          const respuesta: Relacion = {
+            activo: !!relacion.activo,
+            descriptor: `${relacion.descriptor_de_relacion}`,
+          };
 
-          if (relacion.tipo_de_relacion === 'organización - organización') {
-            tipoRelacion = 'orgOrg';
-          } else if (relacion.tipo_de_relacion === 'persona - persona') {
-            tipoRelacion = 'perPer';
-          } else if (relacion.tipo_de_relacion === 'persona - organización') {
-            tipoRelacion = 'perOrg';
-          }
-
-          respuesta.tipoRelacion = tipoRelacion;
+          respuesta.tipoRelacion = tipoRelacion(relacion);
 
           if (relacion.agente_2) {
             const relacionCon = agentes.find((agente) => agente.nombre === relacion.agente_2);
@@ -146,15 +150,52 @@ async function iniciarSheets() {
           return respuesta;
         });
 
+      const relacionesInvertidas = datos
+        .filter((fila) => {
+          if (fila.agente_2) {
+            if (fila.agente_2 === agente.nombre) {
+              return true;
+            }
+          }
+
+          return false;
+        })
+        .map((relacion) => {
+          const respuesta: Relacion = {
+            activo: !!relacion.activo,
+            descriptor: `${relacion.descriptor_de_relacion}`,
+          };
+
+          respuesta.tipoRelacion = tipoRelacion(relacion);
+
+          if (relacion.rrb) {
+            const relacionCon = agentes.find((agente) => agente.nombre === relacion.rrb);
+
+            if (relacionCon) {
+              respuesta.tipo = `${relacionCon.circulo_1}`
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLocaleLowerCase()
+                .replace(/\s/g, '');
+              respuesta.con = `${relacion.rrb}`;
+            }
+          }
+
+          return respuesta;
+        });
+
       if (persona) {
-        return { ...agente, ...{ tipo: 'persona', descripcion: persona.descripcion, relaciones } };
+        return {
+          ...agente,
+          ...{ tipo: 'persona', descripcion: persona.descripcion, relaciones, relacionesInvertidas },
+        };
       } else {
         const org = orgs.find((organizacion) => organizacion.nombre === agente.nombre);
 
         if (org) {
-          return { ...agente, ...{ tipo: 'org', descripcion: org.descripcion, relaciones } };
+          return { ...agente, ...{ tipo: 'org', descripcion: org.descripcion, relaciones, relacionesInvertidas } };
         } else {
-          return { ...agente, ...{ tipo: 'indefinido', relaciones } };
+          return { ...agente, ...{ tipo: 'indefinido', relaciones, relacionesInvertidas } };
         }
       }
     });

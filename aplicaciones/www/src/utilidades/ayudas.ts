@@ -1,76 +1,66 @@
-import type { DatosAgente } from '../tipos';
+import Nodo from '../componentes/Nodo';
 
 const infoTitulo = document.getElementById('infoTitulo') as HTMLDivElement;
 const infoImg = document.getElementById('infoImg') as HTMLDivElement;
 const infoPerfil = document.getElementById('infoPerfil') as HTMLDivElement;
 const infoRelaciones = document.getElementById('infoRelaciones') as HTMLUListElement;
-
-function crearParrafos(texto: string) {
-  infoPerfil.innerHTML = '';
-  if (!texto) return;
-  const partesDesc = texto.split('\n').filter((parte) => parte.length);
-
-  partesDesc.forEach((parte) => {
-    const parrafo = document.createElement('p');
-    parrafo.innerText = parte;
-    infoPerfil.appendChild(parrafo);
-  });
-}
+const contenedorRelaciones = infoRelaciones.parentElement as HTMLDivElement;
+const contenedorPerfil = infoPerfil.parentElement as HTMLDivElement;
 
 export const aleatorioFraccion = (min: number, max: number) => Math.random() * (max - min) + min;
 
-export function llenarInfo(datosAgente: DatosAgente) {
-  const { nombre, descripcion, img, relaciones } = datosAgente;
+export function crearParrafos(texto: string) {
+  if (!texto) return;
+  const partesDesc = texto.split('\n').filter((parte) => parte.length);
 
-  if (infoTitulo) infoTitulo.innerText = nombre;
+  return partesDesc.map((parte) => {
+    const parrafo = document.createElement('p');
+    parrafo.innerText = parte;
+    return parrafo;
+  });
+}
 
-  infoImg.innerHTML = '';
+export function llenarInfo(nodo: Nodo) {
+  if (!nodo) return;
+  let tieneRelaciones = false;
+  let tienePerfil = false;
 
-  if (img) {
-    const foto = new Image();
-    foto.onload = () => {
-      infoImg.appendChild(foto);
-    };
-    foto.src = `/imgs/${img}`;
-
-    foto.setAttribute('alt', `Foto de ${nombre}`);
+  if (nodo.nombre) {
+    infoTitulo.innerText = nodo.nombre;
   }
 
-  if (infoPerfil && descripcion) crearParrafos(descripcion);
+  if (nodo.foto) {
+    infoImg.replaceChildren(nodo.foto);
+  } else {
+    infoImg.replaceChildren();
+  }
 
-  if (infoRelaciones) {
-    infoRelaciones.innerHTML = '';
+  if (nodo.relaciones) {
+    infoRelaciones.replaceChildren(...nodo.relaciones);
+    tieneRelaciones = true;
+    contenedorRelaciones.classList.add('mostrar');
+  } else {
+    contenedorRelaciones.classList.remove('mostrar');
+  }
 
-    const contenedor = infoRelaciones.parentElement;
+  if (nodo.perfil) {
+    infoPerfil.replaceChildren(...nodo.perfil);
+    tienePerfil = true;
+    contenedorPerfil.classList.add('mostrar');
+  } else {
+    contenedorPerfil.classList.remove('mostrar');
+  }
 
-    if (relaciones.length) {
-      contenedor?.classList.add('mostrar');
-
-      // infoRelaciones.classList.add('mostrar')
-      relaciones.forEach((relacion) => {
-        const elemento = document.createElement('li');
-        const descriptor = document.createElement('span');
-        const relacionCon = document.createElement('span');
-
-        elemento.className = 'relacion';
-        descriptor.className = 'descriptor';
-        relacionCon.className = 'relacionCon';
-
-        descriptor.innerText = relacion.descriptor;
-        if (relacion.con) relacionCon.innerText = relacion.con;
-
-        if (relacion.activo) {
-          elemento.classList.add('activo');
-        }
-
-        if (relacion.tipo) elemento.classList.add(relacion.tipo);
-
-        elemento.appendChild(descriptor);
-        elemento.appendChild(relacionCon);
-        infoRelaciones.appendChild(elemento);
-      });
-    } else {
-      contenedor?.classList.remove('mostrar');
-    }
+  if (!tieneRelaciones && tienePerfil) {
+    contenedorPerfil.classList.add('sinTitulo');
+    contenedorPerfil.classList.add('mostrar');
+    contenedorPerfil.classList.remove('cerrado');
+  } else if (tieneRelaciones && !tienePerfil) {
+    contenedorRelaciones.classList.add('sinTitulo');
+    contenedorRelaciones.classList.add('mostrar');
+    contenedorRelaciones.classList.remove('mostrar');
+  } else {
+    contenedorRelaciones.classList.remove('sinTitulo');
+    contenedorPerfil.classList.remove('sinTitulo');
   }
 }

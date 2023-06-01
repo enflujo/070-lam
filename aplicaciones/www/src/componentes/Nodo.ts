@@ -1,11 +1,13 @@
-import { agenteActivo, estanOrbitando, mostrarAgente } from '../cerebros/general';
-import type { DatosAgente, Dims, Punto } from '../tipos';
+import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from '../cerebros/general';
+import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion } from '../tipos';
+import { crearInfo, losNodos } from '../utilidades/elementosRed';
 
 const DOS_PI = Math.PI * 2;
 const conexiones = document?.querySelector<SVGGElement>('#conexiones');
 
 export default class Nodo {
-  grupo: HTMLDivElement;
+  nombre: string;
+  elemento: HTMLDivElement;
   anillo: number;
   datos: DatosAgente;
   angulo: number;
@@ -14,11 +16,15 @@ export default class Nodo {
   activo: boolean;
   x: number;
   y: number;
-  lineas: SVGLineElement[];
+  lineas: NodoRelacion[];
   mostrarRelaciones: boolean;
+  perfil?: HTMLParagraphElement[];
+  foto?: HTMLImageElement;
+  relaciones?: HTMLLIElement[];
 
-  constructor(contenedor: HTMLDivElement, datos: DatosAgente, anillo: number, angulo: number, dims: Dims) {
-    this.grupo = document.createElement('div');
+  constructor(datos: DatosAgente, anillo: number, angulo: number) {
+    this.nombre = datos.nombre;
+    this.elemento = document.createElement('div');
     const texto = document.createElement('span');
     const icono = document.createElement('span');
     this.anillo = anillo;
@@ -37,41 +43,40 @@ export default class Nodo {
 
     icono.className = 'icono';
 
-    this.grupo.className = 'nodo activo';
-    this.grupo.appendChild(icono);
-    this.grupo.appendChild(texto);
-    contenedor.appendChild(this.grupo);
+    this.elemento.className = 'nodo activo';
+    this.elemento.appendChild(icono);
+    this.elemento.appendChild(texto);
 
-    this.escalar(dims);
-    this.actualizar();
-
-    this.grupo.onmouseenter = () => {
+    this.elemento.onmouseenter = () => {
       if (!this.activo) return;
       estanOrbitando.set(false);
-      mostrarAgente.set(this.datos);
+      mostrarAgente.set(this);
       this.mostrarRelaciones = true;
     };
 
-    this.grupo.onmouseleave = () => {
-      if (!this.activo) return;
+    this.elemento.onmouseleave = () => {
       estanOrbitando.set(true);
+      if (!this.activo || leyendo.get()) return;
+      mostrarAgente.set(null);
       this.mostrarRelaciones = false;
     };
 
-    this.grupo.onclick = (evento) => {
+    this.elemento.onclick = (evento) => {
       evento.stopPropagation();
-      agenteActivo.set(this.datos.nombre);
-      this.mostrarRelaciones = true;
+      if (leyendo.get()) {
+        agenteActivo.set(null);
+        this.mostrarRelaciones = false;
+      } else {
+        agenteActivo.set(this.datos.nombre);
+        this.mostrarRelaciones = true;
+      }
     };
 
-    if (datos.relaciones.length) {
-      datos.relaciones.forEach((relacion) => {
-        const linea = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        linea.setAttribute('class', `conexion ${relacion.tipoRelacion}`);
-        linea.setAttribute('data-con', relacion.con);
-        conexiones?.appendChild(linea);
-      });
-    }
+    const elementos = crearInfo(datos);
+
+    if (elementos.foto) this.foto = elementos.foto;
+    if (elementos.perfil) this.perfil = elementos.perfil;
+    if (elementos.relaciones) this.relaciones = elementos.relaciones;
   }
 
   escalar(dims: Dims) {
@@ -87,18 +92,61 @@ export default class Nodo {
     const x = this.centro.x + _x;
     const y = this.centro.y + _y;
 
-    this.grupo.style.transform = `translate(${x}px,${y}px)`;
+    this.elemento.style.transform = `translate(${x}px,${y}px)`;
     this.x = x;
     this.y = y;
+
+    // this.lineas.forEach(linea => {
+    //   linea.setAttribute('x1', `${x}`);
+    //   linea.setAttribute('y1', `${y}`);
+    //   linea.
+    // })
   }
 
   activar() {
-    this.grupo.classList.add('activo');
+    this.elemento.classList.add('activo');
     this.activo = true;
   }
 
   desactivar() {
-    this.grupo.classList.remove('activo');
+    this.elemento.classList.remove('activo');
     this.activo = false;
+  }
+
+  definirRelaciones() {
+    const nodos = losNodos();
+
+    const crearLinea = (relacion: Relacion) => {
+      const linea = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      linea.setAttribute('class', `conexion ${relacion.tipoRelacion}`);
+      conexiones?.appendChild(linea);
+
+      const respuesta: NodoRelacion = { linea };
+      const nodoRelacionado = nodos.findIndex((nodo) => nodo.nombre === relacion.con);
+
+      if (nodoRelacionado >= 0) {
+        respuesta.hacia = nodoRelacionado;
+      } else {
+        // Cuando no hay agente 2 que hacer?
+        console.log('no se encontro nodo relacionado', this.nombre, relacion);
+      }
+
+      return respuesta;
+    };
+
+    if (this.datos.relaciones.length) {
+      this.lineas = this.datos.relaciones.map((relacion) => {
+        return crearLinea(relacion);
+      });
+    }
+
+    if (this.datos.relacionesInvertidas.length) {
+      this.lineas = [
+        ...this.lineas,
+        ...this.datos.relacionesInvertidas.map((relacion) => {
+          return crearLinea(relacion);
+        }),
+      ];
+    }
   }
 }
