@@ -71,6 +71,142 @@ h2 {
   line-height: 1.1;
 }
 
+h3 {
+  font-family: $fuenteTexto;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.infoSeccion {
+  display: none;
+
+  #infoPerfil,
+  #infoRelaciones {
+    overflow: hidden;
+  }
+
+  &.mostrar {
+    display: block;
+  }
+
+  .expandir {
+    &::before {
+      content: '';
+      width: 15px;
+      height: 3px;
+      background-color: var(--negroTinta);
+      display: block;
+      transition: all 0.25s ease-out;
+    }
+
+    &::after {
+      content: '';
+      width: 0;
+      height: 3px;
+      background-color: var(--negroTinta);
+      display: block;
+      transition: all 0.25s ease-out;
+      opacity: 0;
+    }
+  }
+
+  &.cerrado {
+    &.relaciones {
+      #infoRelaciones {
+        max-height: 0;
+      }
+    }
+
+    &.perfil {
+      #infoPerfil {
+        max-height: 0;
+      }
+    }
+
+    .expandir {
+      &::before {
+        width: 10px;
+        transform: rotate(90deg);
+      }
+
+      &::after {
+        width: 10px;
+        margin-top: -3px;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+#infoRelaciones {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8em;
+
+  .relacion {
+    line-height: 1.4;
+    .descriptor {
+      display: block;
+
+      &::after {
+        content: ' - ';
+        display: inline-block;
+        margin: 0 0.3em;
+      }
+    }
+
+    .relacionCon {
+      text-transform: uppercase;
+      padding: 0 0.1em;
+      color: #fcf5f5;
+    }
+
+    &.lam {
+      .relacionCon {
+        background-color: var(--rojoMistico);
+      }
+    }
+
+    &.educacion {
+      .relacionCon {
+        background-color: var(--cafeTunica);
+      }
+    }
+
+    &.politica {
+      .relacionCon {
+        background-color: var(--verdeRealeza);
+      }
+    }
+
+    &.comercio {
+      .relacionCon {
+        background-color: var(--azulNube);
+        color: var(--negroTinta);
+      }
+    }
+
+    &.medios {
+      .relacionCon {
+        background-color: var(--amarilloOro);
+        color: var(--negroTinta);
+      }
+    }
+  }
+}
+
 #contenedor {
   display: flex;
 }
@@ -92,6 +228,7 @@ h2 {
 #vis {
   height: 100vh;
   width: 60vw;
+  display: block;
 }
 
 #contenedorAgentes {

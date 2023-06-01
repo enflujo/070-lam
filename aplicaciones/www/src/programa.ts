@@ -9,10 +9,12 @@ const nodos: Nodo[] = [];
 const svg = document.querySelector<SVGElement>('#vis');
 const contenedorCirculos = svg?.querySelector<SVGGElement>('#circulos');
 const circulos = contenedorCirculos?.querySelectorAll<SVGCircleElement>('circle');
+
 const contenedorAgentes = document.getElementById('contenedorAgentes') as HTMLDivElement;
 const corazon = document.getElementById('corazon') as HTMLSpanElement;
 const contenedorInfo = document.getElementById('info') as HTMLDivElement;
 const agentesFlotantes = agentes.filter((agente) => agente.nombre !== 'Lazos de amor mariano') as DatosAgente[];
+const colapsables = document.querySelectorAll<HTMLDivElement>('.infoSeccion h3');
 const dims: Dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 } };
 let orbitando = true;
 
@@ -67,6 +69,14 @@ function definirEventos() {
         contenedorInfo.classList.remove('org');
       }
       llenarInfo(agente);
+
+      if (agente.relaciones.length) {
+        agente.relaciones.forEach((relacion) => {
+          const conexion = nodos.find((nodo) => nodo.datos.nombre === relacion.con);
+          console.log(conexion);
+        });
+        console.log(agente.relaciones);
+      }
     } else {
       contenedorInfo.classList.add('lam');
       contenedorInfo.classList.remove('persona');
@@ -93,6 +103,19 @@ function definirEventos() {
 
       leyendo.set(false);
     }
+  });
+
+  colapsables.forEach((titulo) => {
+    titulo.onclick = () => {
+      const contenedor = titulo.parentElement;
+      if (contenedor) {
+        if (contenedor.classList.contains('cerrado')) {
+          contenedor.classList.remove('cerrado');
+        } else {
+          contenedor.classList.add('cerrado');
+        }
+      }
+    };
   });
 }
 
@@ -162,6 +185,14 @@ function crearNodos() {
 
 function animar() {
   requestAnimationFrame(animar);
+
+  // nodos.forEach(nodo => {
+  //   if (nodo.mostrarRelaciones) {
+  //     nodo.lineas.forEach(linea => {
+
+  //     })
+  //   }
+  // })
 
   if (!orbitando) return;
   nodos.forEach((nodo) => {

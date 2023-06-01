@@ -113,12 +113,37 @@ async function iniciarSheets() {
       const relaciones = datos
         .filter((fila) => fila.rrb === agente.nombre)
         .map((relacion) => {
-          return {
-            tipo: relacion.tipo_de_relacion,
-            descriptor: relacion.descriptor_de_relacion,
-            con: relacion.agente_2,
-            activo: relacion.activo,
-          };
+          const respuesta: { activo: boolean; descriptor: string; con?: string; tipo?: string; tipoRelacion?: string } =
+            {
+              activo: !!relacion.activo,
+              descriptor: `${relacion.descriptor_de_relacion}`,
+            };
+          let tipoRelacion = '';
+
+          if (relacion.tipo_de_relacion === 'organización - organización') {
+            tipoRelacion = 'orgOrg';
+          } else if (relacion.tipo_de_relacion === 'persona - persona') {
+            tipoRelacion = 'perPer';
+          } else if (relacion.tipo_de_relacion === 'persona - organización') {
+            tipoRelacion = 'perOrg';
+          }
+
+          respuesta.tipoRelacion = tipoRelacion;
+
+          if (relacion.agente_2) {
+            const relacionCon = agentes.find((agente) => agente.nombre === relacion.agente_2);
+
+            if (relacionCon) {
+              respuesta.tipo = `${relacionCon.circulo_1}`
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLocaleLowerCase()
+                .replace(/\s/g, '');
+              respuesta.con = `${relacion.agente_2}`;
+            }
+          }
+
+          return respuesta;
         });
 
       if (persona) {

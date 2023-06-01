@@ -24,7 +24,8 @@ export type DatosAgente = {
 };
 
 export type Relacion = {
-  tipo: 'persona - organización' | 'persona - persona' | 'organización - organización';
+  tipoRelacion: 'perOrg' | 'perPer' | 'orgOrg';
+  tipo: 'politica' | 'comercio' | 'iglesiacatolica' | 'policia' | 'medios' | 'lam' | 'educacion';
   descriptor: string;
   con: string;
   activo: boolean;
