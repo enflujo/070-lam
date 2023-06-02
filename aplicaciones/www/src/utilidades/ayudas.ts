@@ -58,7 +58,7 @@ export function llenarInfo(nodo: Nodo) {
   } else if (tieneRelaciones && !tienePerfil) {
     contenedorRelaciones.classList.add('sinTitulo');
     contenedorRelaciones.classList.add('mostrar');
-    contenedorRelaciones.classList.remove('mostrar');
+    contenedorRelaciones.classList.remove('cerrado');
   } else {
     contenedorRelaciones.classList.remove('sinTitulo');
     contenedorPerfil.classList.remove('sinTitulo');

@@ -1,6 +1,6 @@
 import agentes from '../datos/agentes.json';
 import Nodo from '../componentes/Nodo';
-import { DatosAgente, Dims } from '../tipos';
+import { DatosAgente, Dims, Relacion } from '../tipos';
 import { aleatorioFraccion, crearParrafos, llenarInfo } from './ayudas';
 import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
 
@@ -123,7 +123,7 @@ export function escalarNodos(dims: Dims) {
   }
 }
 
-function elementoListaRelacion(desde: string, hacia: string, activo: boolean, tipo: string) {
+function elementoListaRelacion(relacion: Relacion) {
   const elemento = document.createElement('li');
   const descriptor = document.createElement('span');
   const relacionCon = document.createElement('span');
@@ -132,14 +132,14 @@ function elementoListaRelacion(desde: string, hacia: string, activo: boolean, ti
   descriptor.className = 'descriptor';
   relacionCon.className = 'relacionCon';
 
-  descriptor.innerText = desde;
-  if (hacia) relacionCon.innerText = hacia;
+  descriptor.innerText = relacion.descriptor;
+  if (relacion.con) relacionCon.innerText = relacion.con;
 
-  if (activo) {
+  if (relacion.activo) {
     elemento.classList.add('activo');
   }
 
-  if (tipo) elemento.classList.add(tipo);
+  if (relacion.tipo) elemento.classList.add(relacion.tipo);
 
   elemento.appendChild(descriptor);
   elemento.appendChild(relacionCon);
@@ -162,16 +162,17 @@ export function crearInfo(datos: DatosAgente) {
 
   if (relaciones.length) {
     respuesta.relaciones = relaciones.map((relacion) => {
-      return elementoListaRelacion(relacion.descriptor, relacion.con, relacion.activo, relacion.tipo);
+      return elementoListaRelacion(relacion);
     });
   }
 
   if (relacionesInvertidas.length) {
     const relacionesActuales = respuesta.relaciones ? respuesta.relaciones : [];
+
     respuesta.relaciones = [
       ...relacionesActuales,
       ...relacionesInvertidas.map((relacion) => {
-        return elementoListaRelacion(relacion.descriptor, relacion.con, relacion.activo, relacion.tipo);
+        return elementoListaRelacion(relacion);
       }),
     ];
   }
