@@ -123,8 +123,31 @@ export function escalarNodos(dims: Dims) {
   }
 }
 
+function elementoListaRelacion(desde: string, hacia: string, activo: boolean, tipo: string) {
+  const elemento = document.createElement('li');
+  const descriptor = document.createElement('span');
+  const relacionCon = document.createElement('span');
+
+  elemento.className = 'relacion';
+  descriptor.className = 'descriptor';
+  relacionCon.className = 'relacionCon';
+
+  descriptor.innerText = desde;
+  if (hacia) relacionCon.innerText = hacia;
+
+  if (activo) {
+    elemento.classList.add('activo');
+  }
+
+  if (tipo) elemento.classList.add(tipo);
+
+  elemento.appendChild(descriptor);
+  elemento.appendChild(relacionCon);
+  return elemento;
+}
+
 export function crearInfo(datos: DatosAgente) {
-  const { nombre, descripcion, img, relaciones } = datos;
+  const { nombre, descripcion, img, relaciones, relacionesInvertidas } = datos;
   const respuesta: { foto?: HTMLImageElement; perfil?: HTMLParagraphElement[]; relaciones?: HTMLLIElement[] } = {};
   if (img) {
     const foto = new Image();
@@ -139,27 +162,18 @@ export function crearInfo(datos: DatosAgente) {
 
   if (relaciones.length) {
     respuesta.relaciones = relaciones.map((relacion) => {
-      const elemento = document.createElement('li');
-      const descriptor = document.createElement('span');
-      const relacionCon = document.createElement('span');
-
-      elemento.className = 'relacion';
-      descriptor.className = 'descriptor';
-      relacionCon.className = 'relacionCon';
-
-      descriptor.innerText = relacion.descriptor;
-      if (relacion.con) relacionCon.innerText = relacion.con;
-
-      if (relacion.activo) {
-        elemento.classList.add('activo');
-      }
-
-      if (relacion.tipo) elemento.classList.add(relacion.tipo);
-
-      elemento.appendChild(descriptor);
-      elemento.appendChild(relacionCon);
-      return elemento;
+      return elementoListaRelacion(relacion.descriptor, relacion.con, relacion.activo, relacion.tipo);
     });
+  }
+
+  if (relacionesInvertidas.length) {
+    const relacionesActuales = respuesta.relaciones ? respuesta.relaciones : [];
+    respuesta.relaciones = [
+      ...relacionesActuales,
+      ...relacionesInvertidas.map((relacion) => {
+        return elementoListaRelacion(relacion.descriptor, relacion.con, relacion.activo, relacion.tipo);
+      }),
+    ];
   }
 
   return respuesta;
@@ -175,7 +189,6 @@ export function mostrarRed(nodo: Nodo) {
       if (obj.hacia) {
         const destino = nodos[obj.hacia];
         const { linea } = obj;
-
         linea.setAttribute('x1', `${nodo.x}`);
         linea.setAttribute('y1', `${nodo.y}`);
         linea.setAttribute('x2', `${destino.x}`);

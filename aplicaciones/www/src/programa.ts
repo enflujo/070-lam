@@ -6,7 +6,6 @@ import { actualizarNodos, crearNodos, escalarNodos } from './utilidades/elemento
 import { escalarAnillos } from './utilidades/anillos';
 
 const svg = document.querySelector<SVGElement>('#vis');
-
 const colapsables = document.querySelectorAll<HTMLDivElement>('.infoSeccion h3');
 const dims: Dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 } };
 
@@ -14,7 +13,6 @@ let orbitando = true;
 
 crearNodos();
 definirEventos();
-// inicio();
 escalar();
 
 animar();
@@ -46,14 +44,6 @@ function definirEventos() {
     };
   });
 }
-
-// function inicio() {
-//   const infoLazos = agentes.find((obj) => obj.nombre.toLowerCase() === 'lazos de amor mariano') as DatosAgente;
-
-//   if (infoLazos) {
-//     llenarInfo(infoLazos);
-//   }
-// }
 
 function escalar() {
   const _dims = svg?.getBoundingClientRect();

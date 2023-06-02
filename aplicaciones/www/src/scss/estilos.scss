@@ -21,6 +21,17 @@ $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
   --negroTinta: #3a2817;
   --rojoCalor: #ff24004d;
   --amarilloLuz: #ffff4c4d;
+  --violetaLavanda: #9ba2ff;
+  --rojoSangre: #d4270c;
+  --naranjaMisionero: #ff6316;
+  --naranjaMascara: #fe8b16;
+  --amarilloAliado: #ffff4d;
+  --violetaSacerdote: #6a306d;
+  --colorPolitica: var(--rojoMistico);
+  --colorEducacion: var(--violetaLavanda);
+  --colorComercio: var(--verdeRealeza);
+  --colorMedios: var(--amarilloOro);
+  --colorReligion: var(--violetaSacerdote);
 }
 
 html {
@@ -187,20 +198,21 @@ h3 {
 
     &.educacion {
       .relacionCon {
-        background-color: var(--cafeTunica);
+        background-color: var(--colorEducacion);
+        color: var(--negroTinta);
       }
     }
 
     &.politica {
       .relacionCon {
-        background-color: var(--verdeRealeza);
+        background-color: var(--colorPolitica);
       }
     }
 
     &.comercio {
       .relacionCon {
-        background-color: var(--azulNube);
-        color: var(--negroTinta);
+        background-color: var(--colorComercio);
+        //
       }
     }
 
@@ -208,6 +220,12 @@ h3 {
       .relacionCon {
         background-color: var(--amarilloOro);
         color: var(--negroTinta);
+      }
+    }
+
+    .iglesiacatolica {
+      .relacionCon {
+        background-color: var(--colorReligion);
       }
     }
   }
@@ -344,4 +362,37 @@ h3 {
 .conexion {
   stroke-width: 1;
   stroke: var(--negroTinta);
+  opacity: 0.7;
+
+  &.medios {
+    stroke: var(--colorMedios);
+  }
+
+  &.politica {
+    stroke: var(--colorPolitica);
+  }
+
+  &.educacion {
+    stroke: var(--colorEducacion);
+  }
+
+  &.comercio {
+    stroke: var(--colorComercio);
+  }
+
+  &.iglesiacatolica {
+    stroke: var(--colorReligion);
+  }
+}
+
+#tiposRelaciones {
+  text {
+    fill: var(--negroTinta);
+    font: $fuenteTexto;
+  }
+
+  line {
+    stroke: var(--negroTinta);
+    stroke-width: 2px;
+  }
 }

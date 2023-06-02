@@ -95,12 +95,6 @@ export default class Nodo {
     this.elemento.style.transform = `translate(${x}px,${y}px)`;
     this.x = x;
     this.y = y;
-
-    // this.lineas.forEach(linea => {
-    //   linea.setAttribute('x1', `${x}`);
-    //   linea.setAttribute('y1', `${y}`);
-    //   linea.
-    // })
   }
 
   activar() {
@@ -119,6 +113,15 @@ export default class Nodo {
     const crearLinea = (relacion: Relacion) => {
       const linea = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       linea.setAttribute('class', `conexion ${relacion.tipoRelacion}`);
+
+      if (!relacion.activo) {
+        linea.setAttribute('stroke-dasharray', '4');
+      }
+
+      if (relacion.tipo) {
+        linea.classList.add(relacion.tipo);
+      }
+
       conexiones?.appendChild(linea);
 
       const respuesta: NodoRelacion = { linea };
