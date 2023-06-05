@@ -1,6 +1,6 @@
 import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from '../cerebros/general';
 import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion } from '../tipos';
-import { crearInfo, losNodos } from '../utilidades/elementosRed';
+import { crearInfo, esconderRed, eventoNodosRelacionados, losNodos, prenderTodos } from '../utilidades/elementosRed';
 
 const DOS_PI = Math.PI * 2;
 const conexiones = document?.querySelector<SVGGElement>('#conexiones');
@@ -21,6 +21,8 @@ export default class Nodo {
   perfil?: HTMLParagraphElement[];
   foto?: HTMLImageElement;
   relaciones?: HTMLLIElement[];
+  apagado: boolean;
+  nodosRelacionados: number[];
 
   constructor(datos: DatosAgente, anillo: number, angulo: number) {
     this.nombre = datos.nombre;
@@ -37,6 +39,8 @@ export default class Nodo {
     this.y = 0;
     this.lineas = [];
     this.mostrarRelaciones = false;
+    this.apagado = false;
+    this.nodosRelacionados = [];
 
     texto.className = 'nombre';
     texto.innerText = datos.nombre;
@@ -49,26 +53,33 @@ export default class Nodo {
 
     this.elemento.onmouseenter = () => {
       if (!this.activo) return;
+
       estanOrbitando.set(false);
       mostrarAgente.set(this);
+
+      eventoNodosRelacionados(this.nodosRelacionados, this);
+
       this.mostrarRelaciones = true;
     };
 
     this.elemento.onmouseleave = () => {
       estanOrbitando.set(true);
+
       if (!this.activo || leyendo.get()) return;
+      prenderTodos();
       mostrarAgente.set(null);
-      this.mostrarRelaciones = false;
     };
 
     this.elemento.onclick = (evento) => {
       evento.stopPropagation();
+
       if (leyendo.get()) {
         agenteActivo.set(null);
-        this.mostrarRelaciones = false;
+        this.elemento.classList.remove('ejePrincipal');
       } else {
-        agenteActivo.set(this.datos.nombre);
+        this.elemento.classList.add('ejePrincipal');
         this.mostrarRelaciones = true;
+        agenteActivo.set(this.datos.nombre);
       }
     };
 
@@ -107,6 +118,14 @@ export default class Nodo {
     this.activo = false;
   }
 
+  cambiarEstadoApagado(apagado: boolean) {
+    if (apagado) {
+      this.elemento.classList.add('apagado');
+    } else {
+      this.elemento.classList.remove('apagado');
+    }
+  }
+
   definirRelaciones() {
     const nodos = losNodos();
 
@@ -129,6 +148,7 @@ export default class Nodo {
 
       if (nodoRelacionado >= 0) {
         respuesta.hacia = nodoRelacionado;
+        this.nodosRelacionados.push(nodoRelacionado);
       } else {
         // Cuando no hay agente 2 que hacer?
         console.log('no se encontro nodo relacionado', this.nombre, relacion);

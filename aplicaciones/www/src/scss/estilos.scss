@@ -24,7 +24,7 @@ $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
   --violetaLavanda: #8ac1fc;
   --rojoSangre: #d4270c;
   --naranjaMisionero: #ff6316;
-  --naranjaMascara: #fe8b16;
+  --naranjaMascara: #ff8b17;
   --amarilloAliado: #ffff4d;
   --violetaSacerdote: #6a306d;
   --colorPolitica: var(--rojoMistico);
@@ -245,7 +245,6 @@ h3 {
 
 #contenedorVis {
   background: radial-gradient(circle at center, #ff22009e 0, #ffff4c7d 70%, #ffff4c4d 100%);
-
   position: relative;
 }
 
@@ -296,10 +295,21 @@ h3 {
 .nodo {
   cursor: pointer;
   position: absolute;
-  opacity: 0.4;
+  width: 0;
+
+  &.ejePrincipal {
+    .nombre {
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+  }
 
   &.activo {
     opacity: 1;
+  }
+
+  &.apagado {
+    opacity: 0.3;
   }
 }
 

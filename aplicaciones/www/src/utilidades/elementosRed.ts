@@ -1,8 +1,9 @@
 import agentes from '../datos/agentes.json';
 import Nodo from '../componentes/Nodo';
 import { DatosAgente, Dims, Relacion } from '../tipos';
-import { aleatorioFraccion, crearParrafos, llenarInfo } from './ayudas';
+import { aleatorioFraccion } from './ayudas';
 import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
+import { crearParrafos, llenarInfo } from './columnaInfo';
 
 const nodos: Nodo[] = [];
 const contenedorInfo = document.getElementById('info') as HTMLDivElement;
@@ -213,4 +214,24 @@ export function esconderRed(nodo: Nodo) {
   }
 
   nodo.mostrarRelaciones = false;
+}
+
+export function eventoNodosRelacionados(indices: number[], nodoActual: Nodo) {
+  nodoAnterior = nodoActual;
+  nodos.forEach((nodo, i) => {
+    if (nodoActual !== nodo) {
+      nodo.cambiarEstadoApagado(!indices.includes(i));
+    } else {
+      nodo.cambiarEstadoApagado(false);
+    }
+  });
+}
+
+export function prenderTodos() {
+  document.querySelector('.ejePrincipal')?.classList.remove('ejePrincipal');
+  nodos.forEach((nodo) => {
+    nodo.cambiarEstadoApagado(false);
+  });
+
+  esconderRed(nodoAnterior);
 }

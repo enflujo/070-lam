@@ -1,8 +1,8 @@
 import './scss/estilos.scss';
 
 import type { Dims } from './tipos';
-import { agenteActivo, estanOrbitando, leyendo, mostrarAgente, nodos } from './cerebros/general';
-import { actualizarNodos, crearNodos, escalarNodos } from './utilidades/elementosRed';
+import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from './cerebros/general';
+import { actualizarNodos, crearNodos, escalarNodos, prenderTodos } from './utilidades/elementosRed';
 import { escalarAnillos } from './utilidades/anillos';
 
 const svg = document.querySelector<SVGElement>('#vis');
@@ -24,6 +24,7 @@ function definirEventos() {
       mostrarAgente.set(null);
       agenteActivo.set(null);
       leyendo.set(false);
+      prenderTodos();
     };
   }
 
