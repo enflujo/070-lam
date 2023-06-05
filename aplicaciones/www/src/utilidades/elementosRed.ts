@@ -152,7 +152,7 @@ export function crearInfo(datos: DatosAgente) {
   const respuesta: { foto?: HTMLImageElement; perfil?: HTMLParagraphElement[]; relaciones?: HTMLLIElement[] } = {};
   if (img) {
     const foto = new Image();
-    foto.src = `/imgs/${img}`;
+    foto.src = `${import.meta.env.BASE_URL}/imgs/${img}`;
     foto.setAttribute('alt', `Foto de ${nombre}`);
     respuesta.foto = foto;
   }
