@@ -11,7 +11,7 @@ $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
   --doradoEspada: #c2a154;
   --sangreCristo: #b73944;
   --tinieblas: #0d030c;
-  
+
   //paleta 2
   //fondos
   --amarilloEdadMedia: #fff8cc;
@@ -19,18 +19,17 @@ $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
   --azulNube: #ccf7ff;
   --rosaHermanosGrimm: #fcc5dd;
 
-  
-//convenciones
+  //convenciones
   --amarilloCuarzo: #ffe4c7;
   --rojoMistico: #ee5518;
   --azulJade: #0f6299;
   --verdeRealeza: #197934;
   --azulMillos: #3f97ef;
   --azulJoya: #74c1bd;
-  --azulFiesta:#1BE7FF;
-  --azulFiesta2:#00b7cc;
-  --verdeFiesta:#00ec56;
-  --azulCeleste: #B1F8F2;
+  --azulFiesta: #1be7ff;
+  --azulFiesta2: #00b7cc;
+  --verdeFiesta: #00ec56;
+  --azulCeleste: #b1f8f2;
   --rosaJardin: #ef9396;
   --negroTinta: #3a2817;
   --blancoPecado: #fcf5f5;
@@ -45,7 +44,7 @@ $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
 
   //descartados
   --violetaSacerdote: #6a306d;
-  --violetaLavanda: #9BA2FF;
+  --violetaLavanda: #9ba2ff;
 
   //degradé color
   --rojoCalor: #ff24004d;
@@ -251,7 +250,7 @@ h3 {
     &.iglesiacatolica {
       .relacionCon {
         background-color: var(--colorReligion);
-       // color: var(--blancoPecado);
+        // color: var(--blancoPecado);
       }
     }
   }
