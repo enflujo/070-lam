@@ -22,12 +22,14 @@ $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
   
 //convenciones
   --amarilloCuarzo: #ffe4c7;
-  --rojoMistico: #f24125;
+  --rojoMistico: #ee5518;
   --azulJade: #0f6299;
   --verdeRealeza: #197934;
-  --azulFiesta:#1BE7FF;
   --azulMillos: #3f97ef;
   --azulJoya: #74c1bd;
+  --azulFiesta:#1BE7FF;
+  --azulFiesta2:#00b7cc;
+  --verdeFiesta:#00ec56;
   --azulCeleste: #B1F8F2;
   --rosaJardin: #ef9396;
   --negroTinta: #3a2817;
@@ -53,7 +55,7 @@ $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
   --colorPolitica: var(--rojoMistico);
   --colorEducacion: var(--amarilloCuarzo);
   --colorComercio: var(--verdeRealeza);
-  --colorMedios: var(--azulFiesta);
+  --colorMedios: var(--azulFiesta2);
   --colorReligion: var(--azulJade);
   --colorLAM: var(--rojoSangre2);
 }
@@ -394,7 +396,7 @@ h3 {
 }
 
 .conexion {
-  stroke-width: 1;
+  stroke-width: 2;
   stroke: var(--negroTinta);
   opacity: 0.7;
 
