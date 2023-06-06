@@ -46,18 +46,20 @@
         <h2>Filtros</h2>
 
         <section class="infoSeccion mostrar tipoRelaciones">
-          <h3>Relaciones <span class="expandir"></span></h3>
-          <svg id="tiposRelaciones" width="100%" height="4em">
-            <g>
-              <text x="0" y="10">Vigentes</text>
-              <line class="tipoConexion vigente" x1="6em" y1="7" x2="12vw" y2="7" />
-            </g>
+          <h3>Relaciones <span class="colapsableBtn"></span></h3>
+          <div class="colapsable">
+            <svg id="tiposRelaciones" width="100%" height="4em">
+              <g>
+                <text x="0" y="10">Vigentes</text>
+                <line class="tipoConexion vigente" x1="6em" y1="7" x2="12vw" y2="7" />
+              </g>
 
-            <g>
-              <text x="0" y="35">Pasadas</text>
-              <line class="tipoConexion pasadas" x1="6em" y1="32" x2="12vw" y2="32" stroke-dasharray="4" />
-            </g>
-          </svg>
+              <g>
+                <text x="0" y="35">Pasadas</text>
+                <line class="tipoConexion pasadas" x1="6em" y1="32" x2="12vw" y2="32" stroke-dasharray="4" />
+              </g>
+            </svg>
+          </div>
         </section>
       </div>
 
@@ -81,12 +83,14 @@
         <h2 id="infoTitulo"></h2>
         <div id="infoImg"></div>
         <section class="infoSeccion mostrar relaciones">
-          <h3>Relaciones <span class="expandir"></span></h3>
-          <ul id="infoRelaciones"></ul>
+          <h3>Relaciones <span class="colapsableBtn"></span></h3>
+          <div class="colapsable">
+            <ul id="infoRelaciones"></ul>
+          </div>
         </section>
         <section class="infoSeccion mostrar perfil">
-          <h3>Perfil <span class="expandir"></span></h3>
-          <div id="infoPerfil"></div>
+          <h3>Perfil <span class="colapsableBtn"></span></h3>
+          <div class="colapsable"><div id="infoPerfil"></div></div>
         </section>
       </div>
     </main>
