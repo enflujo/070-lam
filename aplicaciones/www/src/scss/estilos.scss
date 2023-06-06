@@ -2,6 +2,7 @@ $fuenteTitulos: 'Grenze Gotisch', 'Brush Script MT', cursive;
 $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
 
 :root {
+  //paleta 1
   --azulOscuro: #323846;
   --blancoNube: #e0e1db;
   --rojoCorazon: #d53f26;
@@ -10,28 +11,51 @@ $fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
   --doradoEspada: #c2a154;
   --sangreCristo: #b73944;
   --tinieblas: #0d030c;
+  
+  //paleta 2
+  //fondos
   --amarilloEdadMedia: #fff8cc;
   --verdeJade: #ccffcc;
   --azulNube: #ccf7ff;
   --rosaHermanosGrimm: #fcc5dd;
-  --amarilloOro: #3f97ef;
+
+  
+//convenciones
+  --amarilloCuarzo: #ffe4c7;
   --rojoMistico: #f24125;
-  --rosaJardin: #ef9396;
+  --azulJade: #0f6299;
   --verdeRealeza: #197934;
+  --azulFiesta:#1BE7FF;
+  --azulMillos: #3f97ef;
+  --azulJoya: #74c1bd;
+  --azulCeleste: #B1F8F2;
+  --rosaJardin: #ef9396;
   --negroTinta: #3a2817;
-  --rojoCalor: #ff24004d;
-  --amarilloLuz: #ffff4c4d;
-  --violetaLavanda: #8ac1fc;
+  --blancoPecado: #fcf5f5;
+
+  //filtro de cercanía
+  --amarilloOro: #efd63f;
   --rojoSangre: #d4270c;
+  --rojoSangre2: #bd0a0a;
   --naranjaMisionero: #ff6316;
   --naranjaMascara: #ff8b17;
   --amarilloAliado: #ffff4d;
+
+  //descartados
   --violetaSacerdote: #6a306d;
+  --violetaLavanda: #9BA2FF;
+
+  //degradé color
+  --rojoCalor: #ff24004d;
+  --amarilloLuz: #ffff4c4d;
+
+  //variables color
   --colorPolitica: var(--rojoMistico);
-  --colorEducacion: var(--violetaLavanda);
+  --colorEducacion: var(--amarilloCuarzo);
   --colorComercio: var(--verdeRealeza);
-  --colorMedios: var(--amarilloOro);
-  --colorReligion: var(--violetaSacerdote);
+  --colorMedios: var(--azulFiesta);
+  --colorReligion: var(--azulJade);
+  --colorLAM: var(--rojoSangre2);
 }
 
 html {
@@ -60,7 +84,7 @@ body {
   background-color: var(--amarilloEdadMedia);
   color: var(--negroTinta);
   font-family: $fuenteTexto;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 main {
@@ -170,7 +194,7 @@ h3 {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.8em;
+  font-size: 0.93em;
 
   .relacion {
     line-height: 1.4;
@@ -192,7 +216,7 @@ h3 {
 
     &.lam {
       .relacionCon {
-        background-color: var(--rojoMistico);
+        background-color: var(--colorLAM);
       }
     }
 
@@ -212,20 +236,20 @@ h3 {
     &.comercio {
       .relacionCon {
         background-color: var(--colorComercio);
-        //
       }
     }
 
     &.medios {
       .relacionCon {
-        background-color: var(--amarilloOro);
+        background-color: var(--colorMedios);
         color: var(--negroTinta);
       }
     }
 
-    .iglesiacatolica {
+    &.iglesiacatolica {
       .relacionCon {
         background-color: var(--colorReligion);
+       // color: var(--blancoPecado);
       }
     }
   }
@@ -275,7 +299,7 @@ h3 {
 }
 
 .nombre {
-  font-size: 0.75em;
+  font-size: 0.8em;
   color: var(--negroTinta);
   width: 100px;
   display: block;
@@ -373,6 +397,10 @@ h3 {
   stroke-width: 1;
   stroke: var(--negroTinta);
   opacity: 0.7;
+
+  &.lam {
+    stroke: var(--colorLAM);
+  }
 
   &.medios {
     stroke: var(--colorMedios);
