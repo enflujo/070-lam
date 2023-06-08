@@ -110,8 +110,6 @@ export function actualizarNodos() {
     nodo.actualizar();
     if (nodo.mostrarRelaciones) {
       mostrarRed(nodo);
-    } else {
-      esconderRed(nodo);
     }
   });
 }
@@ -231,9 +229,9 @@ export function prenderTodos() {
   document.querySelector('.ejePrincipal')?.classList.remove('ejePrincipal');
   nodos.forEach((nodo) => {
     nodo.cambiarEstadoApagado(false);
+    esconderRed(nodo);
+    nodo.elemento.classList.remove('invisible');
   });
-
-  esconderRed(nodoAnterior);
 }
 
 export function filtrarNodo(llave: string) {
@@ -268,5 +266,21 @@ export function mostrarNodosEnAnillo(anillo: number) {
     } else {
       nodo.cambiarEstadoApagado(false);
     }
+  });
+}
+
+export function mostrarRedPoder(llave: string) {
+  nodos.forEach((nodo) => {
+    if (nodo.poder === llave) {
+      nodo.mostrarRelaciones = true;
+    } else {
+      esconderRed(nodo);
+    }
+  });
+}
+
+export function apagarRedPoder() {
+  nodos.forEach((nodo) => {
+    esconderRed(nodo);
   });
 }

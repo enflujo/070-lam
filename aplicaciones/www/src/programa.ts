@@ -5,7 +5,7 @@ import type { Dims } from './tipos';
 import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from './cerebros/general';
 import { actualizarNodos, crearNodos, escalarNodos, prenderTodos } from './modulos/red';
 import { escalarAnillos } from './modulos/anillos';
-import { definirFiltros } from './modulos/filtros';
+import { definirFiltros, reiniciarAgentes } from './modulos/filtros';
 
 export type FuenteDatos = typeof agentes;
 const svg = document.querySelector<SVGElement>('#vis');
@@ -28,6 +28,7 @@ function definirEventos() {
       agenteActivo.set(null);
       leyendo.set(false);
       prenderTodos();
+      reiniciarAgentes();
     };
   }
 

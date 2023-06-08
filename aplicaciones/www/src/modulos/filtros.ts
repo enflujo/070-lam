@@ -1,19 +1,29 @@
 import grados from '../datos/grados.json';
+import poderes from '../datos/poderes.json';
 import { FuenteDatos } from '../programa';
 import { crearParrafos, normalizarTexto } from '../utilidades/ayudas';
-import { filtrarNodo, mostrarNodosEnAnillo, prenderTodos } from './red';
+import { apagarRedPoder, filtrarNodo, mostrarNodosEnAnillo, mostrarRedPoder, prenderTodos } from './red';
 
 const filtroPersonas = document.getElementById('filtroPersonas') as HTMLSelectElement;
 const filtroOrgs = document.getElementById('filtroOrgs') as HTMLSelectElement;
-const cercanias = document.querySelector('#cercania .contenedor') as HTMLDivElement;
 
 export function definirFiltros(datos: FuenteDatos) {
-  if (!filtroPersonas || !filtroOrgs) return;
+  definirFiltrosAgentes(datos);
+  definirFiltrosPoderes();
+  definirFiltrosCercania();
+}
+
+export function reiniciarAgentes() {
+  filtroPersonas.value = 'todas';
+  filtroOrgs.value = 'todas';
+}
+
+function definirFiltrosAgentes(datos: FuenteDatos) {
   const personas = datos.filter((fila) => fila.tipo === 'persona');
   const orgs = datos.filter((fila) => fila.tipo === 'org');
 
   personas.forEach((persona) => {
-    filtroPersonas?.appendChild(new Option(persona.nombre, normalizarTexto(persona.nombre)));
+    filtroPersonas.appendChild(new Option(persona.nombre, normalizarTexto(persona.nombre)));
   });
 
   orgs.forEach((org) => {
@@ -21,13 +31,24 @@ export function definirFiltros(datos: FuenteDatos) {
   });
 
   filtroPersonas.onchange = () => {
+    prenderTodos();
+    if (filtroOrgs.value !== 'todas') {
+      filtroOrgs.value = 'todas';
+    }
     filtrarNodo(filtroPersonas.value);
   };
 
   filtroOrgs.onchange = () => {
+    prenderTodos();
+    if (filtroPersonas.value !== 'todas') {
+      filtroPersonas.value = 'todas';
+    }
     filtrarNodo(filtroOrgs.value);
   };
+}
 
+function definirFiltrosCercania() {
+  const cercanias = document.querySelector('#cercania .contenedor') as HTMLDivElement;
   const contenedores: HTMLElement[] = [];
 
   grados.forEach((grado) => {
@@ -71,5 +92,34 @@ export function definirFiltros(datos: FuenteDatos) {
     cercanias.appendChild(contenedor);
 
     contenedores.push(contenedor);
+  });
+}
+
+function definirFiltrosPoderes() {
+  const contenedorPoderes = document.getElementById('poderes');
+
+  let poderActivo: string | null = null;
+  let elementoActivo: HTMLDivElement;
+
+  poderes.forEach((poder) => {
+    const elemento = document.createElement('div');
+    const llave = normalizarTexto(poder);
+    elemento.className = 'poder';
+    elemento.innerText = poder;
+    contenedorPoderes?.appendChild(elemento);
+
+    elemento.onclick = () => {
+      if (poderActivo === llave) {
+        apagarRedPoder();
+        poderActivo = null;
+        elemento.classList.remove('activo');
+      } else {
+        mostrarRedPoder(llave);
+        poderActivo = llave;
+        elementoActivo?.classList.remove('activo');
+        elemento.classList.add('activo');
+        elementoActivo = elemento;
+      }
+    };
   });
 }

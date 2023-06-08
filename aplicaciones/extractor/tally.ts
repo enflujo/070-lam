@@ -10,6 +10,13 @@ const guardarJSON = (json: any, nombre: string) => {
 };
 
 const tablas = ['datos-estructurados', 'agentes', 'organizaciones', 'personas', 'metadatos'];
+const normalizarTexto = (texto: string) => {
+  return texto
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase()
+    .replace(/\s/g, '');
+};
 
 function limpiarTabla(datosTabla: sheets_v4.Schema$Sheet) {
   const variables: string[] = [];
@@ -105,12 +112,16 @@ async function iniciarSheets() {
     const orgs = limpiarTabla(tablaOrg);
     const agentes = limpiarTabla(tablaAgentes).filter((agente) => agente.se_muestra);
     const grados: { nombre: string; descripcion: string; grado: number }[] = [];
+    const poderes: string[] = [];
 
     const datosAgentes = agentes.map((agente) => {
       const persona = personas.find((persona) => persona.nombre === agente.nombre);
 
       delete agente.se_muestra;
 
+      /**
+       * Extraer grados
+       */
       if (agente.nombre_grado) {
         grados.push({
           grado: +agente.grado,
@@ -118,9 +129,16 @@ async function iniciarSheets() {
           descripcion: `${agente.descripcion_grado}`,
         });
       }
-
       delete agente.nombre_grado;
       delete agente.descripcion_grado;
+
+      /**
+       * Extraer Círculos de poder
+       */
+
+      if (agente.circulo_1 && typeof agente.circulo_1 === 'string' && !poderes.includes(agente.circulo_1)) {
+        poderes.push(agente.circulo_1);
+      }
 
       // asignar relaciones
       const relaciones = datos
@@ -137,11 +155,7 @@ async function iniciarSheets() {
             const relacionCon = agentes.find((agente) => agente.nombre === relacion.agente_2);
 
             if (relacionCon) {
-              respuesta.tipo = `${relacionCon.circulo_1}`
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLocaleLowerCase()
-                .replace(/\s/g, '');
+              respuesta.tipo = normalizarTexto(relacionCon.circulo_1 as string);
               respuesta.con = `${relacion.agente_2}`;
             }
           }
@@ -171,11 +185,7 @@ async function iniciarSheets() {
             const relacionCon = agentes.find((agente) => agente.nombre === relacion.rrb);
 
             if (relacionCon) {
-              respuesta.tipo = `${relacionCon.circulo_1}`
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLocaleLowerCase()
-                .replace(/\s/g, '');
+              respuesta.tipo = normalizarTexto(relacionCon.circulo_1 as string);
               respuesta.con = `${relacion.rrb}`;
             }
           }
@@ -201,6 +211,7 @@ async function iniciarSheets() {
 
     guardarJSON(datosAgentes, 'agentes');
     guardarJSON(grados, 'grados');
+    guardarJSON(poderes, 'poderes');
   } catch (error) {
     console.error(error);
   }

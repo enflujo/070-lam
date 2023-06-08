@@ -10,6 +10,7 @@ export default class Nodo {
   nombre: string;
   tipo: TipoAgente;
   llave: string;
+  poder: string;
   elemento: HTMLDivElement;
   anillo: number;
   datos: DatosAgente;
@@ -31,6 +32,7 @@ export default class Nodo {
     this.nombre = datos.nombre;
     this.llave = normalizarTexto(datos.nombre);
     this.tipo = datos.tipo;
+    this.poder = normalizarTexto(datos.circulo_1);
     this.elemento = document.createElement('div');
     const texto = document.createElement('span');
     const icono = document.createElement('span');

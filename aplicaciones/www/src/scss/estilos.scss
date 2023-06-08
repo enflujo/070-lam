@@ -44,10 +44,6 @@ $inactivoPolitica: url("data:image/svg+xml,%3Csvg%20id%3D'stripes-svg'%20xmlns%3
   --naranjaMascara: #ff8b17;
   --amarilloAliado: #ffff4d;
 
-  //descartados
-  --violetaSacerdote: #6a306d;
-  --violetaLavanda: #9ba2ff;
-
   //degradé color
   --rojoCalor: #ff24004d;
   --amarilloLuz: #ffff4c4d;
@@ -317,6 +313,12 @@ h2 {
       .tituloColapsable {
         background-color: transparent;
       }
+
+      &:hover {
+        .tituloColapsable {
+          background-color: rgba(255, 255, 255, 0.5);
+        }
+      }
     }
 
     &::before {
@@ -557,6 +559,20 @@ select {
   }
 
   &:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.poder {
+  display: flex;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &.activo {
+    font-weight: 600;
     background-color: rgba(255, 255, 255, 0.7);
   }
 }
