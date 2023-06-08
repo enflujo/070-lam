@@ -1,19 +1,23 @@
 import './scss/estilos.scss';
 
+import agentes from './datos/agentes.json';
 import type { Dims } from './tipos';
 import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from './cerebros/general';
-import { actualizarNodos, crearNodos, escalarNodos, prenderTodos } from './utilidades/elementosRed';
-import { escalarAnillos } from './utilidades/anillos';
+import { actualizarNodos, crearNodos, escalarNodos, prenderTodos } from './modulos/red';
+import { escalarAnillos } from './modulos/anillos';
+import { definirFiltros } from './modulos/filtros';
 
+export type FuenteDatos = typeof agentes;
 const svg = document.querySelector<SVGElement>('#vis');
 const colapsables = document.querySelectorAll<HTMLDivElement>('.infoSeccion h3');
 const dims: Dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 } };
 
 let orbitando = true;
 
-crearNodos();
+crearNodos(agentes);
 definirEventos();
 escalar();
+definirFiltros(agentes);
 
 animar();
 window.onresize = escalar;

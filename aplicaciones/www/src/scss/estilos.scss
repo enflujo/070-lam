@@ -291,6 +291,15 @@ h3 {
 
 #filtros {
   background-color: var(--rosaHermanosGrimm);
+
+  h4 {
+    margin: 0 0 0.5em 0;
+  }
+
+  .infoSeccion {
+    border-bottom: 2px solid var(--negroTinta);
+    padding-bottom: 1em;
+  }
 }
 
 #info {
@@ -339,6 +348,10 @@ h3 {
 
   &.apagado {
     opacity: 0.3;
+  }
+
+  &.invisible {
+    display: none;
   }
 }
 
@@ -437,5 +450,51 @@ h3 {
   line {
     stroke: var(--negroTinta);
     stroke-width: 2px;
+  }
+}
+
+.seleccion {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+
+  color: var(--negroTinta);
+  margin-bottom: 0.7em;
+
+  &::after {
+    content: '\25BC';
+    position: absolute;
+    top: 4px;
+    right: 0;
+    font-size: 1.3em;
+    padding-right: 0.5em;
+    color: var(--rojoMistico);
+    transition: 0.25s all ease;
+    pointer-events: none;
+  }
+}
+
+select {
+  appearance: none;
+  outline: 0;
+  border: 0;
+  box-shadow: none;
+  background-image: none;
+  flex: 1;
+  background-color: white;
+  cursor: pointer;
+  font-family: $fuenteTexto;
+  padding: 0.5em;
+  border: 3px solid var(--rojoMistico);
+  transition: all 0.25s ease-in-out;
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.7);
   }
 }

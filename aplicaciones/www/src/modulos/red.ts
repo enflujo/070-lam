@@ -1,16 +1,16 @@
-import agentes from '../datos/agentes.json';
 import Nodo from '../componentes/Nodo';
 import { DatosAgente, Dims, Relacion } from '../tipos';
-import { aleatorioFraccion } from './ayudas';
+import { aleatorioFraccion } from '../utilidades/ayudas';
 import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
 import { crearParrafos, llenarInfo } from './columnaInfo';
+import { FuenteDatos } from '../programa';
 
 const nodos: Nodo[] = [];
 const contenedorInfo = document.getElementById('info') as HTMLDivElement;
 let nodoAnterior: Nodo;
 let nodoLAM: Nodo;
 
-export function crearNodos() {
+export function crearNodos(agentes: FuenteDatos) {
   const contenedorAgentes = document.getElementById('contenedorAgentes') as HTMLDivElement;
 
   const cantidades = agentes.reduce(
@@ -212,7 +212,7 @@ export function esconderRed(nodo: Nodo) {
       linea.setAttribute('y2', `${nodo.y}`);
     });
   }
-
+  nodo.elemento.classList.remove('ejePrincipal');
   nodo.mostrarRelaciones = false;
 }
 

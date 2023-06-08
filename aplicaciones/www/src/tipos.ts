@@ -11,6 +11,8 @@ export type Punto = {
   y: number;
 };
 
+export type TipoAgente = 'persona' | 'org' | 'lam';
+
 export type DatosAgente = {
   circulo_1: string;
   circulo_2?: string;
@@ -19,7 +21,7 @@ export type DatosAgente = {
   descripcion?: string;
   grado: number;
   img?: string;
-  tipo: 'persona' | 'org' | 'lam';
+  tipo: TipoAgente;
   relaciones: Relacion[];
   relacionesInvertidas: Relacion[];
 };
