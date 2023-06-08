@@ -104,7 +104,6 @@ async function iniciarSheets() {
     const personas = limpiarTabla(tablaPersonas);
     const orgs = limpiarTabla(tablaOrg);
     const agentes = limpiarTabla(tablaAgentes).filter((agente) => agente.se_muestra);
-
     const grados: { nombre: string; descripcion: string; grado: number }[] = [];
 
     const datosAgentes = agentes.map((agente) => {
@@ -201,6 +200,7 @@ async function iniciarSheets() {
     });
 
     guardarJSON(datosAgentes, 'agentes');
+    guardarJSON(grados, 'grados');
   } catch (error) {
     console.error(error);
   }

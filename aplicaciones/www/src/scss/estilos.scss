@@ -109,7 +109,7 @@ h2 {
   line-height: 1.1;
 }
 
-h3 {
+.tituloColapsable {
   font-family: $fuenteTexto;
   font-weight: 600;
   text-transform: uppercase;
@@ -123,6 +123,10 @@ h3 {
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &.interTitulo {
+    text-transform: none;
   }
 }
 
@@ -299,6 +303,64 @@ h3 {
   .infoSeccion {
     border-bottom: 2px solid var(--negroTinta);
     padding-bottom: 1em;
+  }
+
+  .subSeccion {
+    border-bottom: none;
+    padding-bottom: 0;
+
+    .tituloColapsable {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    &.cerrado {
+      .tituloColapsable {
+        background-color: transparent;
+      }
+    }
+
+    &::before {
+      content: '';
+      width: 11px;
+      height: 11px;
+      background-color: var(--rojoCorazon);
+      border-radius: 50%;
+      float: left;
+      margin: 6px 0.5em 0 0;
+    }
+
+    &.grado1 {
+      &::before {
+        background-color: var(--naranjaMisionero);
+      }
+    }
+
+    &.grado2 {
+      &::before {
+        background-color: var(--naranjaMascara);
+      }
+    }
+
+    &.grado3 {
+      &::before {
+        background-color: var(--amarilloAliado);
+      }
+    }
+
+    &.grado4 {
+      &::before {
+        border-radius: 0;
+        background-color: var(--negroTinta);
+      }
+    }
+
+    .colapsable {
+      padding-left: 1.2em;
+
+      p {
+        margin-top: 0;
+      }
+    }
   }
 }
 

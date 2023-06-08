@@ -16,17 +16,6 @@ leyendo.subscribe((estaLeyendo) => {
   }
 });
 
-export function crearParrafos(texto: string) {
-  if (!texto) return;
-  const partesDesc = texto.split('\n').filter((parte) => parte.length);
-
-  return partesDesc.map((parte) => {
-    const parrafo = document.createElement('p');
-    parrafo.innerText = parte;
-    return parrafo;
-  });
-}
-
 export function llenarInfo(nodo: Nodo) {
   if (!nodo) return;
   let tieneRelaciones = false;

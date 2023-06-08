@@ -153,7 +153,7 @@ export default class Nodo {
         this.nodosRelacionados.push(nodoRelacionado);
       } else {
         // Cuando no hay agente 2 que hacer?
-        console.log('no se encontro nodo relacionado', this.nombre, relacion);
+        console.log('no se encontró nodo relacionado', this.nombre, relacion);
       }
 
       return respuesta;

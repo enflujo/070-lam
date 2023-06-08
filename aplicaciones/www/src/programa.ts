@@ -9,15 +9,14 @@ import { definirFiltros } from './modulos/filtros';
 
 export type FuenteDatos = typeof agentes;
 const svg = document.querySelector<SVGElement>('#vis');
-const colapsables = document.querySelectorAll<HTMLDivElement>('.infoSeccion h3');
 const dims: Dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 } };
 
 let orbitando = true;
 
+definirFiltros(agentes);
 crearNodos(agentes);
 definirEventos();
 escalar();
-definirFiltros(agentes);
 
 animar();
 window.onresize = escalar;
@@ -35,6 +34,8 @@ function definirEventos() {
   estanOrbitando.subscribe((valor) => {
     orbitando = valor;
   });
+
+  const colapsables = document.querySelectorAll<HTMLDivElement>('.tituloColapsable');
 
   colapsables.forEach((titulo) => {
     titulo.onclick = () => {

@@ -1,8 +1,8 @@
 import Nodo from '../componentes/Nodo';
 import { DatosAgente, Dims, Relacion } from '../tipos';
-import { aleatorioFraccion } from '../utilidades/ayudas';
-import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
-import { crearParrafos, llenarInfo } from './columnaInfo';
+import { aleatorioFraccion, crearParrafos } from '../utilidades/ayudas';
+import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from '../cerebros/general';
+import { llenarInfo } from './columnaInfo';
 import { FuenteDatos } from '../programa';
 
 const nodos: Nodo[] = [];
@@ -201,7 +201,7 @@ export function mostrarRed(nodo: Nodo) {
 }
 
 export function esconderRed(nodo: Nodo) {
-  if (!nodo.mostrarRelaciones) return;
+  if (!nodo || !nodo.mostrarRelaciones) return;
 
   if (nodo.lineas.length) {
     nodo.lineas.forEach((obj) => {
@@ -257,6 +257,16 @@ export function filtrarNodo(llave: string) {
           nodo.elemento.classList.remove('invisible');
         }
       }
+    }
+  });
+}
+
+export function mostrarNodosEnAnillo(anillo: number) {
+  nodos.forEach((nodo) => {
+    if (nodo.anillo !== anillo) {
+      nodo.cambiarEstadoApagado(true);
+    } else {
+      nodo.cambiarEstadoApagado(false);
     }
   });
 }
