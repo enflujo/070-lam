@@ -6,6 +6,10 @@ import { apagarRedPoder, filtrarNodo, mostrarNodosEnAnillo, mostrarRedPoder, pre
 
 const filtroPersonas = document.getElementById('filtroPersonas') as HTMLSelectElement;
 const filtroOrgs = document.getElementById('filtroOrgs') as HTMLSelectElement;
+const contenedorPoderes = document.getElementById('poderes');
+
+let poderActivo: string | null = null;
+let elementoPoderActivo: HTMLDivElement;
 
 export function definirFiltros(datos: FuenteDatos) {
   definirFiltrosAgentes(datos);
@@ -50,6 +54,7 @@ function definirFiltrosAgentes(datos: FuenteDatos) {
 function definirFiltrosCercania() {
   const cercanias = document.querySelector('#cercania .contenedor') as HTMLDivElement;
   const contenedores: HTMLElement[] = [];
+  let mostrandoGrado = -1;
 
   grados.forEach((grado) => {
     const contenedor = document.createElement('section');
@@ -72,35 +77,36 @@ function definirFiltrosCercania() {
     }
 
     titulo.addEventListener('click', () => {
-      contenedores.forEach((elemento) => {
-        if (elemento !== contenedor) {
-          elemento.classList.add('cerrado');
-        }
-      });
+      if (mostrandoGrado === grado.grado) {
+        prenderTodos();
+        mostrandoGrado = -1;
+      } else {
+        contenedores.forEach((elemento) => {
+          if (elemento !== contenedor) {
+            elemento.classList.add('cerrado');
+          }
+        });
+        mostrarNodosEnAnillo(grado.grado + 1);
+        mostrandoGrado = grado.grado;
+      }
     });
 
-    contenedor.onmouseenter = () => {
-      mostrarNodosEnAnillo(grado.grado + 1);
-    };
+    // contenedor.onmouseenter = () => {
+    //   mostrarNodosEnAnillo(grado.grado + 1);
+    // };
 
-    contenedor.onmouseleave = () => {
-      prenderTodos();
-    };
+    // contenedor.onmouseleave = () => {
+    //   prenderTodos();
+    // };
 
     contenedor.appendChild(titulo);
     contenedor.appendChild(contenido);
     cercanias.appendChild(contenedor);
-
     contenedores.push(contenedor);
   });
 }
 
 function definirFiltrosPoderes() {
-  const contenedorPoderes = document.getElementById('poderes');
-
-  let poderActivo: string | null = null;
-  let elementoActivo: HTMLDivElement;
-
   poderes.forEach((poder) => {
     const elemento = document.createElement('div');
     const llave = normalizarTexto(poder);
@@ -116,10 +122,15 @@ function definirFiltrosPoderes() {
       } else {
         mostrarRedPoder(llave);
         poderActivo = llave;
-        elementoActivo?.classList.remove('activo');
+        elementoPoderActivo?.classList.remove('activo');
         elemento.classList.add('activo');
-        elementoActivo = elemento;
+        elementoPoderActivo = elemento;
       }
     };
   });
+}
+
+export function desactivarPoder() {
+  elementoPoderActivo.classList.remove('activo');
+  poderActivo = null;
 }

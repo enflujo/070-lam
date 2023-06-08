@@ -272,15 +272,18 @@ export function mostrarNodosEnAnillo(anillo: number) {
 export function mostrarRedPoder(llave: string) {
   nodos.forEach((nodo) => {
     if (nodo.poder === llave) {
-      nodo.mostrarRelaciones = true;
+      nodo.elemento.classList.remove('apagado');
+      nodo.activo = true;
     } else {
-      esconderRed(nodo);
+      nodo.elemento.classList.add('apagado');
+      nodo.activo = false;
     }
   });
 }
 
 export function apagarRedPoder() {
   nodos.forEach((nodo) => {
-    esconderRed(nodo);
+    nodo.elemento.classList.remove('apagado');
+    nodo.activo = true;
   });
 }

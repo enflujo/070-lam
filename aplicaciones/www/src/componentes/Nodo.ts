@@ -25,7 +25,6 @@ export default class Nodo {
   perfil?: HTMLParagraphElement[];
   foto?: HTMLImageElement;
   relaciones?: HTMLLIElement[];
-  apagado: boolean;
   nodosRelacionados: number[];
 
   constructor(datos: DatosAgente, anillo: number, angulo: number) {
@@ -46,7 +45,6 @@ export default class Nodo {
     this.y = 0;
     this.lineas = [];
     this.mostrarRelaciones = false;
-    this.apagado = false;
     this.nodosRelacionados = [];
     texto.className = 'nombre';
     texto.innerText = datos.nombre;
