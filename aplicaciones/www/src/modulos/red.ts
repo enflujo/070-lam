@@ -235,3 +235,28 @@ export function prenderTodos() {
 
   esconderRed(nodoAnterior);
 }
+
+export function filtrarNodo(llave: string) {
+  if (nodoAnterior) esconderRed(nodoAnterior);
+  const seleccion = nodos.find((nodo) => nodo.llave === llave);
+
+  if (seleccion) {
+    seleccion.elemento.classList.add('activo', 'ejePrincipal');
+    seleccion.mostrarRelaciones = true;
+    nodoAnterior = seleccion;
+  }
+
+  nodos.forEach((nodo, i) => {
+    if (llave === 'todos') {
+      nodo.elemento.classList.remove('invisible');
+    } else {
+      if (seleccion) {
+        if (nodo !== seleccion && !seleccion.nodosRelacionados.includes(i)) {
+          nodo.elemento.classList.add('invisible');
+        } else {
+          nodo.elemento.classList.remove('invisible');
+        }
+      }
+    }
+  });
+}

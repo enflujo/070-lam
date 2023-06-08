@@ -45,18 +45,41 @@
       <div id="filtros" class="columnaLado">
         <h2>Filtros</h2>
 
+        <section class="infoSeccion mostrar">
+          <h3>Por Agentes <span class="colapsableBtn"></span></h3>
+          <div class="colapsable">
+            <h4>Personas</h4>
+            <div class="seleccion">
+              <select name="personas" id="filtroPersonas">
+                <option value="todos" selected>Todas</option>
+              </select>
+            </div>
+            <h4>Organizaciones</h4>
+            <div class="seleccion">
+              <select name="organizaciones" id="filtroOrgs">
+                <option value="todos" selected>Todas</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section id="carcania" class="infoSeccion mostrar">
+          <h3>Por Cercanía a LAM <span class="colapsableBtn"></span></h3>
+          <div class="colapsable"></div>
+        </section>
+
         <section class="infoSeccion mostrar tipoRelaciones">
           <h3>Relaciones <span class="colapsableBtn"></span></h3>
           <div class="colapsable">
             <svg id="tiposRelaciones" width="100%" height="4em">
               <g>
-                <text x="0" y="10">Vigentes</text>
-                <line class="tipoConexion vigente" x1="6em" y1="7" x2="12vw" y2="7" />
+                <text x="0" y="16">Vigentes</text>
+                <line class="tipoConexion vigente" x1="6em" y1="11" x2="12vw" y2="11" />
               </g>
 
               <g>
-                <text x="0" y="35">Pasadas</text>
-                <line class="tipoConexion pasadas" x1="6em" y1="32" x2="12vw" y2="32" stroke-dasharray="4" />
+                <text x="0" y="38">Pasadas</text>
+                <line class="tipoConexion pasadas" x1="6em" y1="34" x2="12vw" y2="34" stroke-dasharray="4" />
               </g>
             </svg>
           </div>

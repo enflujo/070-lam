@@ -1,12 +1,15 @@
 import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from '../cerebros/general';
-import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion } from '../tipos';
-import { crearInfo, eventoNodosRelacionados, losNodos, prenderTodos } from '../utilidades/elementosRed';
+import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion, TipoAgente } from '../tipos';
+import { crearInfo, eventoNodosRelacionados, losNodos, prenderTodos } from '../modulos/red';
+import { normalizarTexto } from '../utilidades/ayudas';
 
 const DOS_PI = Math.PI * 2;
 const conexiones = document?.querySelector<SVGGElement>('#conexiones');
 
 export default class Nodo {
   nombre: string;
+  tipo: TipoAgente;
+  llave: string;
   elemento: HTMLDivElement;
   anillo: number;
   datos: DatosAgente;
@@ -26,6 +29,8 @@ export default class Nodo {
 
   constructor(datos: DatosAgente, anillo: number, angulo: number) {
     this.nombre = datos.nombre;
+    this.llave = normalizarTexto(datos.nombre);
+    this.tipo = datos.tipo;
     this.elemento = document.createElement('div');
     const texto = document.createElement('span');
     const icono = document.createElement('span');
@@ -41,12 +46,9 @@ export default class Nodo {
     this.mostrarRelaciones = false;
     this.apagado = false;
     this.nodosRelacionados = [];
-
     texto.className = 'nombre';
     texto.innerText = datos.nombre;
-
     icono.className = 'icono';
-
     this.elemento.className = 'nodo activo';
     this.elemento.appendChild(icono);
     this.elemento.appendChild(texto);
