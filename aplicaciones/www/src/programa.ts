@@ -6,20 +6,24 @@ import { actualizarNodos, crearNodos, escalarNodos } from './modulos/red';
 import { escalarAnillos } from './modulos/anillos';
 import { definirFiltros } from './modulos/filtros';
 import { reiniciarTodo } from './modulos/brujeria';
+import { cargarImagenes } from './modulos/imagenes';
 
 export type FuenteDatos = typeof agentes;
 const svg = document.querySelector<SVGElement>('#vis');
 const dims: Dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 } };
-
 let orbitando = true;
 
-definirFiltros(agentes);
-crearNodos(agentes);
-definirEventos();
-escalar();
+async function inicio() {
+  await cargarImagenes(agentes);
+  definirFiltros(agentes);
+  crearNodos(agentes);
+  definirEventos();
+  escalar();
+  animar();
+  window.onresize = escalar;
+}
 
-animar();
-window.onresize = escalar;
+inicio();
 
 export function cambiarEstadoOrbitando(estanOrbitando: boolean) {
   orbitando = estanOrbitando;

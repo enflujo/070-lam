@@ -625,3 +625,39 @@ select {
     background-color: rgba(255, 255, 255, 0.7);
   }
 }
+
+#cargador {
+  opacity: 0;
+  position: fixed;
+  z-index: 9;
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+
+  &.activo {
+    opacity: 1;
+  }
+
+  .barra {
+    display: block;
+    height: 2px;
+    width: 50vw;
+    position: relative;
+    background-color: var(--rojoCalor);
+  }
+
+  .proceso {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background-color: var(--rojoSangre2);
+    width: 0%;
+  }
+}
