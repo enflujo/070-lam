@@ -2,6 +2,7 @@ import { leyendo } from '../cerebros/general';
 import { DatosAgente, Relacion } from '../tipos';
 import { crearParrafos } from '../utilidades/ayudas';
 import Nodo from './Nodo';
+import { buscarImagen } from './imagenes';
 
 const infoTitulo = document.getElementById('infoTitulo') as HTMLDivElement;
 const infoImg = document.getElementById('infoImg') as HTMLDivElement;
@@ -67,10 +68,8 @@ export function crearInfo(datos: DatosAgente) {
   const { nombre, descripcion, img, relaciones, relacionesInvertidas } = datos;
   const respuesta: { foto?: HTMLImageElement; perfil?: HTMLParagraphElement[]; relaciones?: HTMLLIElement[] } = {};
   if (img) {
-    const foto = new Image();
-    foto.src = `${import.meta.env.BASE_URL}/imgs/${img}`;
-    foto.setAttribute('alt', `Foto de ${nombre}`);
-    respuesta.foto = foto;
+    respuesta.foto = buscarImagen(img);
+    respuesta.foto.setAttribute('alt', `Foto de ${nombre}`);
   }
 
   if (descripcion) {

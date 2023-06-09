@@ -12,7 +12,6 @@ export async function cargarImagenes(datos: FuenteDatos) {
   });
 
   imagenes = await cargar();
-  console.log(imagenes);
 }
 
 export function buscarImagen(nombre: string) {

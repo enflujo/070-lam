@@ -34,18 +34,15 @@ export async function cargar(): Promise<ListaImagenes> {
       xhr.responseType = 'blob';
 
       xhr.onload = () => {
-        imgsCargadas++;
-
         const img = new Image();
-        img.onload = () => {
-          imgs[nombre] = img;
-
-          if (imgsCargadas === cola.length) {
-            esconder();
-            resolver(imgs);
-          }
-        };
         img.src = URL.createObjectURL(xhr.response);
+        imgsCargadas++;
+        imgs[nombre] = img;
+
+        if (imgsCargadas === cola.length) {
+          esconder();
+          resolver(imgs);
+        }
       };
 
       xhr.onprogress = (evento) => {
