@@ -1,5 +1,5 @@
 import Nodo from './Nodo';
-import { DatosAgente, Dims, Relacion } from '../tipos';
+import { DatosAgente, Dims, NodoRelacion, Relacion } from '../tipos';
 import { aleatorioFraccion, crearParrafos } from '../utilidades/ayudas';
 import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
 import { llenarInfo } from './columnaInfo';
@@ -7,6 +7,7 @@ import { FuenteDatos } from '../programa';
 
 const nodos: Nodo[] = [];
 const contenedorInfo = document.getElementById('info') as HTMLDivElement;
+const conexiones = document.querySelector<SVGGElement>('#conexiones');
 let nodoAnterior: Nodo;
 let nodoLAM: Nodo;
 
@@ -60,10 +61,37 @@ export function crearNodos(agentes: FuenteDatos) {
   });
 }
 
+export function crearLineaDeRelacion(relacion: Relacion, nodo: Nodo) {
+  const linea = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  linea.setAttribute('class', `conexion ${relacion.tipoRelacion}`);
+
+  if (!relacion.activo) {
+    linea.setAttribute('stroke-dasharray', '4');
+  }
+
+  if (relacion.tipo) {
+    linea.classList.add(relacion.tipo);
+  }
+
+  conexiones?.appendChild(linea);
+
+  const respuesta: NodoRelacion = { linea };
+  const nodoRelacionado = nodos.findIndex((nodo) => nodo.nombre === relacion.con);
+
+  if (nodoRelacionado >= 0) {
+    respuesta.hacia = nodoRelacionado;
+    nodo.nodosRelacionados.push(nodoRelacionado);
+  } else {
+    console.log('no se encontró nodo relacionado', nodo.nombre, relacion);
+  }
+
+  return respuesta;
+}
+
 agenteActivo.subscribe((nombre) => {
   if (nombre) {
     nodos.forEach((nodo) => {
-      if (nodo.datos.nombre === nombre) {
+      if (nodo.nombre === nombre) {
         nodo.activar();
         nodoAnterior = nodo;
       } else {
@@ -87,7 +115,7 @@ agenteActivo.subscribe((nombre) => {
 
 mostrarAgente.subscribe((nodo) => {
   if (nodo) {
-    const { tipo } = nodo.datos;
+    const { tipo } = nodo;
     contenedorInfo.classList.add(tipo);
 
     if (tipo === 'org') {
@@ -110,6 +138,9 @@ mostrarAgente.subscribe((nodo) => {
   }
 });
 
+/**
+ * Actualizar todos los nodos para pintar un fotograma de la animación.
+ */
 export function actualizarNodos() {
   nodos.forEach((nodo) => {
     nodo.actualizar();
@@ -131,6 +162,10 @@ export function escalarNodos(dims: Dims) {
   }
 }
 
+/**
+ * Lista con nodos de la red.
+ * @returns Devuelve los nodos que se ha creado.
+ */
 export function losNodos() {
   return nodos;
 }

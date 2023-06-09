@@ -33,8 +33,8 @@ export function llenarInfo(nodo: Nodo) {
     infoImg.replaceChildren();
   }
 
-  if (nodo.relaciones) {
-    infoRelaciones.replaceChildren(...nodo.relaciones);
+  if (nodo.listaRelaciones) {
+    infoRelaciones.replaceChildren(...nodo.listaRelaciones);
     tieneRelaciones = true;
     contenedorRelaciones.classList.add('mostrar');
   } else {
