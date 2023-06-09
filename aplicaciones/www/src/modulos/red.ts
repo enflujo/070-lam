@@ -1,7 +1,7 @@
 import Nodo from '../componentes/Nodo';
 import { DatosAgente, Dims, Relacion } from '../tipos';
 import { aleatorioFraccion, crearParrafos } from '../utilidades/ayudas';
-import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from '../cerebros/general';
+import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
 import { llenarInfo } from './columnaInfo';
 import { FuenteDatos } from '../programa';
 

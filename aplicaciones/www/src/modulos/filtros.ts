@@ -131,6 +131,6 @@ function definirFiltrosPoderes() {
 }
 
 export function desactivarPoder() {
-  elementoPoderActivo.classList.remove('activo');
+  if (elementoPoderActivo) elementoPoderActivo.classList.remove('activo');
   poderActivo = null;
 }

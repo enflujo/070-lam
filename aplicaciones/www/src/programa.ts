@@ -81,4 +81,4 @@ function animar() {
   actualizarNodos();
 }
 
-console.log('..:: Desarrollado por el Laboratorio EnFlujo - http://enflujo.com ::..');
+console.log('..:: Desarrollado por el Laboratorio EnFlujo - https://enflujo.com ::..');
