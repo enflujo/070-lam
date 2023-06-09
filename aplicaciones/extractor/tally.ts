@@ -3,7 +3,7 @@ import type { sheets_v4 } from '@googleapis/sheets';
 import { writeFileSync } from 'fs';
 
 type Dato = string | boolean | number;
-type Relacion = { activo: boolean; descriptor: string; con?: string; tipo?: string; tipoRelacion?: string };
+type Relacion = { activo: boolean; descriptor: string; con?: string; tipos?: string[]; tipoRelacion?: string };
 
 const guardarJSON = (json: any, nombre: string) => {
   writeFileSync(`../www/src/datos/${nombre}.json`, JSON.stringify(json));
@@ -155,7 +155,10 @@ async function iniciarSheets() {
             const relacionCon = agentes.find((agente) => agente.nombre === relacion.agente_2);
 
             if (relacionCon) {
-              respuesta.tipo = normalizarTexto(relacionCon.circulo_1 as string);
+              const tipos = [];
+              if (relacion.circulo1) tipos.push(normalizarTexto(relacion.circulo1 as string));
+              if (relacion.circulo2) tipos.push(normalizarTexto(relacion.circulo2 as string));
+              respuesta.tipos = tipos;
               respuesta.con = `${relacion.agente_2}`;
             }
           }
@@ -185,7 +188,10 @@ async function iniciarSheets() {
             const relacionCon = agentes.find((agente) => agente.nombre === relacion.rrb);
 
             if (relacionCon) {
-              respuesta.tipo = normalizarTexto(relacionCon.circulo_1 as string);
+              const tipos = [];
+              if (relacion.circulo1) tipos.push(normalizarTexto(relacion.circulo1 as string));
+              if (relacion.circulo2) tipos.push(normalizarTexto(relacion.circulo2 as string));
+              respuesta.tipos = tipos;
               respuesta.con = `${relacion.rrb}`;
             }
           }

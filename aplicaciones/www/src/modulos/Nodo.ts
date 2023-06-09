@@ -63,7 +63,7 @@ export default class Nodo {
     const texto = document.createElement('span');
     const icono = document.createElement('span');
     texto.className = 'nombre';
-    texto.innerText = datos.nombre;
+    texto.innerText = datos.nombre_corto;
     icono.className = 'icono';
     this.elemento.className = 'nodo activo';
     this.elemento.appendChild(icono);

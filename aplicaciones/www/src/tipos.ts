@@ -18,6 +18,7 @@ export type DatosAgente = {
   circulo_2?: string;
   circulo_3?: string;
   nombre: string;
+  nombre_corto: string;
   descripcion?: string;
   grado: number;
   img?: string;
