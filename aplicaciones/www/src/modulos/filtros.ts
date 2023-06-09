@@ -11,15 +11,34 @@ const contenedorPoderes = document.getElementById('poderes');
 let poderActivo: string | null = null;
 let elementoPoderActivo: HTMLDivElement;
 
+let mostrandoGrado = -1;
+let elementoCercaniaActiva: HTMLElement;
+
 export function definirFiltros(datos: FuenteDatos) {
   definirFiltrosAgentes(datos);
   definirFiltrosPoderes();
   definirFiltrosCercania();
 }
 
-export function reiniciarAgentes() {
+export function reiniciarFiltros() {
+  reiniciarAgentes();
+  reiniciarPoderes();
+  reiniciarCercanias();
+}
+
+function reiniciarAgentes() {
   filtroPersonas.value = 'todas';
   filtroOrgs.value = 'todas';
+}
+
+function reiniciarPoderes() {
+  if (elementoPoderActivo) elementoPoderActivo.classList.remove('activo');
+  poderActivo = null;
+}
+
+function reiniciarCercanias() {
+  if (elementoCercaniaActiva) elementoCercaniaActiva.classList.add('cerrado');
+  mostrandoGrado = -1;
 }
 
 function definirFiltrosAgentes(datos: FuenteDatos) {
@@ -54,7 +73,6 @@ function definirFiltrosAgentes(datos: FuenteDatos) {
 function definirFiltrosCercania() {
   const cercanias = document.querySelector('#cercania .contenedor') as HTMLDivElement;
   const contenedores: HTMLElement[] = [];
-  let mostrandoGrado = -1;
 
   grados.forEach((grado) => {
     const contenedor = document.createElement('section');
@@ -88,16 +106,9 @@ function definirFiltrosCercania() {
         });
         mostrarNodosEnAnillo(grado.grado + 1);
         mostrandoGrado = grado.grado;
+        elementoCercaniaActiva = contenedor;
       }
     });
-
-    // contenedor.onmouseenter = () => {
-    //   mostrarNodosEnAnillo(grado.grado + 1);
-    // };
-
-    // contenedor.onmouseleave = () => {
-    //   prenderTodos();
-    // };
 
     contenedor.appendChild(titulo);
     contenedor.appendChild(contenido);
@@ -128,9 +139,4 @@ function definirFiltrosPoderes() {
       }
     };
   });
-}
-
-export function desactivarPoder() {
-  if (elementoPoderActivo) elementoPoderActivo.classList.remove('activo');
-  poderActivo = null;
 }

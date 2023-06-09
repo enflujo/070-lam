@@ -1,8 +1,9 @@
-import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from '../cerebros/general';
+import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
 import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion, TipoAgente } from '../tipos';
 import { crearLineaDeRelacion, eventoNodosRelacionados, prenderTodos } from './red';
 import { normalizarTexto } from '../utilidades/ayudas';
 import { crearInfo } from './columnaInfo';
+import { cambiarEstadoOrbitando } from '../programa';
 
 const DOS_PI = Math.PI * 2;
 
@@ -84,14 +85,14 @@ export default class Nodo {
   eventoRatonEncima = () => {
     if (!this.activo) return;
 
-    estanOrbitando.set(false);
+    cambiarEstadoOrbitando(false);
     mostrarAgente.set(this);
     eventoNodosRelacionados(this.nodosRelacionados, this);
     this.mostrarRelaciones = true;
   };
 
   eventoRatonFuera = () => {
-    estanOrbitando.set(true);
+    cambiarEstadoOrbitando(true);
 
     if (!this.activo || leyendo.get()) return;
     prenderTodos();

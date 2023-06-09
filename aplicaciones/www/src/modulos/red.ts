@@ -1,6 +1,6 @@
 import Nodo from './Nodo';
 import { DatosAgente, Dims, NodoRelacion, Relacion } from '../tipos';
-import { aleatorioFraccion, crearParrafos } from '../utilidades/ayudas';
+import { aleatorioFraccion } from '../utilidades/ayudas';
 import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
 import { llenarInfo } from './columnaInfo';
 import { FuenteDatos } from '../programa';
@@ -226,6 +226,7 @@ export function filtrarNodo(llave: string) {
   const seleccion = nodos.find((nodo) => nodo.llave === llave);
 
   if (seleccion) {
+    llenarInfo(seleccion);
     seleccion.elemento.classList.add('activo', 'ejePrincipal');
     seleccion.mostrarRelaciones = true;
     nodoAnterior = seleccion;
