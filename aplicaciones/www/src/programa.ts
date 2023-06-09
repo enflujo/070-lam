@@ -2,10 +2,10 @@ import './scss/estilos.scss';
 
 import agentes from './datos/agentes.json';
 import type { Dims } from './tipos';
-import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from './cerebros/general';
-import { actualizarNodos, crearNodos, escalarNodos, prenderTodos } from './modulos/red';
+import { actualizarNodos, crearNodos, escalarNodos } from './modulos/red';
 import { escalarAnillos } from './modulos/anillos';
-import { definirFiltros, desactivarPoder, reiniciarAgentes } from './modulos/filtros';
+import { definirFiltros } from './modulos/filtros';
+import { reiniciarTodo } from './modulos/brujeria';
 
 export type FuenteDatos = typeof agentes;
 const svg = document.querySelector<SVGElement>('#vis');
@@ -21,21 +21,12 @@ escalar();
 animar();
 window.onresize = escalar;
 
-function definirEventos() {
-  if (svg) {
-    svg.onclick = () => {
-      mostrarAgente.set(null);
-      agenteActivo.set(null);
-      leyendo.set(false);
-      prenderTodos();
-      reiniciarAgentes();
-      desactivarPoder();
-    };
-  }
+export function cambiarEstadoOrbitando(estanOrbitando: boolean) {
+  orbitando = estanOrbitando;
+}
 
-  estanOrbitando.subscribe((valor) => {
-    orbitando = valor;
-  });
+function definirEventos() {
+  if (svg) svg.onclick = reiniciarTodo;
 
   const colapsables = document.querySelectorAll<HTMLDivElement>('.tituloColapsable');
 
