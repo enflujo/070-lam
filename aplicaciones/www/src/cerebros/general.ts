@@ -1,5 +1,5 @@
 import { atom } from 'nanostores';
-import Nodo from '../componentes/Nodo';
+import Nodo from '../modulos/Nodo';
 
 export const leyendo = atom<boolean>(false);
 export const mostrarAgente = atom<Nodo | null>(null);

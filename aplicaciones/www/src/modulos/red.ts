@@ -1,4 +1,4 @@
-import Nodo from '../componentes/Nodo';
+import Nodo from './Nodo';
 import { DatosAgente, Dims, Relacion } from '../tipos';
 import { aleatorioFraccion, crearParrafos } from '../utilidades/ayudas';
 import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
@@ -10,6 +10,11 @@ const contenedorInfo = document.getElementById('info') as HTMLDivElement;
 let nodoAnterior: Nodo;
 let nodoLAM: Nodo;
 
+/**
+ * Crear nodos para la red a partir de agentes.
+ *
+ * @param agentes Los datos que vienen del Tally
+ */
 export function crearNodos(agentes: FuenteDatos) {
   const contenedorAgentes = document.getElementById('contenedorAgentes') as HTMLDivElement;
 
@@ -114,69 +119,16 @@ export function actualizarNodos() {
   });
 }
 
+/**
+ * Escala los nodos de la red según las nuevas dimensiones.
+ * @param dims Dimensiones de la pantalla
+ */
 export function escalarNodos(dims: Dims) {
   if (nodos && nodos.length) {
     nodos.forEach((nodo) => {
       nodo.escalar(dims);
     });
   }
-}
-
-function elementoListaRelacion(relacion: Relacion) {
-  const elemento = document.createElement('li');
-  const descriptor = document.createElement('span');
-  const relacionCon = document.createElement('span');
-
-  elemento.className = 'relacion';
-  descriptor.className = 'descriptor';
-  relacionCon.className = 'relacionCon';
-
-  descriptor.innerText = relacion.descriptor;
-  if (relacion.con) relacionCon.innerText = relacion.con;
-
-  if (relacion.activo) {
-    elemento.classList.add('activo');
-  }
-
-  if (relacion.tipo) elemento.classList.add(relacion.tipo);
-
-  elemento.appendChild(descriptor);
-  elemento.appendChild(relacionCon);
-  return elemento;
-}
-
-export function crearInfo(datos: DatosAgente) {
-  const { nombre, descripcion, img, relaciones, relacionesInvertidas } = datos;
-  const respuesta: { foto?: HTMLImageElement; perfil?: HTMLParagraphElement[]; relaciones?: HTMLLIElement[] } = {};
-  if (img) {
-    const foto = new Image();
-    foto.src = `${import.meta.env.BASE_URL}/imgs/${img}`;
-    foto.setAttribute('alt', `Foto de ${nombre}`);
-    respuesta.foto = foto;
-  }
-
-  if (descripcion) {
-    respuesta.perfil = crearParrafos(descripcion);
-  }
-
-  if (relaciones.length) {
-    respuesta.relaciones = relaciones.map((relacion) => {
-      return elementoListaRelacion(relacion);
-    });
-  }
-
-  if (relacionesInvertidas.length) {
-    const relacionesActuales = respuesta.relaciones ? respuesta.relaciones : [];
-
-    respuesta.relaciones = [
-      ...relacionesActuales,
-      ...relacionesInvertidas.map((relacion) => {
-        return elementoListaRelacion(relacion);
-      }),
-    ];
-  }
-
-  return respuesta;
 }
 
 export function losNodos() {

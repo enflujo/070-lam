@@ -1,5 +1,7 @@
 import { leyendo } from '../cerebros/general';
-import Nodo from '../componentes/Nodo';
+import { DatosAgente, Relacion } from '../tipos';
+import { crearParrafos } from '../utilidades/ayudas';
+import Nodo from './Nodo';
 
 const infoTitulo = document.getElementById('infoTitulo') as HTMLDivElement;
 const infoImg = document.getElementById('infoImg') as HTMLDivElement;
@@ -59,4 +61,61 @@ export function llenarInfo(nodo: Nodo) {
     contenedorRelaciones.classList.remove('sinTitulo');
     contenedorPerfil.classList.remove('sinTitulo');
   }
+}
+
+export function crearInfo(datos: DatosAgente) {
+  const { nombre, descripcion, img, relaciones, relacionesInvertidas } = datos;
+  const respuesta: { foto?: HTMLImageElement; perfil?: HTMLParagraphElement[]; relaciones?: HTMLLIElement[] } = {};
+  if (img) {
+    const foto = new Image();
+    foto.src = `${import.meta.env.BASE_URL}/imgs/${img}`;
+    foto.setAttribute('alt', `Foto de ${nombre}`);
+    respuesta.foto = foto;
+  }
+
+  if (descripcion) {
+    respuesta.perfil = crearParrafos(descripcion);
+  }
+
+  if (relaciones.length) {
+    respuesta.relaciones = relaciones.map((relacion) => {
+      return elementoListaRelacion(relacion);
+    });
+  }
+
+  if (relacionesInvertidas.length) {
+    const relacionesActuales = respuesta.relaciones ? respuesta.relaciones : [];
+
+    respuesta.relaciones = [
+      ...relacionesActuales,
+      ...relacionesInvertidas.map((relacion) => {
+        return elementoListaRelacion(relacion);
+      }),
+    ];
+  }
+
+  return respuesta;
+}
+
+function elementoListaRelacion(relacion: Relacion) {
+  const elemento = document.createElement('li');
+  const descriptor = document.createElement('span');
+  const relacionCon = document.createElement('span');
+
+  elemento.className = 'relacion';
+  descriptor.className = 'descriptor';
+  relacionCon.className = 'relacionCon';
+
+  descriptor.innerText = relacion.descriptor;
+  if (relacion.con) relacionCon.innerText = relacion.con;
+
+  if (relacion.activo) {
+    elemento.classList.add('activo');
+  }
+
+  if (relacion.tipo) elemento.classList.add(relacion.tipo);
+
+  elemento.appendChild(descriptor);
+  elemento.appendChild(relacionCon);
+  return elemento;
 }

@@ -1,7 +1,8 @@
 import { agenteActivo, estanOrbitando, leyendo, mostrarAgente } from '../cerebros/general';
 import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion, TipoAgente } from '../tipos';
-import { crearInfo, eventoNodosRelacionados, losNodos, prenderTodos } from '../modulos/red';
+import { eventoNodosRelacionados, losNodos, prenderTodos } from './red';
 import { normalizarTexto } from '../utilidades/ayudas';
+import { crearInfo } from './columnaInfo';
 
 const DOS_PI = Math.PI * 2;
 const conexiones = document?.querySelector<SVGGElement>('#conexiones');
