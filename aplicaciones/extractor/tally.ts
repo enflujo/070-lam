@@ -14,7 +14,7 @@ const normalizarTexto = (texto: string) => {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLocaleLowerCase()
-    .replace(/\s/g, '');
+    .replace(/\s+/g, '-');
 };
 
 function limpiarTabla(datosTabla: sheets_v4.Schema$Sheet) {
