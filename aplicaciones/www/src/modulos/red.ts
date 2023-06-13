@@ -61,7 +61,7 @@ export function crearNodos(agentes: FuenteDatos) {
   });
 }
 
-export function crearLineaDeRelacion(relacion: Relacion, nodo: Nodo) {
+export function crearLineaDeRelacion(relacion: Relacion, nodo: Nodo, relacionNormal: boolean) {
   const dobleConexion = relacion.tipos.length === 2;
 
   return relacion.tipos.map((tipo, i) => {
@@ -73,7 +73,7 @@ export function crearLineaDeRelacion(relacion: Relacion, nodo: Nodo) {
     }
 
     conexiones?.appendChild(linea);
-    const respuesta: NodoRelacion = { linea, tipo };
+    const respuesta: NodoRelacion = { linea, tipo, relacionNormal };
     const nodoRelacionado = nodos.findIndex((nodo) => nodo.nombre === relacion.con);
 
     if (nodoRelacionado >= 0) {
@@ -170,12 +170,20 @@ export function mostrarRed(nodo: Nodo) {
   if (nodo.lineas.length) {
     nodo.lineas.forEach((obj) => {
       if (obj.hacia) {
-        const destino = nodos[obj.hacia];
-        const { linea } = obj;
-        linea.setAttribute('x1', `${nodo.x}`);
-        linea.setAttribute('y1', `${nodo.y}`);
-        linea.setAttribute('x2', `${destino.x}`);
-        linea.setAttribute('y2', `${destino.y}`);
+        let mostrar = true;
+
+        if (nodo.mostrarRelacionPoder) {
+          mostrar = obj.relacionNormal && obj.tipo === nodo.mostrarRelacionPoder;
+        }
+
+        if (mostrar) {
+          const destino = nodos[obj.hacia];
+          const { linea } = obj;
+          linea.setAttribute('x1', `${nodo.x}`);
+          linea.setAttribute('y1', `${nodo.y}`);
+          linea.setAttribute('x2', `${destino.x}`);
+          linea.setAttribute('y2', `${destino.y}`);
+        }
       }
     });
   }
@@ -214,6 +222,7 @@ export function prenderTodos() {
     nodo.cambiarEstadoApagado(false);
     esconderRed(nodo);
     nodo.elemento.classList.remove('invisible');
+    nodo.mostrarRelacionPoder = null;
   });
 }
 
@@ -255,6 +264,18 @@ export function mostrarNodosEnAnillo(anillo: number) {
 
 export function mostrarRedPoder(llave: string) {
   nodos.forEach((nodo) => {
+    esconderRed(nodo);
+    if (nodo.poderes.includes(llave)) {
+      nodo.elemento.classList.remove('apagado');
+      nodo.activo = true;
+      nodo.mostrarRelaciones = true;
+      nodo.mostrarRelacionPoder = llave;
+    } else {
+      nodo.elemento.classList.add('apagado');
+      nodo.activo = false;
+      nodo.mostrarRelaciones = false;
+      nodo.mostrarRelacionPoder = null;
+    }
     // if (nodo.poder === llave) {
     //   nodo.elemento.classList.remove('apagado');
     //   nodo.activo = true;

@@ -1,5 +1,5 @@
 import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
-import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion, TipoAgente } from '../tipos';
+import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion, TipoAgente, TiposPoder } from '../tipos';
 import { crearLineaDeRelacion, eventoNodosRelacionados, prenderTodos } from './red';
 import { normalizarTexto } from '../utilidades/ayudas';
 import { crearInfo } from './columnaInfo';
@@ -11,6 +11,7 @@ export default class Nodo {
   nombre: string;
   llave: string;
   tipo: TipoAgente;
+  poderes: string[];
   relaciones: Relacion[];
   relacionesInvertidas: Relacion[];
 
@@ -24,6 +25,7 @@ export default class Nodo {
   y: number;
   lineas: NodoRelacion[];
   mostrarRelaciones: boolean;
+  mostrarRelacionPoder?: string | null;
   perfil?: HTMLParagraphElement[];
   foto?: HTMLImageElement;
   listaRelaciones?: HTMLLIElement[];
@@ -36,6 +38,7 @@ export default class Nodo {
     this.nombre = datos.nombre;
     this.llave = normalizarTexto(datos.nombre);
     this.tipo = datos.tipo;
+    this.poderes = [];
     this.relaciones = datos.relaciones;
     this.relacionesInvertidas = datos.relacionesInvertidas;
     this.anillo = anillo;
@@ -82,11 +85,10 @@ export default class Nodo {
 
   eventoRatonEncima = () => {
     if (!this.activo) return;
-
+    this.mostrarRelaciones = true;
     cambiarEstadoOrbitando(false);
     mostrarAgente.set(this);
     eventoNodosRelacionados(this.nodosRelacionados, this);
-    this.mostrarRelaciones = true;
   };
 
   eventoRatonFuera = () => {
@@ -144,15 +146,22 @@ export default class Nodo {
   cambiarEstadoApagado(apagado: boolean) {
     if (apagado) {
       this.elemento.classList.add('apagado');
+      this.activo = false;
     } else {
       this.elemento.classList.remove('apagado');
+      this.activo = true;
     }
   }
 
   definirRelaciones() {
     if (this.relaciones.length) {
       const conjuntoLineas = this.relaciones.map((relacion) => {
-        return crearLineaDeRelacion(relacion, this);
+        relacion.tipos.forEach((poder) => {
+          if (!this.poderes.includes(poder)) {
+            this.poderes.push(poder);
+          }
+        });
+        return crearLineaDeRelacion(relacion, this, true);
       });
 
       conjuntoLineas.forEach((grupo) => {
@@ -162,14 +171,17 @@ export default class Nodo {
 
     if (this.relacionesInvertidas.length) {
       const conjuntoLineas = this.relacionesInvertidas.map((relacion) => {
-        return crearLineaDeRelacion(relacion, this);
+        relacion.tipos.forEach((poder) => {
+          if (!this.poderes.includes(poder)) {
+            this.poderes.push(poder);
+          }
+        });
+        return crearLineaDeRelacion(relacion, this, false);
       });
 
       conjuntoLineas.forEach((grupo) => {
         this.lineas.push(...grupo);
       });
     }
-
-    console.log(this.lineas);
   }
 }

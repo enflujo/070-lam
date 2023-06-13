@@ -34,6 +34,6 @@ export type Relacion = {
   activo: boolean;
 };
 
-export type NodoRelacion = { linea: SVGLineElement; tipo: string; hacia?: number };
+export type NodoRelacion = { linea: SVGLineElement; tipo: string; hacia?: number; relacionNormal: boolean };
 
 export type ListaImagenes = { [llave: string]: HTMLImageElement };
