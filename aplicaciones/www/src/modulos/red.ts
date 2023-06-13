@@ -62,30 +62,37 @@ export function crearNodos(agentes: FuenteDatos) {
 }
 
 export function crearLineaDeRelacion(relacion: Relacion, nodo: Nodo) {
-  const linea = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  linea.setAttribute('class', `conexion ${relacion.tipoRelacion}`);
+  const dobleConexion = relacion.tipos.length === 2;
 
-  if (!relacion.activo) {
-    linea.setAttribute('stroke-dasharray', '4');
-  }
+  return relacion.tipos.map((tipo, i) => {
+    const linea = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    linea.setAttribute('class', `conexion ${tipo}`);
 
-  if (relacion.tipo) {
-    linea.classList.add(relacion.tipo);
-  }
+    if (!relacion.activo) {
+      linea.setAttribute('stroke-dasharray', '4');
+    }
 
-  conexiones?.appendChild(linea);
+    conexiones?.appendChild(linea);
+    const respuesta: NodoRelacion = { linea, tipo };
+    const nodoRelacionado = nodos.findIndex((nodo) => nodo.nombre === relacion.con);
 
-  const respuesta: NodoRelacion = { linea };
-  const nodoRelacionado = nodos.findIndex((nodo) => nodo.nombre === relacion.con);
+    if (nodoRelacionado >= 0) {
+      respuesta.hacia = nodoRelacionado;
+      nodo.nodosRelacionados.push(nodoRelacionado);
+    } else {
+      console.log('no se encontró nodo relacionado', nodo.nombre, relacion);
+    }
 
-  if (nodoRelacionado >= 0) {
-    respuesta.hacia = nodoRelacionado;
-    nodo.nodosRelacionados.push(nodoRelacionado);
-  } else {
-    console.log('no se encontró nodo relacionado', nodo.nombre, relacion);
-  }
+    if (dobleConexion) {
+      if (i === 0) {
+        linea.style.transform = `translateX(-2px)`;
+      } else {
+        linea.style.transform = `translateX(2px)`;
+      }
+    }
 
-  return respuesta;
+    return respuesta;
+  });
 }
 
 agenteActivo.subscribe((nombre) => {
@@ -115,17 +122,6 @@ agenteActivo.subscribe((nombre) => {
 
 mostrarAgente.subscribe((nodo) => {
   if (nodo) {
-    const { tipo } = nodo;
-    contenedorInfo.classList.add(tipo);
-
-    if (tipo === 'org') {
-      contenedorInfo.classList.remove('lam');
-      contenedorInfo.classList.remove('persona');
-    } else {
-      contenedorInfo.classList.remove('lam');
-      contenedorInfo.classList.remove('org');
-    }
-
     llenarInfo(nodo);
     mostrarRed(nodo);
     nodoAnterior = nodo;
@@ -259,13 +255,13 @@ export function mostrarNodosEnAnillo(anillo: number) {
 
 export function mostrarRedPoder(llave: string) {
   nodos.forEach((nodo) => {
-    if (nodo.poder === llave) {
-      nodo.elemento.classList.remove('apagado');
-      nodo.activo = true;
-    } else {
-      nodo.elemento.classList.add('apagado');
-      nodo.activo = false;
-    }
+    // if (nodo.poder === llave) {
+    //   nodo.elemento.classList.remove('apagado');
+    //   nodo.activo = true;
+    // } else {
+    //   nodo.elemento.classList.add('apagado');
+    //   nodo.activo = false;
+    // }
   });
 }
 

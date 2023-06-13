@@ -11,7 +11,6 @@ export default class Nodo {
   nombre: string;
   llave: string;
   tipo: TipoAgente;
-  poder: string;
   relaciones: Relacion[];
   relacionesInvertidas: Relacion[];
 
@@ -37,7 +36,6 @@ export default class Nodo {
     this.nombre = datos.nombre;
     this.llave = normalizarTexto(datos.nombre);
     this.tipo = datos.tipo;
-    this.poder = normalizarTexto(datos.circulo_1);
     this.relaciones = datos.relaciones;
     this.relacionesInvertidas = datos.relacionesInvertidas;
     this.anillo = anillo;
@@ -153,18 +151,25 @@ export default class Nodo {
 
   definirRelaciones() {
     if (this.relaciones.length) {
-      this.lineas = this.relaciones.map((relacion) => {
+      const conjuntoLineas = this.relaciones.map((relacion) => {
         return crearLineaDeRelacion(relacion, this);
+      });
+
+      conjuntoLineas.forEach((grupo) => {
+        this.lineas.push(...grupo);
       });
     }
 
     if (this.relacionesInvertidas.length) {
-      this.lineas = [
-        ...this.lineas,
-        ...this.relacionesInvertidas.map((relacion) => {
-          return crearLineaDeRelacion(relacion, this);
-        }),
-      ];
+      const conjuntoLineas = this.relacionesInvertidas.map((relacion) => {
+        return crearLineaDeRelacion(relacion, this);
+      });
+
+      conjuntoLineas.forEach((grupo) => {
+        this.lineas.push(...grupo);
+      });
     }
+
+    console.log(this.lineas);
   }
 }

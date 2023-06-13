@@ -623,6 +623,32 @@ select {
   &.activo {
     font-weight: 600;
     background-color: rgba(255, 255, 255, 0.7);
+
+    .iconoPoder {
+      background-position-x: 0px;
+    }
+  }
+
+  .iconoPoder {
+    height: 30px;
+    width: 32px;
+    display: inline-block;
+    margin-top: -6px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: -60px;
+  }
+
+  &.politica {
+    .iconoPoder {
+      background-image: url(/imgs/politica.webp);
+    }
+
+    &:hover {
+      .iconoPoder {
+        background-position-x: -30px;
+      }
+    }
   }
 }
 

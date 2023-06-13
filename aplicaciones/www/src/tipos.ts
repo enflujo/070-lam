@@ -14,9 +14,6 @@ export type Punto = {
 export type TipoAgente = 'persona' | 'org' | 'lam';
 
 export type DatosAgente = {
-  circulo_1: string;
-  circulo_2?: string;
-  circulo_3?: string;
   nombre: string;
   nombre_corto: string;
   descripcion?: string;
@@ -27,14 +24,16 @@ export type DatosAgente = {
   relacionesInvertidas: Relacion[];
 };
 
+export type TiposPoder = 'politica' | 'comercio' | 'iglesiacatolica' | 'policia' | 'medios' | 'lam' | 'educacion';
+
 export type Relacion = {
-  tipoRelacion: 'perOrg' | 'perPer' | 'orgOrg';
-  tipo: 'politica' | 'comercio' | 'iglesiacatolica' | 'policia' | 'medios' | 'lam' | 'educacion';
+  // tipoRelacion: 'perOrg' | 'perPer' | 'orgOrg';
+  tipos: TiposPoder[];
   descriptor: string;
   con: string;
   activo: boolean;
 };
 
-export type NodoRelacion = { linea: SVGLineElement; hacia?: number };
+export type NodoRelacion = { linea: SVGLineElement; tipo: string; hacia?: number };
 
 export type ListaImagenes = { [llave: string]: HTMLImageElement };

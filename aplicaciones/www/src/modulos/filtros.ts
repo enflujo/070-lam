@@ -120,9 +120,17 @@ function definirFiltrosCercania() {
 function definirFiltrosPoderes() {
   poderes.forEach((poder) => {
     const elemento = document.createElement('div');
+    const icono = document.createElement('span');
+    const nombre = document.createElement('span');
     const llave = normalizarTexto(poder);
-    elemento.className = 'poder';
-    elemento.innerText = poder;
+
+    elemento.className = `poder ${llave}`;
+    nombre.className = 'nombrePoder';
+    nombre.innerText = poder;
+    icono.className = 'iconoPoder';
+
+    elemento.appendChild(icono);
+    elemento.appendChild(nombre);
     contenedorPoderes?.appendChild(elemento);
 
     elemento.onclick = () => {

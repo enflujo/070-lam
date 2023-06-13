@@ -108,7 +108,9 @@ function elementoListaRelacion(relacion: Relacion) {
   descriptor.innerText = relacion.descriptor;
   if (relacion.con) relacionCon.innerText = relacion.con;
   if (relacion.activo) elemento.classList.add('activo');
-  if (relacion.tipo) elemento.classList.add(relacion.tipo);
+  if (relacion.tipos) {
+    relacion.tipos.forEach((tipo) => elemento.classList.add(tipo));
+  }
 
   elemento.appendChild(descriptor);
   elemento.appendChild(relacionCon);

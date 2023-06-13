@@ -14,6 +14,7 @@ const dims: Dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 }
 let orbitando = true;
 
 async function inicio() {
+  console.log(agentes);
   await cargarImagenes(agentes);
   definirFiltros(agentes);
   crearNodos(agentes);

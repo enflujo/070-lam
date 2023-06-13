@@ -3,13 +3,12 @@ import type { sheets_v4 } from '@googleapis/sheets';
 import { writeFileSync } from 'fs';
 
 type Dato = string | boolean | number;
-type Relacion = { activo: boolean; descriptor: string; con?: string; tipos?: string[]; tipoRelacion?: string };
+type Relacion = { activo: boolean; descriptor: string; con?: string; tipos?: string[] };
 
 const guardarJSON = (json: any, nombre: string) => {
   writeFileSync(`../www/src/datos/${nombre}.json`, JSON.stringify(json));
 };
 
-const tablas = ['datos-estructurados', 'agentes', 'organizaciones', 'personas', 'metadatos'];
 const normalizarTexto = (texto: string) => {
   return texto
     .normalize('NFD')
@@ -61,18 +60,18 @@ function limpiarTabla(datosTabla: sheets_v4.Schema$Sheet) {
   return datos;
 }
 
-function tipoRelacion(relacion: { [llave: string]: Dato }) {
-  let tipoRelacion = '';
+// function tipoRelacion(relacion: { [llave: string]: Dato }) {
+//   let tipoRelacion = '';
 
-  if (relacion.tipo_de_relacion === 'organización - organización') {
-    tipoRelacion = 'orgOrg';
-  } else if (relacion.tipo_de_relacion === 'persona - persona') {
-    tipoRelacion = 'perPer';
-  } else if (relacion.tipo_de_relacion === 'persona - organización') {
-    tipoRelacion = 'perOrg';
-  }
-  return tipoRelacion;
-}
+//   if (relacion.tipo_de_relacion === 'organización - organización') {
+//     tipoRelacion = 'orgOrg';
+//   } else if (relacion.tipo_de_relacion === 'persona - persona') {
+//     tipoRelacion = 'perPer';
+//   } else if (relacion.tipo_de_relacion === 'persona - organización') {
+//     tipoRelacion = 'perOrg';
+//   }
+//   return tipoRelacion;
+// }
 
 async function iniciarSheets() {
   const conexion = new auth.GoogleAuth({
@@ -139,6 +138,9 @@ async function iniciarSheets() {
       if (agente.circulo_1 && typeof agente.circulo_1 === 'string' && !poderes.includes(agente.circulo_1)) {
         poderes.push(agente.circulo_1);
       }
+      delete agente.circulo_1;
+      delete agente.circulo_2;
+      delete agente.circulo_3;
 
       // asignar relaciones
       const relaciones = datos
@@ -149,8 +151,6 @@ async function iniciarSheets() {
             descriptor: `${relacion.descriptor_de_relacion}`,
           };
 
-          respuesta.tipoRelacion = tipoRelacion(relacion);
-
           if (relacion.agente_2) {
             const relacionCon = agentes.find((agente) => agente.nombre === relacion.agente_2);
 
@@ -160,6 +160,8 @@ async function iniciarSheets() {
               if (relacion.circulo2) tipos.push(normalizarTexto(relacion.circulo2 as string));
               respuesta.tipos = tipos;
               respuesta.con = `${relacion.agente_2}`;
+            } else {
+              console.log(agente.nombre, relacion);
             }
           }
 
@@ -167,22 +169,12 @@ async function iniciarSheets() {
         });
 
       const relacionesInvertidas = datos
-        .filter((fila) => {
-          if (fila.agente_2) {
-            if (fila.agente_2 === agente.nombre) {
-              return true;
-            }
-          }
-
-          return false;
-        })
+        .filter((fila) => fila.agente_2 && fila.agente_2 === agente.nombre)
         .map((relacion) => {
           const respuesta: Relacion = {
             activo: !!relacion.activo,
             descriptor: `${relacion.descriptor_de_relacion}`,
           };
-
-          respuesta.tipoRelacion = tipoRelacion(relacion);
 
           if (relacion.rrb) {
             const relacionCon = agentes.find((agente) => agente.nombre === relacion.rrb);
@@ -193,6 +185,8 @@ async function iniciarSheets() {
               if (relacion.circulo2) tipos.push(normalizarTexto(relacion.circulo2 as string));
               respuesta.tipos = tipos;
               respuesta.con = `${relacion.rrb}`;
+            } else {
+              // console.log(relacion);
             }
           }
 
