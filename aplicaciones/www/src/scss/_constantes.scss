@@ -1,0 +1,56 @@
+$fuenteTitulos: 'Grenze Gotisch', 'Brush Script MT', cursive;
+$fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
+
+:root {
+  //paleta 1
+  --azulOscuro: #323846;
+  --blancoNube: #e0e1db;
+  --rojoCorazon: #d53f26;
+  --azulMedio: #393c5b;
+  --cafeTunica: #ab6656;
+  --doradoEspada: #c2a154;
+  --sangreCristo: #b73944;
+  --tinieblas: #0d030c;
+
+  //paleta 2
+  //fondos
+  --amarilloEdadMedia: #fff8cc;
+  --verdeJade: #ccffcc;
+  --azulNube: #a1ecf9;
+  --rosaHermanosGrimm: #fcc5dd;
+
+  //convenciones
+  --amarilloCuarzo: #ffe4c7;
+  --rojoMistico: #ee5518;
+  --azulJade: #0f6299;
+  --verdeRealeza: #197934;
+  --azulMillos: #3f97ef;
+  --azulJoya: #74c1bd;
+  --azulFiesta: #1be7ff;
+  --azulFiesta2: #00b7cc;
+  --verdeFiesta: #00ec56;
+  --azulCeleste: #b1f8f2;
+  --rosaJardin: #ef9396;
+  --negroTinta: #3a2817;
+  --blancoPecado: #fcf5f5;
+
+  //filtro de cercanía
+  --amarilloOro: #efd63f;
+  --rojoSangre: #d4270c;
+  --rojoSangre2: #bd0a0a;
+  --naranjaMisionero: #ff6316;
+  --naranjaMascara: #ff8b17;
+  --amarilloAliado: #ffff4d;
+
+  //degradé color
+  --rojoCalor: #ff24004d;
+  --amarilloLuz: #ffff4c4d;
+
+  //variables color
+  --colorPolitica: var(--rojoMistico);
+  --colorEducacion: var(--amarilloCuarzo);
+  --colorComercio: var(--verdeRealeza);
+  --colorMedios: var(--azulFiesta2);
+  --colorReligion: var(--azulJade);
+  --colorLAM: var(--rojoSangre2);
+}

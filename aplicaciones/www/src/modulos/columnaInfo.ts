@@ -21,6 +21,7 @@ leyendo.subscribe((estaLeyendo) => {
 
 export function llenarInfo(nodo: Nodo) {
   if (!nodo) return;
+
   let tieneRelaciones = false;
   let tienePerfil = false;
 
@@ -67,6 +68,7 @@ export function llenarInfo(nodo: Nodo) {
 export function crearInfo(datos: DatosAgente) {
   const { nombre, descripcion, img, relaciones, relacionesInvertidas } = datos;
   const respuesta: { foto?: HTMLImageElement; perfil?: HTMLParagraphElement[]; relaciones?: HTMLLIElement[] } = {};
+
   if (img) {
     respuesta.foto = buscarImagen(img);
     respuesta.foto.setAttribute('alt', `Foto de ${nombre}`);
@@ -98,21 +100,31 @@ export function crearInfo(datos: DatosAgente) {
 
 function elementoListaRelacion(relacion: Relacion) {
   const elemento = document.createElement('li');
+  const contenedorNombre = document.createElement('span');
   const descriptor = document.createElement('span');
   const relacionCon = document.createElement('span');
 
   elemento.className = 'relacion';
   descriptor.className = 'descriptor';
   relacionCon.className = 'relacionCon';
+  contenedorNombre.className = 'contenedorNombre';
 
   descriptor.innerText = relacion.descriptor;
   if (relacion.con) relacionCon.innerText = relacion.con;
   if (relacion.activo) elemento.classList.add('activo');
+
   if (relacion.tipos) {
-    relacion.tipos.forEach((tipo) => elemento.classList.add(tipo));
+    relacion.tipos.forEach((tipo) => {
+      const linea = document.createElement('span');
+      linea.className = 'referenciaRelacion';
+      linea.classList.add(tipo);
+      elemento.appendChild(linea);
+    });
   }
 
-  elemento.appendChild(descriptor);
-  elemento.appendChild(relacionCon);
+  contenedorNombre.appendChild(descriptor);
+  contenedorNombre.appendChild(relacionCon);
+  elemento.appendChild(contenedorNombre);
+
   return elemento;
 }

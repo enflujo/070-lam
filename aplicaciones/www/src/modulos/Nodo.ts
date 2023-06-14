@@ -1,6 +1,6 @@
-import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
-import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion, TipoAgente, TiposPoder } from '../tipos';
-import { crearLineaDeRelacion, eventoNodosRelacionados, prenderTodos } from './red';
+import { agenteActivo } from '../cerebros/general';
+import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion, TipoAgente } from '../tipos';
+import { crearLineaDeRelacion } from './red';
 import { normalizarTexto } from '../utilidades/ayudas';
 import { crearInfo } from './columnaInfo';
 import { cambiarEstadoOrbitando } from '../programa';
@@ -41,13 +41,18 @@ export default class Nodo {
     this.poderes = [];
     this.relaciones = datos.relaciones;
     this.relacionesInvertidas = datos.relacionesInvertidas;
-    this.anillo = anillo;
+    this.anillo = anillo + 1;
     this.radio = 0;
     this.centro = { x: 0, y: 0 };
     this.angulo = angulo;
     this.activo = true;
     this.x = 0;
     this.y = 0;
+
+    if (datos.nombre.toLocaleLowerCase() === 'lazos de amor mariano') {
+      this.tipo = 'lam';
+      this.anillo -= 1;
+    }
 
     /**
      * Elementos de HTML
@@ -84,32 +89,34 @@ export default class Nodo {
   }
 
   eventoRatonEncima = () => {
-    if (!this.activo) return;
-    this.mostrarRelaciones = true;
+    // if (!this.activo) return;
+    // this.mostrarRelaciones = true;
     cambiarEstadoOrbitando(false);
-    mostrarAgente.set(this);
-    eventoNodosRelacionados(this.nodosRelacionados, this);
+    // mostrarAgente.set(this);
+    // eventoNodosRelacionados(this.nodosRelacionados, this);
   };
 
   eventoRatonFuera = () => {
     cambiarEstadoOrbitando(true);
 
-    if (!this.activo || leyendo.get()) return;
-    prenderTodos();
-    mostrarAgente.set(null);
+    // if (!this.activo || leyendo.get()) return;
+    // prenderTodos();
+    // mostrarAgente.set(null);
   };
 
   eventoClic = (evento: Event) => {
     evento.stopPropagation();
 
-    if (leyendo.get()) {
-      agenteActivo.set(null);
-      this.elemento.classList.remove('ejePrincipal');
-    } else {
-      this.elemento.classList.add('ejePrincipal');
-      this.mostrarRelaciones = true;
-      agenteActivo.set(this.nombre);
-    }
+    agenteActivo.set(this.llave);
+
+    // if (leyendo.get()) {
+    //   agenteActivo.set(null);
+    //   this.elemento.classList.remove('ejePrincipal');
+    // } else {
+    //   this.elemento.classList.add('ejePrincipal');
+    //   this.mostrarRelaciones = true;
+    //   agenteActivo.set(this.nombre);
+    // }
   };
 
   escalar(dims: Dims) {

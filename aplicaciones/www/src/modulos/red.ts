@@ -1,7 +1,7 @@
 import Nodo from './Nodo';
 import { DatosAgente, Dims, NodoRelacion, Relacion } from '../tipos';
 import { aleatorioFraccion } from '../utilidades/ayudas';
-import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
+import { agenteActivo, mostrarAgente, poderesActivos } from '../cerebros/general';
 import { llenarInfo } from './columnaInfo';
 import { FuenteDatos } from '../programa';
 
@@ -33,20 +33,12 @@ export function crearNodos(agentes: FuenteDatos) {
 
   agentes.forEach((agente) => {
     let anillo = agente.grado;
-    let esLam = false;
-
-    if (agente.nombre.toLocaleLowerCase() !== 'lazos de amor mariano') {
-      anillo++;
-    } else {
-      esLam = true;
-    }
-
     const anguloMax = posiciones[agente.grado].i * posiciones[agente.grado].paso;
     const anguloMin = anguloMax - posiciones[agente.grado].paso * 0.5;
     const angulo = aleatorioFraccion(anguloMin, anguloMax);
     const nodo = new Nodo(agente as DatosAgente, anillo, angulo);
 
-    if (esLam) {
+    if (nodo.tipo === 'lam') {
       nodoLAM = nodo;
       llenarInfo(nodo);
     }
@@ -96,32 +88,46 @@ export function crearLineaDeRelacion(relacion: Relacion, nodo: Nodo, relacionNor
 }
 
 agenteActivo.subscribe((nombre) => {
-  if (nombre) {
-    nodos.forEach((nodo) => {
-      if (nodo.nombre === nombre) {
-        nodo.activar();
-        nodoAnterior = nodo;
-      } else {
-        nodo.desactivar();
-      }
-    });
+  nodos.forEach((nodo) => esconderRed(nodo));
+  const nodo = nodos.find((nodo) => nodo.llave === nombre);
+  const ejeActual = document.querySelector('.nodo.ejePrincipal');
 
-    leyendo.set(true);
-  } else {
-    nodos.forEach((nodo) => {
-      nodo.activar();
-    });
+  if (ejeActual) ejeActual.classList.remove('ejePrincipal');
 
-    leyendo.set(false);
-
-    if (nodoAnterior) {
-      esconderRed(nodoAnterior);
-    }
+  if (nodo) {
+    nodo.elemento.classList.add('ejePrincipal');
+    // actualizarNodos();
   }
 });
 
+// agenteActivo.subscribe((nombre) => {
+//   if (nombre) {
+//     nodos.forEach((nodo) => {
+//       if (nodo.nombre === nombre) {
+//         nodo.activar();
+//         nodoAnterior = nodo;
+//       } else {
+//         nodo.desactivar();
+//       }
+//     });
+
+//     leyendo.set(true);
+//   } else {
+//     nodos.forEach((nodo) => {
+//       nodo.activar();
+//     });
+
+//     leyendo.set(false);
+
+//     if (nodoAnterior) {
+//       esconderRed(nodoAnterior);
+//     }
+//   }
+// });
+
 mostrarAgente.subscribe((nodo) => {
   if (nodo) {
+    contenedorInfo.classList.add(nodo.tipo);
     llenarInfo(nodo);
     mostrarRed(nodo);
     nodoAnterior = nodo;
@@ -133,18 +139,6 @@ mostrarAgente.subscribe((nodo) => {
     llenarInfo(nodoLAM);
   }
 });
-
-/**
- * Actualizar todos los nodos para pintar un fotograma de la animación.
- */
-export function actualizarNodos() {
-  nodos.forEach((nodo) => {
-    nodo.actualizar();
-    if (nodo.mostrarRelaciones) {
-      mostrarRed(nodo);
-    }
-  });
-}
 
 /**
  * Escala los nodos de la red según las nuevas dimensiones.
@@ -166,17 +160,20 @@ export function losNodos() {
   return nodos;
 }
 
-export function mostrarRed(nodo: Nodo) {
+export function mostrarRed(nodo: Nodo, poderes?: string[]) {
   if (nodo.lineas.length) {
     nodo.lineas.forEach((obj) => {
       if (obj.hacia) {
-        let mostrar = true;
-
-        if (nodo.mostrarRelacionPoder) {
-          mostrar = obj.relacionNormal && obj.tipo === nodo.mostrarRelacionPoder;
-        }
-
-        if (mostrar) {
+        if (poderes && poderes.length) {
+          if (poderes.includes(obj.tipo)) {
+            const destino = nodos[obj.hacia];
+            const { linea } = obj;
+            linea.setAttribute('x1', `${nodo.x}`);
+            linea.setAttribute('y1', `${nodo.y}`);
+            linea.setAttribute('x2', `${destino.x}`);
+            linea.setAttribute('y2', `${destino.y}`);
+          }
+        } else {
           const destino = nodos[obj.hacia];
           const { linea } = obj;
           linea.setAttribute('x1', `${nodo.x}`);
@@ -184,13 +181,27 @@ export function mostrarRed(nodo: Nodo) {
           linea.setAttribute('x2', `${destino.x}`);
           linea.setAttribute('y2', `${destino.y}`);
         }
+        // let mostrar = true;
+
+        // if (nodo.mostrarRelacionPoder) {
+        //   mostrar = obj.relacionNormal && obj.tipo === nodo.mostrarRelacionPoder;
+        // }
+
+        // if (mostrar) {
+        //   const destino = nodos[obj.hacia];
+        //   const { linea } = obj;
+        //   linea.setAttribute('x1', `${nodo.x}`);
+        //   linea.setAttribute('y1', `${nodo.y}`);
+        //   linea.setAttribute('x2', `${destino.x}`);
+        //   linea.setAttribute('y2', `${destino.y}`);
+        // }
       }
     });
   }
 }
 
 export function esconderRed(nodo: Nodo) {
-  if (!nodo || !nodo.mostrarRelaciones) return;
+  if (!nodo) return;
 
   if (nodo.lineas.length) {
     nodo.lineas.forEach((obj) => {
@@ -264,25 +275,17 @@ export function mostrarNodosEnAnillo(anillo: number) {
 
 export function mostrarRedPoder(llave: string) {
   nodos.forEach((nodo) => {
-    esconderRed(nodo);
     if (nodo.poderes.includes(llave)) {
       nodo.elemento.classList.remove('apagado');
       nodo.activo = true;
       nodo.mostrarRelaciones = true;
-      nodo.mostrarRelacionPoder = llave;
+      // nodo.mostrarRelacionPoder = llave;
     } else {
-      nodo.elemento.classList.add('apagado');
-      nodo.activo = false;
-      nodo.mostrarRelaciones = false;
-      nodo.mostrarRelacionPoder = null;
+      // nodo.elemento.classList.add('apagado');
+      // nodo.activo = false;
+      // nodo.mostrarRelaciones = false;
+      // nodo.mostrarRelacionPoder = null;
     }
-    // if (nodo.poder === llave) {
-    //   nodo.elemento.classList.remove('apagado');
-    //   nodo.activo = true;
-    // } else {
-    //   nodo.elemento.classList.add('apagado');
-    //   nodo.activo = false;
-    // }
   });
 }
 
@@ -290,5 +293,36 @@ export function apagarRedPoder() {
   nodos.forEach((nodo) => {
     nodo.elemento.classList.remove('apagado');
     nodo.activo = true;
+  });
+}
+
+poderesActivos.listen(() => {
+  nodos.forEach((nodo) => esconderRed(nodo));
+  actualizarNodos();
+});
+
+/**
+ * Actualizar todos los nodos para pintar un fotograma de la animación.
+ */
+export function actualizarNodos(poderes?: string[]) {
+  const poderesActuales = poderes || poderesActivos.get();
+  const llaveAgente = agenteActivo.get();
+
+  nodos.forEach((nodo) => {
+    nodo.actualizar();
+
+    if (llaveAgente) {
+      const nodoAgente = nodos.find((nodo) => nodo.llave === llaveAgente);
+
+      if (nodoAgente) {
+        mostrarRed(nodoAgente, poderesActuales);
+      }
+    } else {
+      poderesActuales.forEach((poder) => {
+        if (nodo.poderes.includes(poder)) {
+          mostrarRed(nodo, [poder]);
+        }
+      });
+    }
   });
 }

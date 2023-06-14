@@ -1,0 +1,115 @@
+#contenedorZonas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  min-height: 100vh;
+
+  .nodoPoder {
+    cursor: pointer;
+    scale: 0.5;
+    pointer-events: all;
+    position: absolute;
+    width: 150px;
+  }
+
+  .icono {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    display: block;
+    background-position-x: -300px;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &:hover {
+      background-position-x: -150px;
+    }
+  }
+
+  .nombre {
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    font-size: 2em;
+  }
+
+  .lam {
+    // position: absolute;
+    // left: 50%;
+    // top: 50%;
+    // transform: translate(-50%, -80%);
+    // width: 4em;
+    // z-index: 8;
+    // cursor: pointer;
+
+    // img {
+    //   width: 100%;
+    //   height: auto;
+    // }
+
+    .icono {
+      background-image: url('/imgs/corazon-3.webp');
+      animation: palpito 0.9s infinite ease-in-out;
+    }
+  }
+
+  .politica {
+    .icono {
+      background-image: url('/imgs/politica.webp');
+    }
+  }
+
+  .educacion {
+    .icono {
+      background-image: url('/imgs/educacion.webp');
+    }
+  }
+
+  .medios {
+    .icono {
+      background-image: url('/imgs/medios.webp');
+    }
+  }
+
+  .comercio {
+    .icono {
+      background-image: url('/imgs/comercio.webp');
+    }
+  }
+
+  .iglesia-catolica {
+    .icono {
+      background-image: url('/imgs/iglesia-catolica.webp');
+    }
+  }
+
+  .activo {
+    .icono {
+      background-position-x: 0;
+    }
+  }
+}
+
+@keyframes palpito {
+  0% {
+    opacity: 0.5;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  40% {
+    opacity: 0.7;
+  }
+
+  60% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 0.9;
+  }
+}

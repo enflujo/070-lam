@@ -1,0 +1,79 @@
+#info {
+  &.persona {
+    background-color: var(--verdeJade);
+  }
+
+  &.org {
+    background-color: var(--azulNube);
+  }
+}
+
+#infoRelaciones {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.93em;
+
+  .relacion {
+    line-height: 1.4;
+    display: flex;
+    margin-bottom: 0.7em;
+
+    .contenedorNombre {
+      margin-left: 0.7em;
+    }
+
+    .descriptor {
+      display: block;
+
+      &::after {
+        content: ' - ';
+        display: inline-block;
+        margin: 0 0.3em;
+      }
+    }
+
+    .relacionCon {
+      text-transform: uppercase;
+      padding: 0 0.1em;
+      font-weight: 600;
+    }
+
+    .referenciaRelacion {
+      display: block;
+      border-top: 4px;
+      border-style: dashed;
+      margin-right: 1px;
+
+      &.lam {
+        border-color: var(--colorLAM);
+      }
+
+      &.politica {
+        border-color: var(--colorPolitica);
+      }
+
+      &.comercio {
+        border-color: var(--colorComercio);
+      }
+
+      &.educacion {
+        border-color: var(--colorEducacion);
+      }
+
+      &.iglesia-catolica {
+        border-color: var(--colorReligion);
+      }
+
+      &.medios {
+        border-color: var(--colorMedios);
+      }
+    }
+
+    &.activo {
+      .referenciaRelacion {
+        border-style: solid;
+      }
+    }
+  }
+}

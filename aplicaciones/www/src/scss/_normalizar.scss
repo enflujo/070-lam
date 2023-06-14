@@ -1,0 +1,47 @@
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+::selection {
+  background-color: var(--rojoMistico);
+  color: var(--blancoNube);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--amarilloEdadMedia);
+  color: var(--negroTinta);
+  font-family: $fuenteTexto;
+  font-size: 1em;
+}
+
+main {
+  height: 100vh;
+  overflow: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: $fuenteTitulos;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2em;
+  border-bottom: 2px solid var(--negroTinta);
+  padding-bottom: 0.5em;
+  line-height: 1.1;
+}

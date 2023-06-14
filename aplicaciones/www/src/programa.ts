@@ -7,14 +7,17 @@ import { escalarAnillos } from './modulos/anillos';
 import { definirFiltros } from './modulos/filtros';
 import { reiniciarTodo } from './modulos/brujeria';
 import { cargarImagenes } from './modulos/imagenes';
+import { crearZonas } from './modulos/zonas';
 
 export type FuenteDatos = typeof agentes;
 const svg = document.querySelector<SVGElement>('#vis');
+const reiniciar = document.getElementById('reiniciar') as HTMLDivElement;
 const dims: Dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 } };
 let orbitando = true;
 
 async function inicio() {
   await cargarImagenes(agentes);
+  crearZonas();
   definirFiltros(agentes);
   crearNodos(agentes);
   definirEventos();
@@ -31,6 +34,7 @@ export function cambiarEstadoOrbitando(estanOrbitando: boolean) {
 
 function definirEventos() {
   if (svg) svg.onclick = reiniciarTodo;
+  reiniciar.onclick = reiniciarTodo;
 
   const colapsables = document.querySelectorAll<HTMLDivElement>('.tituloColapsable');
 

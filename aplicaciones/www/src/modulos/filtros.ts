@@ -1,16 +1,16 @@
+import { agenteActivo, poderesActivos } from '../cerebros/general';
 import grados from '../datos/grados.json';
 import poderes from '../datos/poderes.json';
 import { FuenteDatos } from '../programa';
 import { crearParrafos, normalizarTexto } from '../utilidades/ayudas';
-import { apagarRedPoder, filtrarNodo, mostrarNodosEnAnillo, mostrarRedPoder, prenderTodos } from './red';
+import { mostrarNodosEnAnillo, prenderTodos } from './red';
 
 const filtroPersonas = document.getElementById('filtroPersonas') as HTMLSelectElement;
 const filtroOrgs = document.getElementById('filtroOrgs') as HTMLSelectElement;
 const contenedorPoderes = document.getElementById('poderes');
 
-let poderActivo: string | null = null;
+const elementosPoderes: { [llave: string]: HTMLDivElement } = {};
 let elementoPoderActivo: HTMLDivElement;
-
 let mostrandoGrado = -1;
 let elementoCercaniaActiva: HTMLElement;
 
@@ -26,14 +26,13 @@ export function reiniciarFiltros() {
   reiniciarCercanias();
 }
 
-function reiniciarAgentes() {
+export function reiniciarAgentes() {
   filtroPersonas.value = 'todas';
   filtroOrgs.value = 'todas';
 }
 
 function reiniciarPoderes() {
   if (elementoPoderActivo) elementoPoderActivo.classList.remove('activo');
-  poderActivo = null;
 }
 
 function reiniciarCercanias() {
@@ -54,19 +53,22 @@ function definirFiltrosAgentes(datos: FuenteDatos) {
   });
 
   filtroPersonas.onchange = () => {
-    prenderTodos();
-    if (filtroOrgs.value !== 'todas') {
-      filtroOrgs.value = 'todas';
-    }
-    filtrarNodo(filtroPersonas.value);
+    agenteActivo.set(filtroPersonas.value);
+    // prenderTodos();
+    // if (filtroOrgs.value !== 'todas') {
+    //   filtroOrgs.value = 'todas';
+    // }
+
+    // filtrarNodo(filtroPersonas.value);
   };
 
   filtroOrgs.onchange = () => {
-    prenderTodos();
-    if (filtroPersonas.value !== 'todas') {
-      filtroPersonas.value = 'todas';
-    }
-    filtrarNodo(filtroOrgs.value);
+    agenteActivo.set(filtroOrgs.value);
+    // prenderTodos();
+    // if (filtroPersonas.value !== 'todas') {
+    //   filtroPersonas.value = 'todas';
+    // }
+    // filtrarNodo(filtroOrgs.value);
   };
 }
 
@@ -113,7 +115,7 @@ function definirFiltrosCercania() {
     contenedor.appendChild(titulo);
     contenedor.appendChild(contenido);
     cercanias.appendChild(contenedor);
-    contenedores.push(contenedor);
+    // contenedores.push(contenedor);
   });
 }
 
@@ -134,17 +136,47 @@ function definirFiltrosPoderes() {
     contenedorPoderes?.appendChild(elemento);
 
     elemento.onclick = () => {
-      if (poderActivo === llave) {
-        apagarRedPoder();
-        poderActivo = null;
-        elemento.classList.remove('activo');
-      } else {
-        mostrarRedPoder(llave);
-        poderActivo = llave;
-        elementoPoderActivo?.classList.remove('activo');
-        elemento.classList.add('activo');
-        elementoPoderActivo = elemento;
-      }
+      activarPoder(llave);
+
+      // if (poderActivo === llave) {
+      //   desactivarZona(llave);
+      //   apagarRedPoder();
+      //   poderActivo = null;
+      //   elemento.classList.remove('activo');
+      // } else {
+
+      //   // activarZona(llave);
+      //   // mostrarRedPoder(llave);
+      //   // poderActivo = llave;
+      //   // elementoPoderActivo?.classList.remove('activo');
+      //   // elemento.classList.add('activo');
+      //   // elementoPoderActivo = elemento;
+      // }
     };
+
+    elementosPoderes[llave] = elemento;
   });
 }
+
+export function activarPoder(llave: string) {
+  const poderes = poderesActivos.get();
+  const indice = poderes.indexOf(llave);
+
+  if (indice < 0) {
+    poderes.push(llave);
+  } else {
+    poderes.splice(indice, 1);
+  }
+
+  poderesActivos.set([...poderes]);
+}
+
+poderesActivos.subscribe((listaPoderes) => {
+  for (const poder in elementosPoderes) {
+    if (listaPoderes.includes(poder)) {
+      elementosPoderes[poder].classList.add('activo');
+    } else {
+      elementosPoderes[poder].classList.remove('activo');
+    }
+  }
+});

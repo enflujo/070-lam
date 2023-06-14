@@ -1,118 +1,50 @@
-$fuenteTitulos: 'Grenze Gotisch', 'Brush Script MT', cursive;
-$fuenteTexto: 'Roboto Mono', 'Courier New', Courier, monospace;
+@import './constantes';
+@import './normalizar';
+@import './ladoInfo';
+@import './zonas';
 
-$inactivoPolitica: url("data:image/svg+xml,%3Csvg%20id%3D'stripes-svg'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'100%25'%20height%3D'100%25'%3E%3Cdefs%3E%3Cpattern%20id%3D'svg-stripes-pattern-55055'%20patternTransform%3D'rotate(137)'%20width%3D'100%25'%20height%3D'8'%20x%3D'0'%20y%3D'0'%20patternUnits%3D'userSpaceOnUse'%3E%3Cg%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'7'%20fill%3D'rgba(238%2C%2085%2C%2024%2C%201)'%3E%3C%2Frect%3E%3Crect%20x%3D'0'%20y%3D'7'%20width%3D'100%25'%20height%3D'1'%20fill%3D'rgba(255%2C%20173%2C%20137%2C%201)'%3E%3C%2Frect%3E%3C%2Fg%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%20fill%3D'url(%23svg-stripes-pattern-55055)'%3E%3C%2Frect%3E%3C%2Fsvg%3E");
-
-$inactivoEducacion: url("data:image/svg+xml,%3Csvg%20id%3D'stripes-svg'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'100%25'%20height%3D'100%25'%3E%3Cdefs%3E%3Cpattern%20id%3D'svg-stripes-pattern-55182'%20patternTransform%3D'rotate(137)'%20width%3D'100%25'%20height%3D'8'%20x%3D'0'%20y%3D'0'%20patternUnits%3D'userSpaceOnUse'%3E%3Cg%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'7'%20fill%3D'rgba(255%2C%20228%2C%20199%2C%201)'%3E%3C%2Frect%3E%3Crect%20x%3D'0'%20y%3D'7'%20width%3D'100%25'%20height%3D'1'%20fill%3D'rgba(255%2C%20173%2C%20137%2C%201)'%3E%3C%2Frect%3E%3C%2Fg%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%20fill%3D'url(%23svg-stripes-pattern-55182)'%3E%3C%2Frect%3E%3C%2Fsvg%3E");
-
-$inactivoComercio: url("data:image/svg+xml,%3Csvg%20id%3D'stripes-svg'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'100%25'%20height%3D'100%25'%3E%3Cdefs%3E%3Cpattern%20id%3D'svg-stripes-pattern-66308'%20patternTransform%3D'rotate(137)'%20width%3D'100%25'%20height%3D'8'%20x%3D'0'%20y%3D'0'%20patternUnits%3D'userSpaceOnUse'%3E%3Cg%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'7'%20fill%3D'rgba(25%2C%20121%2C%2052%2C%201)'%3E%3C%2Frect%3E%3Crect%20x%3D'0'%20y%3D'7'%20width%3D'100%25'%20height%3D'1'%20fill%3D'rgba(82%2C%20184%2C%20112%2C%201)'%3E%3C%2Frect%3E%3C%2Fg%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%20fill%3D'url(%23svg-stripes-pattern-66308)'%3E%3C%2Frect%3E%3C%2Fsvg%3E");
-
-$inactivoMedios: url("data:image/svg+xml,%3Csvg%20id%3D'stripes-svg'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'100%25'%20height%3D'100%25'%3E%3Cdefs%3E%3Cpattern%20id%3D'svg-stripes-pattern-68525'%20patternTransform%3D'rotate(137)'%20width%3D'100%25'%20height%3D'8'%20x%3D'0'%20y%3D'0'%20patternUnits%3D'userSpaceOnUse'%3E%3Cg%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'7'%20fill%3D'rgba(0%2C%20183%2C%20204%2C%201)'%3E%3C%2Frect%3E%3Crect%20x%3D'0'%20y%3D'7'%20width%3D'100%25'%20height%3D'1'%20fill%3D'rgba(108%2C%20234%2C%20251%2C%201)'%3E%3C%2Frect%3E%3C%2Fg%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%20fill%3D'url(%23svg-stripes-pattern-68525)'%3E%3C%2Frect%3E%3C%2Fsvg%3E");
-
-$inactivoReligion: url("data:image/svg+xml,%3Csvg%20id%3D'stripes-svg'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'100%25'%20height%3D'100%25'%3E%3Cdefs%3E%3Cpattern%20id%3D'svg-stripes-pattern-74001'%20patternTransform%3D'rotate(137)'%20width%3D'100%25'%20height%3D'8'%20x%3D'0'%20y%3D'0'%20patternUnits%3D'userSpaceOnUse'%3E%3Cg%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'7'%20fill%3D'rgba(15%2C%2098%2C%20153%2C%201)'%3E%3C%2Frect%3E%3Crect%20x%3D'0'%20y%3D'7'%20width%3D'100%25'%20height%3D'1'%20fill%3D'rgba(42%2C%20180%2C%20193%2C%201)'%3E%3C%2Frect%3E%3C%2Fg%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%20fill%3D'url(%23svg-stripes-pattern-74001)'%3E%3C%2Frect%3E%3C%2Fsvg%3E");
-
-$inactivoLAM: url("data:image/svg+xml,%3Csvg%20id%3D'stripes-svg'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'100%25'%20height%3D'100%25'%3E%3Cdefs%3E%3Cpattern%20id%3D'svg-stripes-pattern-90087'%20patternTransform%3D'rotate(137)'%20width%3D'100%25'%20height%3D'8'%20x%3D'0'%20y%3D'0'%20patternUnits%3D'userSpaceOnUse'%3E%3Cg%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'7'%20fill%3D'rgba(189%2C%2010%2C%2010%2C%201)'%3E%3C%2Frect%3E%3Crect%20x%3D'0'%20y%3D'7'%20width%3D'100%25'%20height%3D'1'%20fill%3D'rgba(221%2C%2062%2C%2049%2C%201)'%3E%3C%2Frect%3E%3C%2Fg%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Crect%20x%3D'0'%20y%3D'0'%20width%3D'100%25'%20height%3D'100%25'%20fill%3D'url(%23svg-stripes-pattern-90087)'%3E%3C%2Frect%3E%3C%2Fsvg%3E");
-
-:root {
-  //paleta 1
-  --azulOscuro: #323846;
-  --blancoNube: #e0e1db;
-  --rojoCorazon: #d53f26;
-  --azulMedio: #393c5b;
-  --cafeTunica: #ab6656;
-  --doradoEspada: #c2a154;
-  --sangreCristo: #b73944;
-  --tinieblas: #0d030c;
-
-  //paleta 2
-  //fondos
-  --amarilloEdadMedia: #fff8cc;
-  --verdeJade: #ccffcc;
-  --azulNube: #ccf7ff;
-  --rosaHermanosGrimm: #fcc5dd;
-
-  //convenciones
-  --amarilloCuarzo: #ffe4c7;
-  --rojoMistico: #ee5518;
-  --azulJade: #0f6299;
-  --verdeRealeza: #197934;
-  --azulMillos: #3f97ef;
-  --azulJoya: #74c1bd;
-  --azulFiesta: #1be7ff;
-  --azulFiesta2: #00b7cc;
-  --verdeFiesta: #00ec56;
-  --azulCeleste: #b1f8f2;
-  --rosaJardin: #ef9396;
-  --negroTinta: #3a2817;
-  --blancoPecado: #fcf5f5;
-
-  //filtro de cercanía
-  --amarilloOro: #efd63f;
-  --rojoSangre: #d4270c;
-  --rojoSangre2: #bd0a0a;
-  --naranjaMisionero: #ff6316;
-  --naranjaMascara: #ff8b17;
-  --amarilloAliado: #ffff4d;
-
-  //degradé color
-  --rojoCalor: #ff24004d;
-  --amarilloLuz: #ffff4c4d;
-
-  //variables color
-  --colorPolitica: var(--rojoMistico);
-  --colorEducacion: var(--amarilloCuarzo);
-  --colorComercio: var(--verdeRealeza);
-  --colorMedios: var(--azulFiesta2);
-  --colorReligion: var(--azulJade);
-  --colorLAM: var(--rojoSangre2);
+#contenedor {
+  display: flex;
 }
 
-html {
-  box-sizing: border-box;
-  height: 100%;
+.tituloPrincipal {
+  color: var(--rojoSangre2);
+  font-size: 3em;
+  margin: 0.5em 0 0 0;
+  line-height: 1.2;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
+.tachado {
+  position: relative;
+  margin-right: 0.3em;
+
+  &::before {
+    content: '';
+    width: 100%;
+    position: absolute;
+    border-bottom: 3px solid var(--rojoSangre2);
+    top: 0.85em;
+  }
 }
 
-::selection {
-  background-color: var(--rojoMistico);
-  color: var(--blancoNube);
-}
+#reiniciar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--amarilloAliado);
+  padding: 0.5em;
+  cursor: pointer;
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
+  &:hover {
+    background-color: var(--amarilloAliado);
+  }
 
-body {
-  background-color: var(--amarilloEdadMedia);
-  color: var(--negroTinta);
-  font-family: $fuenteTexto;
-  font-size: 1em;
-}
-
-main {
-  height: 100vh;
-  overflow: none;
-}
-
-h1,
-h2,
-h3 {
-  font-family: $fuenteTitulos;
-  font-weight: 700;
-}
-
-h2 {
-  font-size: 2em;
-  border-bottom: 2px solid var(--negroTinta);
-  padding-bottom: 0.5em;
-  line-height: 1.1;
+  .icono {
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
 }
 
 .tituloColapsable {
@@ -197,122 +129,6 @@ h2 {
   }
 }
 
-#infoRelaciones {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0.93em;
-
-  .relacion {
-    line-height: 1.4;
-    .descriptor {
-      display: block;
-
-      &::after {
-        content: ' - ';
-        display: inline-block;
-        margin: 0 0.3em;
-      }
-    }
-
-    .relacionCon {
-      text-transform: uppercase;
-      padding: 0 0.1em;
-      color: #fcf5f5;
-    }
-
-    &.politica {
-      .relacionCon {
-        background-image: $inactivoPolitica;
-        background-color: transparent;
-      }
-    }
-
-    &.politica.activo {
-      .relacionCon {
-        background-color: var(--colorPolitica);
-        background-image: none;
-      }
-    }
-
-    &.educacion {
-      .relacionCon {
-        background-image: $inactivoEducacion;
-        background-color: transparent;
-      }
-    }
-
-    &.educacion.activo {
-      .relacionCon {
-        background-color: var(--colorEducacion);
-        color: var(--negroTinta);
-        background-image: none;
-      }
-    }
-
-    &.comercio {
-      .relacionCon {
-        background-image: $inactivoComercio;
-        background-color: transparent;
-      }
-    }
-
-    &.comercio.activo {
-      .relacionCon {
-        background-color: var(--colorComercio);
-        background-image: none;
-      }
-    }
-
-    &.medios {
-      .relacionCon {
-        background-image: $inactivoMedios;
-        background-color: transparent;
-      }
-    }
-
-    &.medios.activo {
-      .relacionCon {
-        background-color: var(--colorMedios);
-        background-image: none;
-      }
-    }
-
-    &.iglesiacatolica {
-      .relacionCon {
-        background-image: $inactivoReligion;
-        background-color: transparent;
-        // color: var(--blancoPecado);
-      }
-    }
-
-    &.iglesiacatolica.activo {
-      .relacionCon {
-        background-color: var(--colorReligion);
-        background-image: none;
-      }
-    }
-
-    &.lam {
-      .relacionCon {
-        background-image: $inactivoLAM;
-        background-color: transparent;
-      }
-    }
-
-    &.lam.activo {
-      .relacionCon {
-        background-color: var(--colorLAM);
-        background-image: none;
-      }
-    }
-  }
-}
-
-#contenedor {
-  display: flex;
-}
-
 .columnaLado {
   width: 20vw;
   min-height: 100vh;
@@ -336,6 +152,25 @@ h2 {
   position: absolute;
   top: 0;
   left: 0;
+
+  .nombre {
+    font-size: 0.8em;
+    color: var(--negroTinta);
+    width: 100px;
+    display: block;
+    transform: translate(-50%, -3px);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .icono {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+    background-color: var(--rojoCorazon);
+    transform: translate(-50%, -50%);
+  }
 }
 
 #filtros {
@@ -415,26 +250,6 @@ h2 {
   }
 }
 
-#info {
-  &.persona {
-    background-color: var(--verdeJade);
-  }
-
-  &.org {
-    background-color: var(--azulNube);
-  }
-}
-
-.nombre {
-  font-size: 0.8em;
-  color: var(--negroTinta);
-  width: 100px;
-  display: block;
-  transform: translate(-50%, -3px);
-  text-align: center;
-  line-height: 1;
-}
-
 #circulos {
   circle {
     fill: none;
@@ -468,59 +283,11 @@ h2 {
   }
 }
 
-.icono {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  display: block;
-  background-color: var(--rojoCorazon);
-  transform: translate(-50%, -50%);
-}
-
-#corazon {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 2em;
-  z-index: 8;
-  cursor: pointer;
-
-  img {
-    width: 100%;
-    height: auto;
-  }
-
-  animation: palpito 0.9s infinite ease-in-out;
-}
-
 #infoImg {
   width: 100%;
   img {
     width: 100%;
     height: auto;
-  }
-}
-
-@keyframes palpito {
-  0% {
-    opacity: 0.5;
-  }
-
-  20% {
-    opacity: 1;
-  }
-
-  40% {
-    opacity: 0.7;
-  }
-
-  60% {
-    opacity: 0.3;
-  }
-
-  100% {
-    opacity: 0.9;
   }
 }
 
@@ -549,7 +316,7 @@ h2 {
     stroke: var(--colorComercio);
   }
 
-  &.iglesiacatolica {
+  &.iglesia-catolica {
     stroke: var(--colorReligion);
   }
 }
@@ -615,9 +382,149 @@ select {
 .poder {
   display: flex;
   cursor: pointer;
+  position: relative;
+  margin-bottom: 3px;
+
+  &::before {
+    content: '';
+    width: 10px;
+    height: 1.5em;
+  }
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .iconoPoder {
+    height: 30px;
+    width: 32px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  &.lam {
+    &::before {
+      background-color: var(--colorLAM);
+    }
+
+    .iconoPoder {
+      background-image: url(/imgs/corazon-3.webp);
+      background-position-x: -52px;
+      height: 25px;
+      margin-top: 0px;
+      margin-left: 7px;
+      margin-right: 3px;
+      width: 22px;
+    }
+
+    &:hover {
+      .iconoPoder {
+        background-position-x: -27px;
+        margin-left: 7px;
+        margin-right: 3px;
+      }
+    }
+  }
+
+  &.politica {
+    &::before {
+      background-color: var(--colorPolitica);
+    }
+
+    .iconoPoder {
+      background-image: url(/imgs/politica.webp);
+      background-position-x: -60px;
+      margin-top: -6px;
+    }
+
+    &:hover {
+      .iconoPoder {
+        background-position-x: -30px;
+      }
+    }
+  }
+
+  &.educacion {
+    &::before {
+      background-color: var(--colorEducacion);
+    }
+
+    .iconoPoder {
+      background-image: url(/imgs/educacion.webp);
+      background-position-x: -59px;
+      margin-top: -3px;
+    }
+
+    &:hover {
+      .iconoPoder {
+        background-position-x: -29px;
+      }
+    }
+  }
+
+  &.medios {
+    &::before {
+      background-color: var(--colorMedios);
+    }
+
+    .iconoPoder {
+      background-image: url(/imgs/medios.webp);
+      background-position-x: -50px;
+      height: 25px;
+      margin-top: 0;
+      width: 23px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    &:hover {
+      .iconoPoder {
+        background-position-x: -25px;
+      }
+    }
+  }
+
+  &.comercio {
+    &::before {
+      background-color: var(--colorComercio);
+    }
+
+    .iconoPoder {
+      background-image: url(/imgs/comercio.webp);
+      background-position-x: -48px;
+      width: 26px;
+      height: 24px;
+      margin-left: 4px;
+      margin-right: 3px;
+    }
+
+    &:hover {
+      .iconoPoder {
+        background-position-x: -24px;
+      }
+    }
+  }
+
+  &.iglesia-catolica {
+    &::before {
+      background-color: var(--colorReligion);
+    }
+
+    .iconoPoder {
+      background-image: url(/imgs/iglesia-catolica.webp);
+      background-position-x: -43px;
+      width: 26px;
+      height: 24px;
+      margin-top: 1px;
+      margin-right: 6px;
+    }
+
+    &:hover {
+      .iconoPoder {
+        background-position-x: -19px;
+      }
+    }
   }
 
   &.activo {
@@ -675,114 +582,6 @@ select {
         height: 24px;
         margin-top: 1px;
         margin-right: 6px;
-      }
-    }
-  }
-
-  .iconoPoder {
-    height: 30px;
-    width: 32px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
-  &.lam {
-    .iconoPoder {
-      background-image: url(/imgs/corazon-3.webp);
-      background-position-x: -52px;
-      height: 25px;
-      margin-top: 0px;
-      margin-left: 7px;
-      margin-right: 3px;
-      width: 22px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -27px;
-        margin-left: 7px;
-        margin-right: 3px;
-      }
-    }
-  }
-
-  &.politica {
-    .iconoPoder {
-      background-image: url(/imgs/politica.webp);
-      background-position-x: -60px;
-      margin-top: -6px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -30px;
-      }
-    }
-  }
-
-  &.educacion {
-    .iconoPoder {
-      background-image: url(/imgs/educacion.webp);
-      background-position-x: -59px;
-      margin-top: -3px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -29px;
-      }
-    }
-  }
-
-  &.medios {
-    .iconoPoder {
-      background-image: url(/imgs/medios.webp);
-      background-position-x: -50px;
-      height: 25px;
-      margin-top: 0;
-      width: 23px;
-      margin-left: 5px;
-      margin-right: 5px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -25px;
-      }
-    }
-  }
-
-  &.comercio {
-    .iconoPoder {
-      background-image: url(/imgs/comercio.webp);
-      background-position-x: -48px;
-      width: 26px;
-      height: 24px;
-      margin-left: 4px;
-      margin-right: 3px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -24px;
-      }
-    }
-  }
-
-  &.iglesia-catolica {
-    .iconoPoder {
-      background-image: url(/imgs/religion.webp);
-      background-position-x: -43px;
-      width: 26px;
-      height: 24px;
-      margin-top: 1px;
-      margin-right: 6px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -19px;
       }
     }
   }
