@@ -7,7 +7,7 @@ import { mostrarNodosEnAnillo, prenderTodos } from './red';
 
 const filtroPersonas = document.getElementById('filtroPersonas') as HTMLSelectElement;
 const filtroOrgs = document.getElementById('filtroOrgs') as HTMLSelectElement;
-const contenedorPoderes = document.getElementById('poderes');
+const contenedorPoderes = document.querySelector('#poderes .colapsable') as HTMLDivElement;
 
 const elementosPoderes: { [llave: string]: HTMLDivElement } = {};
 let elementoPoderActivo: HTMLDivElement;
