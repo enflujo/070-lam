@@ -1,11 +1,13 @@
-import { agenteActivo, leyendo, mostrarAgente } from '../cerebros/general';
-import { reiniciarFiltros } from './filtros';
-import { prenderTodos } from './red';
+import { agenteActivo, poderesActivos } from '../cerebros/general';
+import { reiniciarAgentes } from './filtros';
 
 export function reiniciarTodo() {
-  mostrarAgente.set(null);
+  poderesActivos.set([]);
   agenteActivo.set(null);
-  leyendo.set(false);
-  prenderTodos();
-  reiniciarFiltros();
+  reiniciarAgentes();
+  // mostrarAgente.set(null);
+  // agenteActivo.set(null);
+  // leyendo.set(false);
+  // prenderTodos();
+  // reiniciarFiltros();
 }

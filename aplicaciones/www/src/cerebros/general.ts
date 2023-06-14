@@ -3,5 +3,5 @@ import Nodo from '../modulos/Nodo';
 
 export const leyendo = atom<boolean>(false);
 export const mostrarAgente = atom<Nodo | null>(null);
-export const tipoAgente = atom<'persona' | 'org' | 'lam'>('lam');
 export const agenteActivo = atom<string | null>(null);
+export const poderesActivos = atom<string[]>([]);
