@@ -1,8 +1,8 @@
 import { agenteActivo } from '../cerebros/general';
 import type { DatosAgente, Dims, NodoRelacion, Punto, Relacion, TipoAgente } from '../tipos';
-import { crearLineaDeRelacion } from './red';
+import { actualizarNodos, crearLineaDeRelacion, llenarInfoLAM } from './red';
 import { normalizarTexto } from '../utilidades/ayudas';
-import { crearInfo } from './columnaInfo';
+import { crearInfo, llenarInfo } from './columnaInfo';
 import { cambiarEstadoOrbitando } from '../programa';
 
 const DOS_PI = Math.PI * 2;
@@ -92,13 +92,14 @@ export default class Nodo {
     // if (!this.activo) return;
     // this.mostrarRelaciones = true;
     cambiarEstadoOrbitando(false);
+    llenarInfo(this);
     // mostrarAgente.set(this);
     // eventoNodosRelacionados(this.nodosRelacionados, this);
   };
 
   eventoRatonFuera = () => {
     cambiarEstadoOrbitando(true);
-
+    llenarInfoLAM();
     // if (!this.activo || leyendo.get()) return;
     // prenderTodos();
     // mostrarAgente.set(null);
@@ -106,8 +107,15 @@ export default class Nodo {
 
   eventoClic = (evento: Event) => {
     evento.stopPropagation();
+    const agenteActual = agenteActivo.get();
 
-    agenteActivo.set(this.llave);
+    if (agenteActual === this.llave) {
+      agenteActivo.set(null);
+    } else {
+      agenteActivo.set(this.llave);
+    }
+
+    actualizarNodos();
 
     // if (leyendo.get()) {
     //   agenteActivo.set(null);

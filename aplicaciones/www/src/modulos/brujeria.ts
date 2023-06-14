@@ -6,7 +6,6 @@ export function reiniciarTodo() {
   agenteActivo.set(null);
   reiniciarAgentes();
   // mostrarAgente.set(null);
-  // agenteActivo.set(null);
   // leyendo.set(false);
   // prenderTodos();
   // reiniciarFiltros();

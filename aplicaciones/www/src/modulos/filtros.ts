@@ -3,7 +3,7 @@ import grados from '../datos/grados.json';
 import poderes from '../datos/poderes.json';
 import { FuenteDatos } from '../programa';
 import { crearParrafos, normalizarTexto } from '../utilidades/ayudas';
-import { mostrarNodosEnAnillo, prenderTodos } from './red';
+import { losNodos, mostrarNodosEnAnillo, prenderTodos } from './red';
 
 const filtroPersonas = document.getElementById('filtroPersonas') as HTMLSelectElement;
 const filtroOrgs = document.getElementById('filtroOrgs') as HTMLSelectElement;
@@ -177,6 +177,26 @@ poderesActivos.subscribe((listaPoderes) => {
       elementosPoderes[poder].classList.add('activo');
     } else {
       elementosPoderes[poder].classList.remove('activo');
+    }
+  }
+});
+
+agenteActivo.subscribe((llave) => {
+  const nodos = losNodos();
+
+  const nodo = nodos.find((nodo) => nodo.llave === llave);
+
+  if (llave && nodo) {
+    if (nodo.tipo === 'org') {
+      if (filtroOrgs.value !== llave) {
+        filtroOrgs.value = llave;
+        filtroPersonas.value = 'todas';
+      }
+    } else if (nodo.tipo === 'persona') {
+      if (filtroPersonas.value !== llave) {
+        filtroPersonas.value = llave;
+        filtroOrgs.value = 'todas';
+      }
     }
   }
 });

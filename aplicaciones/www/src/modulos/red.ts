@@ -96,7 +96,11 @@ agenteActivo.subscribe((nombre) => {
 
   if (nodo) {
     nodo.elemento.classList.add('ejePrincipal');
-    // actualizarNodos();
+    llenarInfo(nodo);
+    nodoAnterior = nodo;
+  } else {
+    llenarInfo(nodoLAM);
+    nodoAnterior = nodoLAM;
   }
 });
 
@@ -325,4 +329,12 @@ export function actualizarNodos(poderes?: string[]) {
       });
     }
   });
+}
+
+export function llenarInfoLAM() {
+  if (nodoAnterior) {
+    llenarInfo(nodoAnterior);
+  } else {
+    llenarInfo(nodoLAM);
+  }
 }
