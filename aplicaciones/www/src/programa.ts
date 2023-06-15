@@ -15,6 +15,12 @@ const reiniciar = document.getElementById('reiniciar') as HTMLDivElement;
 const dims: Dims = { ancho: 0, alto: 0, min: 0, pasoR: 0, centro: { x: 0, y: 0 } };
 let orbitando = true;
 
+//const cuerpo = document.getElementById('contenedor');
+
+const cerrarCreditos = document.getElementById('cerrarCreditos') as HTMLDivElement;
+const creditos = document.getElementById('creditos') as HTMLDivElement;
+const abrirCreditos = document.getElementById('acerca') as HTMLSpanElement;
+
 async function inicio() {
   await cargarImagenes(agentes);
   crearZonas();
@@ -49,6 +55,24 @@ function definirEventos() {
         }
       }
     };
+  });
+
+  document.body.addEventListener('click', (evento: MouseEvent) => {
+    const elemento = evento.target as HTMLElement;
+    if (creditos.classList.contains('visible')) {
+      if (!(creditos === evento.target || creditos.contains(elemento))) {
+        creditos.classList.remove('visible');
+      }
+    }
+  });
+
+  cerrarCreditos.addEventListener('click', () => {
+    creditos.classList.remove('visible');
+  });
+
+  abrirCreditos.addEventListener('click', (evento) => {
+    evento.stopPropagation();
+    creditos.classList.toggle('visible');
   });
 }
 
