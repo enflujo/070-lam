@@ -2,6 +2,8 @@
 @import './normalizar';
 @import './ladoInfo';
 @import './zonas';
+@import './filtros';
+@import './red';
 
 #contenedor {
   display: flex;
@@ -17,14 +19,15 @@
 .tachado {
   position: relative;
   margin-right: 0.3em;
+  text-decoration: line-through;
 
-  &::before {
-    content: '';
-    width: 100%;
-    position: absolute;
-    border-bottom: 3px solid var(--rojoSangre2);
-    top: 0.85em;
-  }
+  // &::before {
+  //   content: '';
+  //   width: 100%;
+  //   position: absolute;
+  //   border-bottom: 3px solid var(--rojoSangre2);
+  //   top: 0.85em;
+  // }
 }
 
 #reiniciar {
@@ -131,460 +134,9 @@
 
 .columnaLado {
   width: 20vw;
-  min-height: 100vh;
   padding: 2em 3em 2em 3em;
   background-color: var(--rosaHermanosGrimm);
   overflow-y: auto;
-}
-
-#contenedorVis {
-  background: radial-gradient(circle at center, #ff22009e 0, #ffff4c7d 70%, #ffff4c4d 100%);
-  position: relative;
-}
-
-#vis {
-  height: 100vh;
-  width: 60vw;
-  display: block;
-}
-
-#contenedorAgentes {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  .nombre {
-    font-size: 0.8em;
-    color: var(--negroTinta);
-    width: 100px;
-    display: block;
-    transform: translate(-50%, -3px);
-    text-align: center;
-    line-height: 1;
-  }
-
-  .icono {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: block;
-    background-color: var(--rojoCorazon);
-    transform: translate(-50%, -50%);
-  }
-}
-
-#filtros {
-  background-color: var(--rosaHermanosGrimm);
-
-  h4 {
-    margin: 0 0 0.5em 0;
-  }
-
-  .infoSeccion {
-    border-bottom: 2px solid var(--negroTinta);
-    padding-bottom: 1em;
-  }
-
-  .subSeccion {
-    border-bottom: none;
-    padding-bottom: 0;
-
-    .tituloColapsable {
-      background-color: rgba(255, 255, 255, 0.5);
-    }
-
-    &.cerrado {
-      .tituloColapsable {
-        background-color: transparent;
-      }
-
-      &:hover {
-        .tituloColapsable {
-          background-color: rgba(255, 255, 255, 0.5);
-        }
-      }
-    }
-
-    &::before {
-      content: '';
-      width: 11px;
-      height: 11px;
-      background-color: var(--rojoCorazon);
-      border-radius: 50%;
-      float: left;
-      margin: 6px 0.5em 0 0;
-    }
-
-    &.grado1 {
-      &::before {
-        background-color: var(--naranjaMisionero);
-      }
-    }
-
-    &.grado2 {
-      &::before {
-        background-color: var(--naranjaMascara);
-      }
-    }
-
-    &.grado3 {
-      &::before {
-        background-color: var(--amarilloAliado);
-      }
-    }
-
-    &.grado4 {
-      &::before {
-        border-radius: 0;
-        background-color: var(--negroTinta);
-      }
-    }
-
-    .colapsable {
-      padding-left: 1.2em;
-
-      p {
-        margin-top: 0;
-      }
-    }
-  }
-}
-
-#circulos {
-  circle {
-    fill: none;
-    stroke-width: 0.5px;
-    stroke: var(--negroTinta);
-  }
-}
-
-.nodo {
-  cursor: pointer;
-  position: absolute;
-  width: 0;
-
-  &.ejePrincipal {
-    .nombre {
-      font-weight: 600;
-      font-size: 0.95em;
-    }
-  }
-
-  &.activo {
-    opacity: 1;
-  }
-
-  &.apagado {
-    opacity: 0.3;
-  }
-
-  &.invisible {
-    display: none;
-  }
-}
-
-#infoImg {
-  width: 100%;
-  img {
-    width: 100%;
-    height: auto;
-  }
-}
-
-.conexion {
-  stroke-width: 2;
-  stroke: var(--negroTinta);
-  opacity: 0.7;
-
-  &.lam {
-    stroke: var(--colorLAM);
-  }
-
-  &.medios {
-    stroke: var(--colorMedios);
-  }
-
-  &.politica {
-    stroke: var(--colorPolitica);
-  }
-
-  &.educacion {
-    stroke: var(--colorEducacion);
-  }
-
-  &.comercio {
-    stroke: var(--colorComercio);
-  }
-
-  &.iglesia-catolica {
-    stroke: var(--colorReligion);
-  }
-}
-
-#tiposRelaciones {
-  text {
-    fill: var(--negroTinta);
-    font: $fuenteTexto;
-  }
-
-  line {
-    stroke: var(--negroTinta);
-    stroke-width: 2px;
-  }
-}
-
-.seleccion {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 40px;
-  overflow: hidden;
-
-  color: var(--negroTinta);
-  margin-bottom: 0.7em;
-
-  &::after {
-    content: '\25BC';
-    position: absolute;
-    top: 4px;
-    right: 0;
-    font-size: 1.3em;
-    padding-right: 0.5em;
-    color: var(--rojoMistico);
-    transition: 0.25s all ease;
-    pointer-events: none;
-  }
-}
-
-select {
-  appearance: none;
-  outline: 0;
-  border: 0;
-  box-shadow: none;
-  background-image: none;
-  flex: 1;
-  background-color: white;
-  cursor: pointer;
-  font-family: $fuenteTexto;
-  padding: 0.5em;
-  border: 3px solid var(--rojoMistico);
-  transition: all 0.25s ease-in-out;
-
-  &::-ms-expand {
-    display: none;
-  }
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-}
-
-.poder {
-  display: flex;
-  cursor: pointer;
-  position: relative;
-  margin-bottom: 3px;
-
-  &::before {
-    content: '';
-    width: 10px;
-    height: 1.5em;
-  }
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-
-  .iconoPoder {
-    height: 30px;
-    width: 32px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
-  &.lam {
-    &::before {
-      background-color: var(--colorLAM);
-    }
-
-    .iconoPoder {
-      background-image: url(/imgs/corazon-3.webp);
-      background-position-x: -52px;
-      height: 25px;
-      margin-top: 0px;
-      margin-left: 7px;
-      margin-right: 3px;
-      width: 22px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -27px;
-        margin-left: 7px;
-        margin-right: 3px;
-      }
-    }
-  }
-
-  &.politica {
-    &::before {
-      background-color: var(--colorPolitica);
-    }
-
-    .iconoPoder {
-      background-image: url(/imgs/politica.webp);
-      background-position-x: -60px;
-      margin-top: -6px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -30px;
-      }
-    }
-  }
-
-  &.educacion {
-    &::before {
-      background-color: var(--colorEducacion);
-    }
-
-    .iconoPoder {
-      background-image: url(/imgs/educacion.webp);
-      background-position-x: -59px;
-      margin-top: -3px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -29px;
-      }
-    }
-  }
-
-  &.medios {
-    &::before {
-      background-color: var(--colorMedios);
-    }
-
-    .iconoPoder {
-      background-image: url(/imgs/medios.webp);
-      background-position-x: -50px;
-      height: 25px;
-      margin-top: 0;
-      width: 23px;
-      margin-left: 5px;
-      margin-right: 5px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -25px;
-      }
-    }
-  }
-
-  &.comercio {
-    &::before {
-      background-color: var(--colorComercio);
-    }
-
-    .iconoPoder {
-      background-image: url(/imgs/comercio.webp);
-      background-position-x: -48px;
-      width: 26px;
-      height: 24px;
-      margin-left: 4px;
-      margin-right: 3px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -24px;
-      }
-    }
-  }
-
-  &.iglesia-catolica {
-    &::before {
-      background-color: var(--colorReligion);
-    }
-
-    .iconoPoder {
-      background-image: url(/imgs/iglesia-catolica.webp);
-      background-position-x: -43px;
-      width: 26px;
-      height: 24px;
-      margin-top: 1px;
-      margin-right: 6px;
-    }
-
-    &:hover {
-      .iconoPoder {
-        background-position-x: -19px;
-      }
-    }
-  }
-
-  &.activo {
-    font-weight: 600;
-    background-color: rgba(255, 255, 255, 0.7);
-
-    &.lam {
-      .iconoPoder {
-        background-position-x: -2px;
-        height: 25px;
-        margin-top: 0px;
-        margin-left: 7px;
-        margin-right: 3px;
-        width: 22px;
-      }
-    }
-
-    &.politica {
-      .iconoPoder {
-        background-position-x: 0px;
-      }
-    }
-
-    &.educacion {
-      .iconoPoder {
-        background-position-x: 1px;
-      }
-    }
-
-    &.medios {
-      .iconoPoder {
-        background-position-x: 0px;
-        height: 25px;
-        margin-top: 0;
-        width: 23px;
-        margin-left: 5px;
-        margin-right: 5px;
-      }
-    }
-
-    &.comercio {
-      .iconoPoder {
-        background-position-x: 0px;
-        width: 26px;
-        height: 24px;
-        margin-left: 4px;
-        margin-right: 3px;
-      }
-    }
-
-    &.iglesia-catolica {
-      .iconoPoder {
-        background-position-x: 5px;
-        width: 26px;
-        height: 24px;
-        margin-top: 1px;
-        margin-right: 6px;
-      }
-    }
-  }
 }
 
 #cargador {
@@ -623,12 +175,9 @@ select {
   }
 }
 
-///// créditos
-
 #acerca {
   color: var(--rojoSangre2);
   font-size: 1.7em;
-  // position: fixed;
   cursor: pointer;
   right: 5%;
   top: 5%;
@@ -716,12 +265,69 @@ select {
     .logo-manifiesta {
       width: 60px;
       height: auto;
-      // display: table-cell;
       height: 40px;
       vertical-align: -10%;
       margin-right: 4em;
-      //padding-bottom: 0.1em;
       border-radius: 2px;
     }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #contenedor {
+    flex-direction: column;
+  }
+
+  #filtros {
+    h2,
+    h3 {
+      display: none;
+    }
+
+    #reiniciar {
+      display: inline-block;
+    }
+
+    .textoReiniciar {
+      display: none;
+    }
+
+    #poderes,
+    .tipoRelaciones {
+      display: none;
+    }
+
+    #cercania {
+      .colapsable {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    #filtroAgentes {
+      .colapsable {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  .columnaLado {
+    width: 100vw;
+    overflow-y: initial;
+    // background-color: transparent;
+  }
+
+  .tituloPrincipal {
+    display: inline-block;
+  }
+
+  #acerca {
+    display: inline-block;
+  }
+
+  #vis {
+    width: 100vw;
+    // height: 70vh;
   }
 }

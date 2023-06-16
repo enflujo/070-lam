@@ -64,7 +64,7 @@
 
         <div class="">
           <p>
-            Este trabajo hace parte de la investigación ‘Cruzada antiaborto en Colombia’ sobre los grupos religiosos que
+            Este trabajo hace parte de la investigación 'Cruzada antiaborto en Colombia' sobre los grupos religiosos que
             en el país han buscado imponer restricciones al aborto tras el fallo de la Corte Constitucional que lo
             despenaliza hasta la semana 24.
           </p>
@@ -99,27 +99,34 @@
       <div id="filtros" class="columnaLado">
         <h1 class="tituloPrincipal">Lazos de <span class="tachado">Amor </span>Poder Mariano</h1>
 
-        <h6><span id="acerca">+ Info</span></h6>
+        <p id="acerca">+ Info</p>
         <h2>Filtros</h2>
+
         <div id="reiniciar">
-          Reiniciar los filtros
+          <span class="textoReiniciar">Reiniciar los filtros</span>
           <span class="icono"><img src="/imgs/reiniciar.svg" style="width: 20px" alt="Icono reiniciar" /></span>
         </div>
-        <section class="infoSeccion mostrar">
+
+        <section id="filtroAgentes" class="infoSeccion mostrar">
           <h3 class="tituloColapsable">Por Agentes <span class="colapsableBtn"></span></h3>
           <div class="colapsable">
-            <h4>Personas</h4>
-            <div class="seleccion">
-              <select name="personas" id="filtroPersonas">
-                <option value="todas" selected>Todas</option>
-              </select>
-            </div>
-            <h4>Organizaciones</h4>
-            <div class="seleccion">
-              <select name="organizaciones" id="filtroOrgs">
-                <option value="todas" selected>Todas</option>
-              </select>
-            </div>
+            <section class="grupoAgente">
+              <h4>Personas</h4>
+              <div class="seleccion">
+                <select name="personas" id="filtroPersonas">
+                  <option value="todas" selected>Todas</option>
+                </select>
+              </div>
+            </section>
+
+            <section class="grupoAgente">
+              <h4>Organizaciones</h4>
+              <div class="seleccion">
+                <select name="organizaciones" id="filtroOrgs">
+                  <option value="todas" selected>Todas</option>
+                </select>
+              </div>
+            </section>
           </div>
         </section>
 

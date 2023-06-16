@@ -54,21 +54,10 @@ function definirFiltrosAgentes(datos: FuenteDatos) {
 
   filtroPersonas.onchange = () => {
     agenteActivo.set(filtroPersonas.value);
-    // prenderTodos();
-    // if (filtroOrgs.value !== 'todas') {
-    //   filtroOrgs.value = 'todas';
-    // }
-
-    // filtrarNodo(filtroPersonas.value);
   };
 
   filtroOrgs.onchange = () => {
     agenteActivo.set(filtroOrgs.value);
-    // prenderTodos();
-    // if (filtroPersonas.value !== 'todas') {
-    //   filtroPersonas.value = 'todas';
-    // }
-    // filtrarNodo(filtroOrgs.value);
   };
 }
 
@@ -115,7 +104,6 @@ function definirFiltrosCercania() {
     contenedor.appendChild(titulo);
     contenedor.appendChild(contenido);
     cercanias.appendChild(contenedor);
-    // contenedores.push(contenedor);
   });
 }
 
@@ -137,21 +125,6 @@ function definirFiltrosPoderes() {
 
     elemento.onclick = () => {
       activarPoder(llave);
-
-      // if (poderActivo === llave) {
-      //   desactivarZona(llave);
-      //   apagarRedPoder();
-      //   poderActivo = null;
-      //   elemento.classList.remove('activo');
-      // } else {
-
-      //   // activarZona(llave);
-      //   // mostrarRedPoder(llave);
-      //   // poderActivo = llave;
-      //   // elementoPoderActivo?.classList.remove('activo');
-      //   // elemento.classList.add('activo');
-      //   // elementoPoderActivo = elemento;
-      // }
     };
 
     elementosPoderes[llave] = elemento;

@@ -1,0 +1,110 @@
+#contenedorVis {
+  background: radial-gradient(circle at center, #ff22009e 0, #ffff4c7d 70%, #ffff4c4d 100%);
+  position: relative;
+}
+
+#vis {
+  height: 100vh;
+  width: 60vw;
+  display: block;
+}
+
+#contenedorAgentes {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  .nombre {
+    font-size: 0.8em;
+    color: var(--negroTinta);
+    width: 100px;
+    display: block;
+    transform: translate(-50%, -3px);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .icono {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+    background-color: var(--rojoCorazon);
+    transform: translate(-50%, -50%);
+  }
+}
+
+#circulos {
+  circle {
+    fill: none;
+    stroke-width: 0.5px;
+    stroke: var(--negroTinta);
+  }
+}
+
+.nodo {
+  cursor: pointer;
+  position: absolute;
+  width: 0;
+
+  &.ejePrincipal {
+    .nombre {
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+  }
+
+  &.activo {
+    opacity: 1;
+  }
+
+  &.apagado {
+    opacity: 0.3;
+  }
+
+  &.invisible {
+    display: none;
+  }
+}
+
+.conexion {
+  stroke-width: 2;
+  stroke: var(--negroTinta);
+  opacity: 0.7;
+
+  &.lam {
+    stroke: var(--colorLAM);
+  }
+
+  &.medios {
+    stroke: var(--colorMedios);
+  }
+
+  &.politica {
+    stroke: var(--colorPolitica);
+  }
+
+  &.educacion {
+    stroke: var(--colorEducacion);
+  }
+
+  &.comercio {
+    stroke: var(--colorComercio);
+  }
+
+  &.iglesia-catolica {
+    stroke: var(--colorReligion);
+  }
+}
+
+#tiposRelaciones {
+  text {
+    fill: var(--negroTinta);
+    font: $fuenteTexto;
+  }
+
+  line {
+    stroke: var(--negroTinta);
+    stroke-width: 2px;
+  }
+}
