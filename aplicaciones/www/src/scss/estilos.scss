@@ -177,11 +177,8 @@
 
 #acerca {
   color: var(--rojoSangre2);
-  font-size: 1.7em;
+  font-size: 1.2em;
   cursor: pointer;
-  right: 5%;
-  top: 5%;
-  z-index: 8;
   padding: 0.3em;
   transition: all 0.25s ease-in-out;
   background-color: transparent;
@@ -240,6 +237,11 @@
     margin: 1.5em 0em 1em 0;
   }
 
+  h4 {
+    font-family: $fuenteTitulos;
+    font-size: 1.2em;
+  }
+
   .equipo {
     list-style: none;
     padding-left: 0;
@@ -255,10 +257,28 @@
       margin-bottom: 0.5em;
     }
 
+    .gracias {
+      padding-top: 1.5em;
+      font-weight: 400;
+      font-size: 0.9em;
+      margin-bottom: 0.5em;
+    }
+
+    .comillas {
+      text-transform: uppercase;
+    }
+
+    .agradecimiento {
+      padding-top: 1.5em;
+      font-size: 0.8em;
+      font-weight: 400;
+      margin-bottom: 0.5em;
+    }
+
     .logo {
       width: 60px;
       height: auto;
-      margin-right: 4em;
+      margin-right: 2em;
       border-radius: 2px;
     }
 
@@ -266,9 +286,20 @@
       width: 60px;
       height: auto;
       height: 40px;
-      vertical-align: -10%;
+      vertical-align: 20%;
       margin-right: 4em;
       border-radius: 2px;
+    }
+
+    .logo-IWMF {
+      width: 80px;
+      margin-top: 1em;
+    }
+
+    .logo-liga {
+      width: 80px;
+      height: auto;
+      margin-bottom: -1em;
     }
   }
 }
