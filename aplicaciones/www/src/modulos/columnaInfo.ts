@@ -1,6 +1,6 @@
-import { leyendo } from '../cerebros/general';
+import { agenteActivo, leyendo } from '../cerebros/general';
 import { DatosAgente, Relacion } from '../tipos';
-import { crearParrafos } from '../utilidades/ayudas';
+import { crearParrafos, normalizarTexto } from '../utilidades/ayudas';
 import Nodo from './Nodo';
 import { buscarImagen } from './imagenes';
 
@@ -103,6 +103,7 @@ function elementoListaRelacion(relacion: Relacion) {
   const contenedorNombre = document.createElement('span');
   const descriptor = document.createElement('span');
   const relacionCon = document.createElement('span');
+  const llave = normalizarTexto(relacion.con);
 
   elemento.className = 'relacion';
   descriptor.className = 'descriptor';
@@ -121,6 +122,10 @@ function elementoListaRelacion(relacion: Relacion) {
       elemento.appendChild(linea);
     });
   }
+
+  elemento.onclick = () => {
+    agenteActivo.set(llave);
+  };
 
   contenedorNombre.appendChild(descriptor);
   contenedorNombre.appendChild(relacionCon);

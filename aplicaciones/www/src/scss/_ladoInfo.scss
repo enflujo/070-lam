@@ -18,6 +18,11 @@
     line-height: 1.4;
     display: flex;
     margin-bottom: 0.7em;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
 
     .contenedorNombre {
       margin-left: 0.7em;
