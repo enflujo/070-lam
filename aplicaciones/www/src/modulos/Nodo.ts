@@ -89,20 +89,13 @@ export default class Nodo {
   }
 
   eventoRatonEncima = () => {
-    // if (!this.activo) return;
-    // this.mostrarRelaciones = true;
     cambiarEstadoOrbitando(false);
     llenarInfo(this);
-    // mostrarAgente.set(this);
-    // eventoNodosRelacionados(this.nodosRelacionados, this);
   };
 
   eventoRatonFuera = () => {
     cambiarEstadoOrbitando(true);
     llenarInfoLAM();
-    // if (!this.activo || leyendo.get()) return;
-    // prenderTodos();
-    // mostrarAgente.set(null);
   };
 
   eventoClic = (evento: Event) => {
@@ -116,15 +109,6 @@ export default class Nodo {
     }
 
     actualizarNodos();
-
-    // if (leyendo.get()) {
-    //   agenteActivo.set(null);
-    //   this.elemento.classList.remove('ejePrincipal');
-    // } else {
-    //   this.elemento.classList.add('ejePrincipal');
-    //   this.mostrarRelaciones = true;
-    //   agenteActivo.set(this.nombre);
-    // }
   };
 
   escalar(dims: Dims) {
