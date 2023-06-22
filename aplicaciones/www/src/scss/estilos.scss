@@ -305,6 +305,18 @@
 }
 
 @media screen and (max-width: 1000px) {
+  #creditos {
+    width: 100vw;
+    padding: 2em 2em 3em 2.2em;
+
+    #cerrarCreditos {
+      font-size: 1.7em;
+      margin-right: 0.6em;
+      cursor: pointer;
+      text-align: right;
+    }
+  }
+
   #contenedor {
     flex-direction: column;
   }
