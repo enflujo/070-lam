@@ -56,6 +56,25 @@ export function crearZonas() {
       // }
     };
   });
+
+  const popo = window.matchMedia('(max-width: 1000px)');
+
+  detectarPantalla();
+
+  function detectarPantalla() {
+    const elementoIglesia = document.querySelector('.nodoPoder.iglesia-catolica') as HTMLDivElement;
+    if (popo.matches) {
+      elementoIglesia.style.right = '50%';
+      elementoIglesia.style.bottom = '0';
+      elementoIglesia.style.transform = 'translate(100%, 20%)';
+    } else {
+      elementoIglesia.style.right = '0';
+      elementoIglesia.style.bottom = '50%';
+      elementoIglesia.style.transform = 'translateY(100%)';
+    }
+  }
+
+  popo.addEventListener('change', detectarPantalla);
 }
 
 export function activarZona(llave: string) {
